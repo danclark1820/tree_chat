@@ -9,7 +9,7 @@
   <%= text_input f, :username %>
   <%= error_tag f, :username %>
 
-  <%= label f, :encrypted_password %>
+  <%= label f, :password %>
   <%= text_input f, :encrypted_password %>
   <%= error_tag f, :encrypted_password %>
 

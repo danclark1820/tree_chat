@@ -37,6 +37,13 @@ defmodule TreeChat.Accounts do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  def get_by_username(username) when is_nil(username) do
+    nil
+  end
+  def get_by_username(username) do
+    Repo.get_by(User, username: username)
+  end
+
   @doc """
   Creates a user.
 
