@@ -10,6 +10,10 @@ import css from "../css/app.css"
 // Import dependencies
 //
 import "phoenix_html"
+import socket from "./socket"
+import WaterCooler from "./water_cooler"
+
+WaterCooler.init(socket)
 
 // Import local files
 //

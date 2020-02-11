@@ -3,6 +3,7 @@ defmodule TreeChatWeb.UserSocket do
 
   ## Channels
   # channel "room:*", TreeChatWeb.RoomChannel
+  channel "water_cooler:*", TreeChatWeb.WaterCoolerChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
