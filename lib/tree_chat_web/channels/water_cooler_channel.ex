@@ -1,12 +1,12 @@
 defmodule TreeChatWeb.WaterCoolerChannel do
   use TreeChatWeb, :channel
 
-  def join("water_cooler:lobby", _payload, socket) do
-    # if authorized?(payload) do
+  def join("water_cooler:lobby", payload, socket) do
+    if authorized?(payload) do
       {:ok, socket}
-    # else
-    #   {:error, %{reason: "unauthorized"}}
-    # end
+    else
+      {:error, %{reason: "unauthorized"}}
+    end
   end
 
   # Channels can be used in a request/response fashion

@@ -1,9 +1,9 @@
 <h2>The Water Cooler</h2>
 <div id="chat-box">
 </div>
-
-<form id="chat-form">
-  <input type="text" placeholder="Username" id="user-name"></input>
-  <textarea placeholder="Your comment" id="user-msg"></textarea>
-  <button type="submit">Post</button>
-</form>
+<%= if signed_in?(@conn) do %>
+  <form id="chat-form">
+    <textarea placeholder="Your comment" id="user-msg"></textarea>
+    <button type="submit">Send</button>
+  </form>
+<% end %>
