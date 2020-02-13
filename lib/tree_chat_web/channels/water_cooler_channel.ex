@@ -2,11 +2,9 @@ defmodule TreeChatWeb.WaterCoolerChannel do
   use TreeChatWeb, :channel
 
   def join("water_cooler:lobby", payload, socket) do
-    if authorized?(payload) do
-      {:ok, socket}
-    else
-      {:error, %{reason: "unauthorized"}}
-    end
+    #We allow users to join a channel so they can see the conversation
+    #But cannot write in channel until authorized
+    {:ok, socket}
   end
 
   # Channels can be used in a request/response fashion
@@ -18,12 +16,11 @@ defmodule TreeChatWeb.WaterCoolerChannel do
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (water_cooler:lobby).
   def handle_in("shout", payload, socket) do
-    broadcast socket, "shout", payload
-    {:noreply, socket}
-  end
-
-  # Add authorization logic here as required.
-  defp authorized?(_payload) do
-    true
+    if signed_into_channel?(socket) do
+      broadcast socket, "shout", payload
+      {:noreply, socket}
+    else
+      {error: "Not Authorized to Channel"}
+    end
   end
 end

@@ -1,6 +1,6 @@
 let WaterCooler = {
   init(socket) {
-    let channel = socket.channel('water_cooler:lobby', {cat: "dog"})
+    let channel = socket.channel('water_cooler:lobby', {})
     channel.join()
     this.listenForChats(channel)
   },

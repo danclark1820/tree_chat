@@ -36,7 +36,7 @@ defmodule TreeChatWeb do
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
-      import TeacherWeb.Helpers.Auth, only: [signed_in?: 1]
+      import TeacherWeb.Helpers.Auth, only: [signed_into_app?: 1]
       # import Phoenix.Controller.Routes
 
       # Use all HTML functionality (forms, tags, etc)
@@ -61,6 +61,7 @@ defmodule TreeChatWeb do
     quote do
       use Phoenix.Channel
       import TreeChatWeb.Gettext
+      import TeacherWeb.Helpers.Auth, only: [signed_into_app?: 1]
     end
   end
 

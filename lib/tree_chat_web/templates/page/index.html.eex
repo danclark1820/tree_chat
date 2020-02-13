@@ -1,7 +1,7 @@
 <h2>The Water Cooler</h2>
 <div id="chat-box">
 </div>
-<%= if signed_in?(@conn) do %>
+<%= if signed_into_channel?(@conn) do %>
   <form id="chat-form">
     <textarea placeholder="Your comment" id="user-msg"></textarea>
     <button type="submit">Send</button>
