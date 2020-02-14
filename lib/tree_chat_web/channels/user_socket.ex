@@ -16,11 +16,13 @@ defmodule TreeChatWeb.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  def connect(params, socket, _connect_info) do
-    if signed_into_app?(params[:user]) do
-      {:ok, assign(socket, :current_user, params[:user])}
-    else
-      {:ok, socket}
+  def connect(%{"token" => token}, socket, _connect_info) do
+     # max_age: 1209600 is equivalent to two weeks in seconds
+    case Phoenix.Token.verify(socket, "user socket", token, max_age: 1209600) do
+      {:ok, user_id} ->
+        {:ok, assign(socket, :user, user_id)}
+      {:error, reason} ->
+        :error
     end
   end
 

@@ -16,11 +16,7 @@ defmodule TreeChatWeb.WaterCoolerChannel do
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (water_cooler:lobby).
   def handle_in("shout", payload, socket) do
-    if signed_into_channel?(socket) do
-      broadcast socket, "shout", payload
-      {:noreply, socket}
-    else
-      {error: "Not Authorized to Channel"}
-    end
+    broadcast socket, "shout", payload
+    {:noreply, socket}
   end
 end

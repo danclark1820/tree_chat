@@ -9,13 +9,13 @@ defmodule TreeChatWeb.SessionController do #This handles app sessions but not ch
 
   def create(conn, %{"session" => auth_params}) do
     user = Accounts.get_by_username(auth_params["username"])
-    socket = auth_params["socket"]
     case Comeonin.Bcrypt.check_pass(user, auth_params["password"]) do
       {:ok, user} ->
-        socket.assigns(current_user, user.id)
-
+        # socket.assigns(current_user, user.id)
+        token = Phoenix.Token.sign(conn, "user socket", user.id)
         conn
         |> put_session(:current_user_id, user.id)
+        |> assign(:user_token, token)
         |> put_flash(:info, "Signed in successfully.")
         |> redirect(to: page_path(conn, :index))
       {:error, _} ->
