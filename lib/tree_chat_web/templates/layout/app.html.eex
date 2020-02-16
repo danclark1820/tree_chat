@@ -14,6 +14,7 @@
       <%= render @view_module, @view_template, assigns %>
       <%= if signed_into_app?(@conn) do %>
         <%= link "Sign out", to: session_path(@conn, :delete), method: :delete %>
+        <script>window.userToken = "<%= assigns[:user_token] %>";</script>
       <% else %>
         <%= link "Sign In", to: session_path(@conn, :new) %>
         |
@@ -21,6 +22,5 @@
       <% end %>
     </main>
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
-    <script>window.userToken = "<%= assigns[:user_token] %>";</script>
   </body>
 </html>

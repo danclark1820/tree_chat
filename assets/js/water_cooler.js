@@ -8,7 +8,6 @@ let WaterCooler = {
   listenForChats(channel) {
     document.getElementById('chat-form').addEventListener('submit', function(e){
       e.preventDefault()
-
       // let userName = document.getElementById('user-name').value
       let userMsg = document.getElementById('user-msg').value
 
