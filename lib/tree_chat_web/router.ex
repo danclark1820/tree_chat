@@ -26,9 +26,12 @@ defmodule TreeChatWeb.Router do
   end
 
   defp put_user_token(conn, _) do
+    # Is this conn available in the socket, is it the same conn?
     if current_user_id = Plug.Conn.get_session(conn, :current_user_id) do
       token = Phoenix.Token.sign(conn, "user socket", current_user_id)
+      # user_name = Plug.Conn.get_session(conn, :user_name)
       assign(conn, :user_token, token)
+      # assign(conn, :user_name, user_name)
     else
       conn
     end

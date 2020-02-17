@@ -21,7 +21,8 @@ defmodule TreeChatWeb.UserSocket do
     # max_age: 1209600 is equivalent to two weeks in seconds
     case Phoenix.Token.verify(socket, "user socket", token, max_age: 1209600) do
       {:ok, user_id} ->
-        {:ok, assign(socket, :user, user_id)}
+        #This is not getting set or is not available for some reason
+        {:ok, assign(socket, :user, "5 MAO DMT PIZZA")}
       {:error, reason} ->
         {:ok, socket}
         # {:error, "Could not connect to socket: #{reason}"}
