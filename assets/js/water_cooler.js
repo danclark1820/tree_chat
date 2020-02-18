@@ -6,12 +6,12 @@ let WaterCooler = {
   },
 
   listenForChats(channel) {
+    let userName = window.userName
     document.getElementById('chat-form').addEventListener('submit', function(e){
       e.preventDefault()
-      // let userName = document.getElementById('user-name').value
       let userMsg = document.getElementById('user-msg').value
 
-      channel.push('shout', {name: "PIZZA", body: userMsg})
+      channel.push('shout', {name: userName, body: userMsg})
 
       // document.getElementById('user-name').value = ''
       document.getElementById('user-msg').value = ''

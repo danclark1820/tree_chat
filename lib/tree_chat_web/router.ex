@@ -6,6 +6,7 @@ defmodule TreeChatWeb.Router do
     plug :fetch_session
     plug :fetch_flash
     plug :put_user_token
+    plug :put_user_name
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
@@ -26,17 +27,21 @@ defmodule TreeChatWeb.Router do
   end
 
   defp put_user_token(conn, _) do
-    # Is this conn available in the socket, is it the same conn?
     if current_user_id = Plug.Conn.get_session(conn, :current_user_id) do
       token = Phoenix.Token.sign(conn, "user socket", current_user_id)
-      # user_name = Plug.Conn.get_session(conn, :user_name)
       assign(conn, :user_token, token)
-      # assign(conn, :user_name, user_name)
     else
       conn
     end
   end
 
+  defp put_user_name(conn, _) do
+    if current_user_name = Plug.Conn.get_session(conn, :current_user_name) do
+      assign(conn, :user_name, current_user_name)
+    else
+      conn
+    end
+  end
   # Other scopes may use custom stacks.
   # scope "/api", TreeChatWeb do
   #   pipe_through :api

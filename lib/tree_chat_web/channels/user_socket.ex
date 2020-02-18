@@ -21,7 +21,10 @@ defmodule TreeChatWeb.UserSocket do
     # max_age: 1209600 is equivalent to two weeks in seconds
     case Phoenix.Token.verify(socket, "user socket", token, max_age: 1209600) do
       {:ok, user_id} ->
-        #This is not getting set or is not available for some reason
+        # This is not getting set or is not available for some reason
+        # We should really be getting the user from the socket and not the window
+        # This should always be getting hit once a user has a token
+        # We have a token and we are literally not using it.
         {:ok, assign(socket, :user, "5 MAO DMT PIZZA")}
       {:error, reason} ->
         {:ok, socket}
