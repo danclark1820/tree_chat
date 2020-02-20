@@ -3,6 +3,6 @@
 </div>
 <%= if signed_into_app?(@conn) do %>
   <form id="chat-form">
-    <input type="text" placeholder="Enter to send" id="user-msg"></input>
+    <input type="text" placeholder="Enter to send" class="message-input" id="user-msg"></input>
   </form>
 <% end %>

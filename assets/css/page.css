@@ -1,0 +1,5 @@
+.message-input {
+  height: 10vh; /* important; */
+  width: 80vw;  /* !important; */
+  text-align: center;
+}
