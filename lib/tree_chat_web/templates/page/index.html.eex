@@ -3,7 +3,6 @@
 </div>
 <%= if signed_into_app?(@conn) do %>
   <form id="chat-form">
-    <textarea placeholder="Your comment" id="user-msg"></textarea>
-    <button type="submit">Send</button>
+    <input type="text" placeholder="Enter to send" id="user-msg"></input>
   </form>
 <% end %>
