@@ -1,5 +1,10 @@
+.messages-display {
+  height: 65vh;
+  width: 60vw;
+  border: solid #E0E0E0 3px;
+}
+
 .message-input {
-  height: 10vh; /* important; */
-  width: 80vw;  /* !important; */
-  text-align: center;
+  height: 12vh; /* important; */
+  width: 60vw;  /* !important; */
 }

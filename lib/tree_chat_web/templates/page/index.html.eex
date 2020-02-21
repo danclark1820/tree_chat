@@ -1,5 +1,8 @@
 <h2>The Water Cooler</h2>
-<div id="chat-box">
+<div class="messages-display" id="chat-box">
+  <%= for message <- @messages do %>
+  <p><b><%= message.name %>:</b> <%= message.body %></p>
+<% end %>
 </div>
 <%= if signed_into_app?(@conn) do %>
   <form id="chat-form">

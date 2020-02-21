@@ -1,5 +1,6 @@
 defmodule TreeChatWeb.WaterCoolerChannel do
   use TreeChatWeb, :channel
+  alias TreeChat.Chats
 
   def join("water_cooler:lobby", payload, socket) do
     #We allow users to join a channel so they can see the conversation
@@ -16,6 +17,7 @@ defmodule TreeChatWeb.WaterCoolerChannel do
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (water_cooler:lobby).
   def handle_in("shout", payload, socket) do
+    Chats.create_message(payload)
     broadcast socket, "shout", payload
     {:noreply, socket}
   end
