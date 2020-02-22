@@ -1,5 +1,5 @@
 <h2>The Water Cooler</h2>
-<div class="messages-display" id="chat-box">
+<div class="chat-window" id="chat-window">
   <%= for message <- @messages do %>
   <p><b><%= message.name %>:</b> <%= message.body %></p>
 <% end %>
