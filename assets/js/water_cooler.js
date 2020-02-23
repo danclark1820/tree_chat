@@ -8,16 +8,22 @@ let WaterCooler = {
   listenForChats(channel) {
     let userName = window.userName
     let chatWindow = document.getElementById('chat-window')
+    var scrolled = false;
+
+    chatWindow.addEventListener("scroll", function(){ scrolled=true })
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+
+    function updateScroll(){
+      if (!scrolled) {
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+      }
+    }
+
     document.getElementById('chat-form').addEventListener('submit', function(e){
       e.preventDefault()
       let userMsg = document.getElementById('user-msg').value
-
       channel.push('shout', {name: userName, body: userMsg})
-
-      // document.getElementById('user-name').value = ''
       document.getElementById('user-msg').value = ''
-      // Re get chat window element to find out its new scroll height
-      chatWindow.scrollTop = document.getElementById('chat-window').scrollHeight
     })
 
     channel.on('shout', payload => {
@@ -25,6 +31,9 @@ let WaterCooler = {
 
       msgBlock.insertAdjacentHTML('beforeend', `${payload.name}: ${payload.body}`)
       chatWindow.appendChild(msgBlock)
+      // Figure this out
+      // updateScroll();
+      chatWindow.scrollTop = chatWindow.scrollHeight;
     })
   }
 }

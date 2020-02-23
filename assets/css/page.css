@@ -2,7 +2,7 @@
   height: 65vh;
   width: 60vw;
   border: solid #E0E0E0 3px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .message-input {
