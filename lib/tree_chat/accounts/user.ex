@@ -2,6 +2,7 @@ defmodule TreeChat.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
   alias TreeChat.Accounts.User
+  alias TreeChat.Message
   alias Comeonin.Bcrypt
 
   schema "users" do
@@ -10,7 +11,7 @@ defmodule TreeChat.Accounts.User do
     field :full_name, :string
     field :phone_number, :string
     field :email, :string
-
+    has_many :messages, Message
 
     timestamps()
   end

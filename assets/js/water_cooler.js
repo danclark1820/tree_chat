@@ -22,7 +22,7 @@ let WaterCooler = {
     document.getElementById('chat-form').addEventListener('submit', function(e){
       e.preventDefault()
       let userMsg = document.getElementById('user-msg').value
-      channel.push('shout', {name: userName, body: userMsg})
+      channel.push('shout', {name: userName, body: userMsg, })
       document.getElementById('user-msg').value = ''
     })
 
