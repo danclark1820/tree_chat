@@ -6,7 +6,7 @@ defmodule TreeChat.Message do
   schema "messages" do
     field :body, :string
     field :name, :string
-    belongs_to :users, User
+    belongs_to :user, User
 
     timestamps()
   end

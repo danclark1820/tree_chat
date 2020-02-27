@@ -7,6 +7,7 @@ let WaterCooler = {
 
   listenForChats(channel) {
     let userName = window.userName
+    let userId = window.userId
     let chatWindow = document.getElementById('chat-window')
     var scrolled = false;
 
@@ -22,7 +23,7 @@ let WaterCooler = {
     document.getElementById('chat-form').addEventListener('submit', function(e){
       e.preventDefault()
       let userMsg = document.getElementById('user-msg').value
-      channel.push('shout', {name: userName, body: userMsg, })
+      channel.push('shout', {name: userName, body: userMsg, user_id: userId})
       document.getElementById('user-msg').value = ''
     })
 
