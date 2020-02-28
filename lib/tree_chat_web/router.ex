@@ -31,7 +31,6 @@ defmodule TreeChatWeb.Router do
     if current_user_id = Plug.Conn.get_session(conn, :current_user_id) do
       token = Phoenix.Token.sign(conn, "user socket", current_user_id)
       assign(conn, :user_token, token)
-      # assign(conn, :user_id, Integer.to_string(current_user_id))
     else
       conn
     end
@@ -47,8 +46,6 @@ defmodule TreeChatWeb.Router do
 
   defp put_user_id(conn, _) do
     if current_user_id = Plug.Conn.get_session(conn, :current_user_id) do
-      # token = Phoenix.Token.sign(conn, "user socket", current_user_id)
-      # assign(conn, :user_id, current_user_id)
       assign(conn, :user_id, Integer.to_string(current_user_id))
     else
       conn

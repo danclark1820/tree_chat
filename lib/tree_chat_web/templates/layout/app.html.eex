@@ -17,7 +17,7 @@
         <script>
           window.userToken = "<%= assigns[:user_token] %>";
           window.userName = "<%= assigns[:user_name] %>";
-          window.userId = "<%= assigns[:current_user_id] %>";
+          window.userId = "<%= assigns[:user_id] %>";
         </script>
       <% else %>
         <%= link "Sign In", to: session_path(@conn, :new) %>
