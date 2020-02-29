@@ -17,8 +17,8 @@ defmodule TreeChatWeb.WaterCoolerChannel do
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (water_cooler:lobby).
   def handle_in("shout", payload, socket) do
-    updated_payload = Map.update!(payload, "user_id", &Integer.parse(&1))
-    Chats.create_message(updated_payload)
+    updated_payload = Map.update!(payload, "user_id", &Integer.parse(&1) |> elem(0))
+    Chats.create_message(payload)
     broadcast socket, "shout", payload
     {:noreply, socket}
   end
