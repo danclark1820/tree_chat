@@ -50,6 +50,9 @@ defmodule TreeChat.Chats do
 
   """
   def create_message(attrs \\ %{}) do
+    #This is the problem
+    # remember this was working before.
+    # Why is the user id key not working?
     %Message{}
     |> Message.changeset(attrs)
     |> Repo.insert()
