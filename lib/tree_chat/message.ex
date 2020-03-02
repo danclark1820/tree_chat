@@ -16,6 +16,6 @@ defmodule TreeChat.Message do
     message
     |> cast(attrs, [:name, :user_id, :body])
     |> validate_required([:name, :user_id, :body])
-    |> assoc_constraint([:user])
+    |> assoc_constraint(:user)
   end
 end
