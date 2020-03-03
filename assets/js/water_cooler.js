@@ -33,7 +33,7 @@ let WaterCooler = {
       msgBlock.insertAdjacentHTML('beforeend', `${payload.name}: ${payload.body}`)
       chatWindow.appendChild(msgBlock)
       // Figure this out
-      // updateScroll();
+      updateScroll();
       chatWindow.scrollTop = chatWindow.scrollHeight;
     })
   }
