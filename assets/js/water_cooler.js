@@ -28,11 +28,10 @@ let WaterCooler = {
     })
 
     channel.on('shout', payload => {
-      let msgBlock = document.createElement('p')
+      let msgBlock = document.createElement('div')
 
-      msgBlock.insertAdjacentHTML('beforeend', `${payload.name}: ${payload.body}`)
+      msgBlock.insertAdjacentHTML('beforeend', `<b>${payload.name}:</b> ${payload.body}`)
       chatWindow.appendChild(msgBlock)
-      // Figure this out
       updateScroll();
       chatWindow.scrollTop = chatWindow.scrollHeight;
     })

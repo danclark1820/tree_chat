@@ -1,8 +1,16 @@
 <h2>The Water Cooler</h2>
 <div class="chat-window" id="chat-window">
   <%= for message <- @messages do %>
-  <p><b><%= message.name %>:</b> <%= message.body %></p>
-<% end %>
+    <%= if message.user_id == assigns[:user_id] do %>
+      <div class="current-user-message">
+        <span class="current-user-message-name"><%= message.name %>:</span>
+        <span class="current-user-message-body"><%= message.body %></span>
+    <%= else %>
+      <div class="user-message">
+        <span class="user-message-name"><%= message.name %>:</span>
+        <span class="user-message-body"><%= message.body %></span>
+    <% end %>
+  <% end %>
 </div>
 <%= if signed_into_app?(@conn) do %>
   <form id="chat-form">

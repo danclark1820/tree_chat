@@ -10,3 +10,19 @@
   width: 60vw;  /* !important; */
   overflow: scroll;
 }
+
+.current-user-message-name {
+  color: blue;
+  font-weight: bold;
+}
+
+.current-user-message-body {
+}
+
+.message-name {
+  color: red;
+  font-weight: bold;
+}
+
+.message-body {
+}
