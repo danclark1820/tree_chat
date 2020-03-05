@@ -5,10 +5,12 @@
       <div class="current-user-message">
         <span class="current-user-message-name"><%= message.name %>:</span>
         <span class="current-user-message-body"><%= message.body %></span>
+      </div>
     <%= else %>
       <div class="user-message">
         <span class="user-message-name"><%= message.name %>:</span>
         <span class="user-message-body"><%= message.body %></span>
+      </div>
     <% end %>
   <% end %>
 </div>
