@@ -7,9 +7,9 @@
         <span class="current-user-message-body"><%= message.body %></span>
       </div>
     <%= else %>
-      <div class="user-message">
-        <span class="user-message-name"><%= message.name %>:</span>
-        <span class="user-message-body"><%= message.body %></span>
+      <div class="message">
+        <span class="message-name"><%= message.name %>:</span>
+        <span class="message-body"><%= message.body %></span>
       </div>
     <% end %>
   <% end %>
