@@ -20,6 +20,7 @@
           window.userId = "<%= assigns[:user_id] %>";
         </script>
       <% else %>
+        <!-- Show sign in or signup depending on which page your on -->
         <%= link "Sign In", to: session_path(@conn, :new) %>
         |
         <%= link "Sign up", to: user_path(@conn, :new) %>

@@ -1,4 +1,5 @@
 .chat-window {
+  align-content: center;
   height: 65vh;
   width: 60vw;
   border: solid #E0E0E0 3px;

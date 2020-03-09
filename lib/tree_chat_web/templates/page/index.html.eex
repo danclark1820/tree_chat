@@ -1,7 +1,7 @@
 <h2>The Water Cooler</h2>
 <div class="chat-window" id="chat-window">
   <%= for message <- @messages do %>
-    <%= if message.user_id == assigns[:user_id] do %>
+    <%= if message.user_id === assigns[:user_id] do %>
       <div class="current-user-message">
         <span class="current-user-message-name"><%= message.name %>:</span>
         <span class="current-user-message-body"><%= message.body %></span>
