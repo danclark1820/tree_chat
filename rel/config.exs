@@ -51,5 +51,8 @@ release :tree_chat do
   set applications: [
     :runtime_tools
   ]
-end
 
+  set commands: [
+    migrate: "rel/commands/migrate.sh"
+  ]
+end
