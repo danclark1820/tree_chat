@@ -22,6 +22,14 @@ config :tree_chat, TreeChatWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+# Configure your database
+config :tree_chat, TreeChat.Repo,
+  # username: System.get_env("DATABASE_USER"),
+  # password: System.get_env("DATABASE_PASSWORD"),
+  # database: System.get_env("DATABASE_NAME"),
+  url: System.get_env("DATABASE_URL")
+  # pool_size: 10
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
