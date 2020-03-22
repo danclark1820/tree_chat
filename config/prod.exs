@@ -27,8 +27,8 @@ config :tree_chat, TreeChat.Repo,
   # username: System.get_env("DATABASE_USER"),
   # password: System.get_env("DATABASE_PASSWORD"),
   # database: System.get_env("DATABASE_NAME"),
-  url: System.get_env("DATABASE_URL")
-  # pool_size: 10
+  url: System.get_env("DATABASE_URL"),
+  pool_size: 10
 
 # ## SSL Support
 #
