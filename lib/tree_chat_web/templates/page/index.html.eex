@@ -1,4 +1,4 @@
-<h2>The Water Cooler</h2>
+<h2>Cooler.Chat</h2>
 <div class="chat-window" id="chat-window">
   <%= for message <- @messages do %>
     <%= if message.user_id === assigns[:user_id] do %>
@@ -13,6 +13,19 @@
       </div>
     <% end %>
   <% end %>
+</div>
+<!-- Trigger/Open The Modal -->
+<button id="myBtn">Open Modal</button>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Some text in the Modal..</p>
+  </div>
+
 </div>
 <%= if signed_into_app?(@conn) do %>
   <form id="chat-form">

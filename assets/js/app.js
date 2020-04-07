@@ -12,6 +12,7 @@ import css from "../css/app.css"
 import "phoenix_html"
 import socket from "./socket"
 import WaterCooler from "./water_cooler"
+import page from "./page"
 
 WaterCooler.init(socket)
 
