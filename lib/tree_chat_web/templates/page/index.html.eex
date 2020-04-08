@@ -14,21 +14,17 @@
     <% end %>
   <% end %>
 </div>
-<!-- Trigger/Open The Modal -->
+
 <button id="myBtn">Open Modal</button>
-
-<!-- The Modal -->
 <div id="myModal" class="modal">
-
-  <!-- Modal content -->
   <div class="modal-content">
     <span class="close">&times;</span>
-    <p>Some text in the Modal..</p>
+    <%= render "new_session.html", Map.put(assigns, :action, Routes.session_path(@conn, :create)) %>
+    <!-- < link_to sign up, do we need redirect or can we just use js to hide and display> -->
+    <!-- I think we need redirect to help make sure we hit user vs session controller > -->
   </div>
-
 </div>
-<%= if signed_into_app?(@conn) do %>
-  <form id="chat-form">
-    <input type="text" placeholder="Enter to send" class="message-input" id="user-msg"></input>
-  </form>
-<% end %>
+
+<form id="chat-form">
+  <input type="text" placeholder="Enter to send" class="message-input" id="user-msg"></input>
+</form>
