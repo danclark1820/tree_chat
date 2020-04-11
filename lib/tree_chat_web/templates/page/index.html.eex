@@ -16,12 +16,18 @@
 </div>
 
 <button id="myBtn">Open Modal</button>
-<div id="myModal" class="modal">
+
+<div id="signin-modal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
     <%= render "new_session.html", Map.put(assigns, :action, Routes.session_path(@conn, :create)) %>
-    <!-- < link_to sign up, do we need redirect or can we just use js to hide and display> -->
-    <!-- I think we need redirect to help make sure we hit user vs session controller > -->
+  </div>
+</div>
+
+<div id="signup-modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <%= render "new_user.html", Map.put(assigns, :action, Routes.user_path(@conn, :create)) %>
   </div>
 </div>
 
