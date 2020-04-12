@@ -4,3 +4,6 @@
   <%= password_input f, :password, placeholder: "password" %><br>
   <%= submit "Sign in" %>
 <% end %>
+<div>
+  Not a member? <span class="signup-link">Sign Up</span>
+</div>

@@ -15,11 +15,13 @@ defmodule TreeChatWeb.UserController do
       {:ok, user} ->
         conn
         |> put_session(:current_user_id, user.id)
+        |> put_session(:current_user_name, user.username)
         |> put_flash(:info, "Account created successfully.")
         |> redirect(to: page_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         conn
+        # Display changeset errors here
         |> put_flash(:error, "There was an error creating your account")
         |> render("new.html", changeset: changeset)
     end

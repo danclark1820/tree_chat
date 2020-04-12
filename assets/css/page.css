@@ -65,3 +65,22 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.signup-link{
+  color: blue;
+  text-decoration: underline;
+}
+
+.signin-link{
+  color: blue;
+  text-decoration: underline;
+}
+
+.signin-link:hover,
+.signin-link:focus,
+.signup-link:hover,
+.signup-link:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}

@@ -15,8 +15,6 @@
   <% end %>
 </div>
 
-<button id="myBtn">Open Modal</button>
-
 <div id="signin-modal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -34,3 +32,11 @@
 <form id="chat-form">
   <input type="text" placeholder="Enter to send" class="message-input" id="user-msg"></input>
 </form>
+<%= if signed_into_app?(@conn) do %>
+  <%= link "Sign out", to: session_path(@conn, :delete), method: :delete %>
+<%= else %>
+  <div>
+    <span class="signin-link">Sign In</span> |
+    <span class="signup-link">Sign Up</span>
+  </div>
+<% end %>
