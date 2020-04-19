@@ -1,4 +1,18 @@
-<h2>Cooler.Chat</h2>
+<h2 class="chat-title">Cooler.Chat</h2>
+
+
+  <%= if signed_into_app?(@conn) do %>
+  <div id="signout-link">
+    <%= link "Sign out", to: session_path(@conn, :delete), method: :delete %>
+  </div>
+  <% else %>
+    <div id="signin-signup-links">
+      <span class="signin-link">Sign In</span> |
+      <span class="signup-link">Sign Up</span>
+    </div>
+  <% end %>
+
+
 <div class="chat-window" id="chat-window">
   <%= for message <- @messages do %>
     <%= if message.user_id === assigns[:user_id] do %>
@@ -6,7 +20,7 @@
         <span class="current-user-message-name"><%= message.name %>:</span>
         <span class="current-user-message-body"><%= message.body %></span>
       </div>
-    <%= else %>
+    <% else %>
       <div class="message">
         <span class="message-name"><%= message.name %>:</span>
         <span class="message-body"><%= message.body %></span>
@@ -30,13 +44,5 @@
 </div>
 
 <form id="chat-form">
-  <input type="text" placeholder="Enter to send" class="message-input" id="user-msg"></input>
+  <textarea type="text" placeholder="Enter to send" class="message-input" id="user-msg"></textarea>
 </form>
-<%= if signed_into_app?(@conn) do %>
-  <%= link "Sign out", to: session_path(@conn, :delete), method: :delete %>
-<%= else %>
-  <div>
-    <span class="signin-link">Sign In</span> |
-    <span class="signup-link">Sign Up</span>
-  </div>
-<% end %>
