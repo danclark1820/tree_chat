@@ -39,7 +39,6 @@
 
 
 .current-user-message-name {
-  color: blue;
   font-weight: bold;
 }
 
@@ -47,7 +46,6 @@
 }
 
 .message-name {
-  color: red;
   font-weight: bold;
 }
 

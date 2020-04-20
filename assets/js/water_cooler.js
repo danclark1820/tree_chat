@@ -20,12 +20,14 @@ let WaterCooler = {
       }
     }
 
-    document.getElementById('chat-form').addEventListener('submit', function(e){
-      e.preventDefault()
-      let userMsg = document.getElementById('user-msg').value
-      channel.push('shout', {name: userName, body: userMsg, user_id: userId})
-      document.getElementById('user-msg').value = ''
-    })
+    document.getElementById("chat-form").addEventListener('keydown', function(e) {
+      if (e.keyCode == 13 && !e.shiftKey) {
+        e.preventDefault();
+        let userMsg = document.getElementById('user-msg').value
+        channel.push('shout', {name: userName, body: userMsg, user_id: userId})
+        document.getElementById('user-msg').value = ''
+      }
+    });
 
     channel.on('shout', payload => {
       let msgBlock = document.createElement('div')

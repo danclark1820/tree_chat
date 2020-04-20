@@ -43,6 +43,6 @@
   </div>
 </div>
 
-<form id="chat-form">
-  <textarea type="text" placeholder="Enter to send" class="message-input" id="user-msg"></textarea>
+<form id="chat-form" name="chat-form">
+  <textarea type="text" placeholder="Enter to send; Shift+Enter for new line" class="message-input" id="user-msg" form="chat-form"></textarea>
 </form>
