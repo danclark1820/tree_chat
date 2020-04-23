@@ -1,3 +1,4 @@
+#This will be a table/repo now...
 defmodule TreeChat.Chats do
   @moduledoc """
   The Chats context.
