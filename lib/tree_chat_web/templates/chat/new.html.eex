@@ -1,0 +1,17 @@
+<h1>Chat</h1>
+
+<%= form_for @conn, chat_path(@conn, :create), [as: :chat], fn f -> %>
+  <div>
+    <%= label f, :topic %>
+    <%= text_input f, :topic %>
+    <%= error_tag f, :topic %>
+  </div>
+  <div>
+    <%= label f, :description %>
+    <%= text_input f, :description %>
+    <%= error_tag f, :description%>
+  </div>
+  <div>
+    <%= submit "Submit" %>
+  </div>
+<% end %>

@@ -1,13 +1,31 @@
 #This will be a table/repo now...
-defmodule TreeChat.Chats do
+defmodule TreeChat.Chat do
   @moduledoc """
   The Chats context.
   """
-
   import Ecto.Query, warn: false
+  import Ecto.Changeset
+  use Ecto.Schema
   alias TreeChat.Repo
-
   alias TreeChat.Message
+  alias TreeChat.Accounts.User
+  alias TreeChat.Chat
+
+  schema "chats" do
+    field :topic, :string
+    field :description, :string
+    belongs_to :user, User
+
+    timestamps()
+  end
+
+  @doc false
+  def changeset(chat, attrs) do
+    chat
+    |> cast(attrs, [:topic, :description, :user_id])
+    |> validate_required([:topic, :description, :user_id])
+    |> assoc_constraint(:user)
+  end
 
   @doc """
   Returns the list of messages.
@@ -101,5 +119,73 @@ defmodule TreeChat.Chats do
   """
   def change_message(%Message{} = message) do
     Message.changeset(message, %{})
+  end
+
+
+  def get_chat!(id), do: Repo.get!(Chat, id)
+
+  @doc """
+  Creates a message.
+
+  ## Examples
+
+      iex> create_message(%{field: value})
+      {:ok, %Message{}}
+
+      iex> create_message(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_chat(attrs \\ %{}) do
+    %Chat{}
+    |> Chat.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a message.
+
+  ## Examples
+
+      iex> update_message(message, %{field: new_value})
+      {:ok, %Message{}}
+
+      iex> update_message(message, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_chat(%Chat{} = message, attrs) do
+    message
+    |> Chat.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a message.
+
+  ## Examples
+
+      iex> delete_message(message)
+      {:ok, %Message{}}
+
+      iex> delete_message(message)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_chat(%Chat{} = message) do
+    Repo.delete(message)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking message changes.
+
+  ## Examples
+
+      iex> change_message(message)
+      %Ecto.Changeset{source: %Message{}}
+
+  """
+  def change_chat(%Chat{} = message) do
+    Chat.changeset(message, %{})
   end
 end
