@@ -4,17 +4,17 @@ defmodule TreeChatWeb.ChatController do
   alias TreeChat.Chat
 
   def new(conn, _params) do
-    changeset = Chat.changeset(%Chat{})
+    changeset = Chat.change_chat(%Chat{})
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"chat" => chat_params}) do
-
     case Chat.create_chat(chat_params) do
       {:ok, chat} ->
+        require IEx; IEx.pry
         conn
         |> put_flash(:info, "Chat created successfully.")
-        |> redirect(to: chat_path(conn, chat.id, :show))
+        |> redirect(to: page_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         conn

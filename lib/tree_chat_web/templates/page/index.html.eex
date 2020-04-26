@@ -1,6 +1,4 @@
 <h2 class="chat-title">Cooler.Chat</h2>
-
-
   <%= if signed_into_app?(@conn) do %>
   <div id="signout-link">
     <%= link "Sign out", to: session_path(@conn, :delete), method: :delete %>
@@ -12,37 +10,47 @@
     </div>
   <% end %>
 
+  <div class="chat-container">
+    <div class="chat-list" id="chat-list">
+      <%= for chat <- @chats do %>
+        <div class="chat">
+          <span class="chat-topic"><%= chat.topic %></span>
+        </div>
+      <% end %>
+    </div>
 
-<div class="chat-window" id="chat-window">
-  <%= for message <- @messages do %>
-    <%= if message.user_id === assigns[:user_id] do %>
-      <div class="current-user-message">
-        <span class="current-user-message-name"><%= message.name %>:</span>
-        <span class="current-user-message-body"><%= message.body %></span>
-      </div>
-    <% else %>
-      <div class="message">
-        <span class="message-name"><%= message.name %>:</span>
-        <span class="message-body"><%= message.body %></span>
-      </div>
-    <% end %>
-  <% end %>
-</div>
+    <div class="chat-window" id="chat-window">
+      <%= for message <- @messages do %>
+        <%= if message.user_id === assigns[:user_id] do %>
+          <div class="current-user-message">
+            <span class="current-user-message-name"><%= message.name %>:</span>
+            <span class="current-user-message-body"><%= message.body %></span>
+          </div>
+        <% else %>
+          <div class="message">
+            <span class="message-name"><%= message.name %>:</span>
+            <span class="message-body"><%= message.body %></span>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
 
-<div id="signin-modal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <%= render "new_session.html", Map.put(assigns, :action, Routes.session_path(@conn, :create)) %>
+    <form id="chat-form" name="chat-form">
+      <textarea type="text" placeholder="Enter to send; Shift+Enter for new line" class="message-input" id="user-msg" form="chat-form"></textarea>
+    </form>
   </div>
-</div>
 
-<div id="signup-modal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <%= render "new_user.html", Map.put(assigns, :action, Routes.user_path(@conn, :create)) %>
+
+  <div id="signin-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <%= render "new_session.html", Map.put(assigns, :action, Routes.session_path(@conn, :create)) %>
+    </div>
   </div>
-</div>
 
-<form id="chat-form" name="chat-form">
-  <textarea type="text" placeholder="Enter to send; Shift+Enter for new line" class="message-input" id="user-msg" form="chat-form"></textarea>
-</form>
+  <div id="signup-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <%= render "new_user.html", Map.put(assigns, :action, Routes.user_path(@conn, :create)) %>
+    </div>
+  </div>

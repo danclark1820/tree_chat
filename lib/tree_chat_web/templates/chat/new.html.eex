@@ -12,6 +12,10 @@
     <%= error_tag f, :description%>
   </div>
   <div>
+    <%= hidden_input f, :created_by, [value: @conn.assigns[:user_id]] %>
+    <%= error_tag f, :user_id %>
+  </div>
+  <div>
     <%= submit "Submit" %>
   </div>
 <% end %>

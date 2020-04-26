@@ -14,7 +14,24 @@
   top: 0vw;
 }
 
+.chat-container {
+  overflow: hidden;
+}
+
+.chat-list {
+  /* float: left; */
+  display: table-cell;
+  margin-left: 9vw;
+  margin-right: 20vw;
+  height: 65vh;
+  width: 9vw;
+  border: solid #E0E0E0 3px;
+  overflow-wrap: break-word;
+  overflow-y: auto;
+}
+
 .chat-window {
+  display: table-cell;
   margin-left: 20vw;
   margin-right: 20vw;
   height: 65vh;
@@ -22,6 +39,8 @@
   border: solid #E0E0E0 3px;
   overflow-wrap: break-word;
   overflow-y: auto;
+  /* padding-bottom: 100%; */
+  /* margin-bottom: -100%; */
 }
 
 .message-input {

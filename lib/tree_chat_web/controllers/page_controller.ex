@@ -1,9 +1,10 @@
 defmodule TreeChatWeb.PageController do
   use TreeChatWeb, :controller
-  alias TreeChat.Chats
+  alias TreeChat.Chat
 
   def index(conn, _params) do
-    messages = Chats.list_messages()
-    render conn, "index.html", messages: messages
+    messages = Chat.list_messages()
+    chats = Chat.list_chats()
+    render conn, "index.html", messages: messages, chats: chats
   end
 end

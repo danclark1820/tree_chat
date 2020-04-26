@@ -1,7 +1,7 @@
 # Maybe remove the word water from all name spacing?
 defmodule TreeChatWeb.WaterCoolerChannel do
   use TreeChatWeb, :channel
-  alias TreeChat.Chats
+  alias TreeChat.Chat
 
   # instead of water_cooler:lobby, it will be water_cooler:chat_name,
   # chat name coming from the lobby. The lobby is the home screen and original chat,
@@ -25,7 +25,7 @@ defmodule TreeChatWeb.WaterCoolerChannel do
   # broadcast to everyone in the current topic (water_cooler:lobby).
   # payload will now include channel id.
   def handle_in("shout", payload, socket) do
-    Chats.create_message(payload)
+    Chat.create_message(payload)
     broadcast socket, "shout", payload
     {:noreply, socket}
   end

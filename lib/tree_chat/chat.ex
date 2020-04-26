@@ -5,16 +5,18 @@ defmodule TreeChat.Chat do
   """
   import Ecto.Query, warn: false
   import Ecto.Changeset
+
   use Ecto.Schema
-  alias TreeChat.Repo
-  alias TreeChat.Message
-  alias TreeChat.Accounts.User
-  alias TreeChat.Chat
+
+  alias TreeChat.{Chat, Message, Accounts.User, Repo}
+
+
 
   schema "chats" do
     field :topic, :string
     field :description, :string
-    belongs_to :user, User
+    field :created_by, :integer
+    belongs_to :user, User, define_field: false
 
     timestamps()
   end
@@ -22,8 +24,8 @@ defmodule TreeChat.Chat do
   @doc false
   def changeset(chat, attrs) do
     chat
-    |> cast(attrs, [:topic, :description, :user_id])
-    |> validate_required([:topic, :description, :user_id])
+    |> cast(attrs, [:topic, :description, :created_by])
+    |> validate_required([:topic, :description, :created_by])
     |> assoc_constraint(:user)
   end
 
@@ -121,6 +123,11 @@ defmodule TreeChat.Chat do
     Message.changeset(message, %{})
   end
 
+  def list_chats do
+    Repo.all(Chat)
+  end
+
+
 
   def get_chat!(id), do: Repo.get!(Chat, id)
 
@@ -185,7 +192,7 @@ defmodule TreeChat.Chat do
       %Ecto.Changeset{source: %Message{}}
 
   """
-  def change_chat(%Chat{} = message) do
-    Chat.changeset(message, %{})
+  def change_chat(%Chat{} = chat) do
+    Chat.changeset(chat, %{})
   end
 end
