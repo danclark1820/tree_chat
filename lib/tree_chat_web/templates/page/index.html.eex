@@ -10,7 +10,7 @@
     </div>
   <% end %>
 
-  <div class="chat-container">
+  <section class="chat-container">
     <div class="chat-list" id="chat-list">
       <%= for chat <- @chats do %>
         <div class="chat">
@@ -33,12 +33,11 @@
           </div>
         <% end %>
       <% end %>
-    </div>
-
-    <form id="chat-form" name="chat-form">
-      <textarea type="text" placeholder="Enter to send; Shift+Enter for new line" class="message-input" id="user-msg" form="chat-form"></textarea>
-    </form>
+    </section>
   </div>
+  <form id="chat-form" name="chat-form">
+    <textarea type="text" placeholder="Enter to send; Shift+Enter for new line" class="message-input" id="user-msg" form="chat-form"></textarea>
+  </form>
 
 
   <div id="signin-modal" class="modal">
