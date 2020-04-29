@@ -18,30 +18,17 @@
   width: 73vw;
   height: 60vh;
   padding-left: 8vw;
-  /* margin: auto; */
-  /* padding: 10px; */
 }
 
 .chat-list {
-  /* float: left; */
   width: 10vw;
   height: 60vh;
   margin-right: 1vw;
   float: left;
   border: solid #E0E0E0 3px;
-  /* display: table-cell;
-  margin-left: 9vw;
-  margin-right: 20vw;
-  height: 65vh;
-  width: 100%;
-
-  overflow-wrap: break-word;
-  overflow-y: auto;
-  white-space: nowrap; */
 }
 
 .chat-window {
-  /* margin-left: 15vw; */
   height: 60vh;
   border: solid #E0E0E0 3px;
   overflow-wrap: break-word;
@@ -51,10 +38,9 @@
 .message-input {
   margin-left: 19vw;
   margin-top: 4vh;
-  height: 12vh; /* important; */
-  width: 61vw;  /* !important; */
+  height: 12vh;
+  width: 61vw;
   overflow: auto;
-  /* overflow: scroll; */
   overflow-wrap: break-word;
   font-size: 16px;
   font-family: times;

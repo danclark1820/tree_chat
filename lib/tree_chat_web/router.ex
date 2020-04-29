@@ -20,7 +20,9 @@ defmodule TreeChatWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    resources "/chat", ChatController, only: [:create, :edit, :index, :new, :update, :show]
+    get "/lobby", PageController, :index
+    get "/:chat", PageController, :index
+    resources "/chat", ChatController, only: [:create, :index, :new, :show]
     resources "/user", UserController, only: [:create, :new]
 
     get "/sign-in", SessionController, :new
