@@ -25,6 +25,8 @@ defmodule TreeChatWeb.UserSocket do
         # We should really be getting the user from the socket and not the window
         # This should always be getting hit once a user has a token
         # We have a token and we are literally not using it.
+        # This is getting set on the socket and is only avialbe in the
+        # context of a channel.
         {:ok, assign(socket, :user, "PIZZA MESSAGE CHICKEN PARM HIT")}
       {:error, reason} ->
         {:ok, socket}

@@ -3,13 +3,22 @@ defmodule TreeChatWeb.WaterCoolerChannel do
   use TreeChatWeb, :channel
   alias TreeChat.Chat
 
-  # instead of water_cooler:lobby, it will be water_cooler:chat_name,
+  # instead of water_cooler:lobby, it will be water_cooler:chat_topic,
   # chat name coming from the lobby. The lobby is the home screen and original chat,
   # will be first entry in the in the chats table.
   # We will also want to create routing around chat name.
   def join("water_cooler:lobby", payload, socket) do
+    # We allow users to join a channel so they can see the conversation
+    # But cannot write in channel until authorized
+    {:ok, socket}
+  end
+
+  def join(_chat_topic, payload, socket) do
     #We allow users to join a channel so they can see the conversation
     #But cannot write in channel until authorized
+    # Here we can check if the chat topic exists
+    # If it does not do not return the socket to avoid
+    # socket being returned for every query
     {:ok, socket}
   end
 

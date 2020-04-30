@@ -54,6 +54,9 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 socket.connect()
 
 // Now that you are connected, you can join channels with a topic:
+// What is the call order of this, does this get called before or after the water_cooler socket is joined
+// Always Join the lobby channel
+// Join the channel you visit next?
 let channel = socket.channel("water_cooler:lobby", {})
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })

@@ -1,6 +1,7 @@
 let WaterCooler = {
   init(socket) {
-    let channel = socket.channel('water_cooler:lobby', {})
+    let channel_name = window.location.pathname.replace(/\//g, '')
+    let channel = socket.channel(`water_cooler:${channel_name}`, {})
     channel.join()
     this.listenForChats(channel)
   },
