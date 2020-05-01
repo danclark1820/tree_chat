@@ -2,24 +2,19 @@
 defmodule TreeChatWeb.WaterCoolerChannel do
   use TreeChatWeb, :channel
   alias TreeChat.Chat
+  alias TreeChat.Repo
 
-  # instead of water_cooler:lobby, it will be water_cooler:chat_topic,
-  # chat name coming from the lobby. The lobby is the home screen and original chat,
-  # will be first entry in the in the chats table.
-  # We will also want to create routing around chat name.
   def join("water_cooler:lobby", payload, socket) do
-    # We allow users to join a channel so they can see the conversation
-    # But cannot write in channel until authorized
     {:ok, socket}
   end
 
-  def join(_chat_topic, payload, socket) do
-    #We allow users to join a channel so they can see the conversation
-    #But cannot write in channel until authorized
-    # Here we can check if the chat topic exists
-    # If it does not do not return the socket to avoid
-    # socket being returned for every query
-    {:ok, socket}
+  def join("water_cooler:" <> chat_topic, payload, socket) do
+    case Repo.get_by(Chat, topic: chat_topic) do
+      _chat ->
+        {:ok, socket}
+      nil ->
+        {:error, "Chat Topic does not exist"}
+    end
   end
 
   # Channels can be used in a request/response fashion
@@ -27,15 +22,26 @@ defmodule TreeChatWeb.WaterCoolerChannel do
   # payload will include channel id:
   # Eventually we will need per channel authentication
   def handle_in("ping", payload, socket) do
+    #Does this go to the whole socket or just the topic?
     {:reply, {:ok, payload}, socket}
   end
 
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (water_cooler:lobby).
   # payload will now include channel id.
-  def handle_in("shout", payload, socket) do
-    Chat.create_message(payload)
-    broadcast socket, "shout", payload
-    {:noreply, socket}
+  def handle_in("shout", payload, socket = %Phoenix.Socket{topic: "water_cooler:" <> chat_topic}) do
+    #Does this go to the whole socket or just the topic?
+    # Currently, if the topic does not exist in the chats table, this will
+    # just return nil, which is ok, we will still create messages in the lobby
+    # but we can update it so it just not create messages without a channel_id
+    chat = Repo.get_by(Chat, topic: chat_topic)
+    Map.merge(payload, %{chat: chat})
+    case Chat.create_message(payload) do
+      {:ok, _message} ->
+        broadcast socket, "shout", payload
+        {:noreply, socket}
+      {:error, _error} ->
+        {:noreply, socket}
+    end
   end
 end
