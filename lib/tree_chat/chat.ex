@@ -42,6 +42,10 @@ defmodule TreeChat.Chat do
     Repo.all(Message)
   end
 
+  def list_messages(chat_topic) do
+    Repo.all(Message)
+  end
+
   @doc """
   Gets a single message.
 
