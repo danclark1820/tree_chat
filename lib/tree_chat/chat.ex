@@ -38,12 +38,22 @@ defmodule TreeChat.Chat do
       [%Message{}, ...]
 
   """
-  def list_messages do
-    Repo.all(Message)
+  def list_messages(nil) do
+    Repo.all(from m in Message, where: is_nil(m.chat_id))
+  end
+
+  def list_messages("lobby") do
+    Repo.all(from m in Message, where: is_nil(m.chat_id))
   end
 
   def list_messages(chat_topic) do
-    Repo.all(Message)
+    case Repo.get_by(Chat, topic: chat_topic) do
+      nil ->
+        {:error, "Chat Topic does not exist"}
+      chat ->
+        from(m in Message, where: m.chat_id == ^chat.id)
+        |> Repo.all
+    end
   end
 
   @doc """

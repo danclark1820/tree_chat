@@ -7,6 +7,7 @@ defmodule TreeChat.Message do
     field :body, :string
     field :name, :string
     belongs_to :user, User
+    belongs_to :chat, Chat
 
     timestamps()
   end
@@ -14,8 +15,9 @@ defmodule TreeChat.Message do
   @doc false
   def changeset(message, attrs) do
     message
-    |> cast(attrs, [:name, :user_id, :body])
+    |> cast(attrs, [:name, :user_id, :body, :chat_id])
     |> validate_required([:name, :user_id, :body])
     |> assoc_constraint(:user)
+    |> assoc_constraint(:chat)
   end
 end

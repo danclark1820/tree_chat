@@ -35,7 +35,7 @@ defmodule TreeChatWeb.WaterCoolerChannel do
     # just return nil, which is ok, we will still create messages in the lobby
     # but we can update it so it just not create messages without a channel_id
     chat = Repo.get_by(Chat, topic: chat_topic)
-    case Chat.create_message(Map.merge(payload, %{chat: chat})) do
+    case Chat.create_message(Map.put(payload, "chat_id", chat.id )) do
       {:ok, _message} ->
         broadcast socket, "shout", payload
         {:noreply, socket}

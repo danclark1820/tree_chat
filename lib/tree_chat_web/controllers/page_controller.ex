@@ -5,6 +5,11 @@ defmodule TreeChatWeb.PageController do
   def index(conn, _params) do
     messages = Chat.list_messages(conn.params["chat"])
     chats = Chat.list_chats()
-    render conn, "index.html", messages: messages, chats: chats
+    case messages do
+      {:error, _error} ->
+        render conn, "index.html", messages: [], chats: chats
+      messages ->
+        render conn, "index.html", messages: messages, chats: chats
+    end
   end
 end
