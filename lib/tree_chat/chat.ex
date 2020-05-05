@@ -46,6 +46,11 @@ defmodule TreeChat.Chat do
     Repo.all(from m in Message, where: is_nil(m.chat_id))
   end
 
+  def list_messages(chat = %Chat{}) do
+    from(m in Message, where: m.chat_id == ^chat.id)
+    |> Repo.all
+  end
+
   def list_messages(chat_topic) do
     case Repo.get_by(Chat, topic: chat_topic) do
       nil ->
@@ -144,6 +149,9 @@ defmodule TreeChat.Chat do
 
 
   def get_chat!(id), do: Repo.get!(Chat, id)
+
+  def get_chat_by_topic(nil), do: nil
+  def get_chat_by_topic(topic), do: Repo.get_by(Chat, topic: topic)
 
   @doc """
   Creates a message.

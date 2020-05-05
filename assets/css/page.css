@@ -14,10 +14,19 @@
   top: 0vw;
 }
 
+.new-chat-link{
+  padding-left: 8vw;
+}
+
+.chat-description {
+  padding-left: 6vw;
+}
+
 .chat-container {
   width: 73vw;
   height: 60vh;
   padding-left: 8vw;
+  padding-top: 1vh;
 }
 
 .chat-list {
