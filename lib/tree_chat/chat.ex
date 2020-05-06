@@ -26,6 +26,7 @@ defmodule TreeChat.Chat do
     chat
     |> cast(attrs, [:topic, :description, :created_by])
     |> validate_required([:topic, :description, :created_by])
+    |> validate_format(:topic, ~r/^[a-zA-Z0-9_]+$/)
     |> assoc_constraint(:user)
   end
 
