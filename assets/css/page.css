@@ -45,7 +45,7 @@
 }
 
 .message-input {
-  margin-left: 19vw;
+  margin-left: 19.5vw;
   margin-top: 4vh;
   height: 12vh;
   width: 61vw;
@@ -53,8 +53,8 @@
   overflow-wrap: break-word;
   font-size: 16px;
   font-family: times;
+  border: solid #E0E0E0 3px
 }
-
 
 .current-user-message-name {
   font-weight: bold;

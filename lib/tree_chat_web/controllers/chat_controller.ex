@@ -16,9 +16,20 @@ defmodule TreeChatWeb.ChatController do
         |> redirect(to: page_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
+        errors_map = Ecto.Changeset.traverse_errors(changeset, fn {message, opts} ->
+          Enum.reduce(opts, message, fn {key, value}, acc ->
+            String.replace(acc, "%{#{key}}", to_string(value))
+          end)
+        end)
+
+        formatted_errors = errors_map
+        |> Enum.map(fn {key, errors} ->
+          "#{key}: #{Enum.join(errors, ", ")}"
+        end)
+        |> Enum.join("\n")
+
         conn
-        # Display changeset errors here
-        |> put_flash(:error, "There was an error creating your chat")
+        |> put_flash(:error, formatted_errors)
         |> render("new.html", changeset: changeset)
     end
   end

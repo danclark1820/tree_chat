@@ -26,7 +26,7 @@ defmodule TreeChat.Chat do
     chat
     |> cast(attrs, [:topic, :description, :created_by])
     |> validate_required([:topic, :description, :created_by])
-    |> validate_format(:topic, ~r/^[a-zA-Z0-9_]+$/)
+    |> validate_format(:topic, ~r/^[a-zA-Z0-9_]+$/, message: "topic: Formatting error. Only letters, numbers, and underscores are supported, no spaces or special characters.")
     |> assoc_constraint(:user)
   end
 
