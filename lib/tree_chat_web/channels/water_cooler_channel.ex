@@ -10,10 +10,10 @@ defmodule TreeChatWeb.WaterCoolerChannel do
 
   def join("water_cooler:" <> chat_topic, payload, socket) do
     case Repo.get_by(Chat, topic: chat_topic) do
-      _chat ->
-        {:ok, socket}
       nil ->
         {:error, "Chat Topic does not exist"}
+      _chat ->
+        {:ok, socket}
     end
   end
 
@@ -29,13 +29,30 @@ defmodule TreeChatWeb.WaterCoolerChannel do
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (water_cooler:lobby).
   # payload will now include channel id.
+  def handle_in("shout", payload, socket = %Phoenix.Socket{topic: "water_cooler:"}) do
+    require IEx; IEx.pry
+    case Chat.create_message(payload) do
+      {:ok, _message} ->
+        broadcast socket, "shout", payload
+        {:noreply, socket}
+      {:error, _error} ->
+        {:noreply, socket}
+    end
+  end
+
   def handle_in("shout", payload, socket = %Phoenix.Socket{topic: "water_cooler:" <> chat_topic}) do
     #Does this go to the whole socket or just the topic?
     # Currently, if the topic does not exist in the chats table, this will
     # just return nil, which is ok, we will still create messages in the lobby
     # but we can update it so it just not create messages without a channel_id
-    chat = Repo.get_by(Chat, topic: chat_topic)
-    case Chat.create_message(Map.put(payload, "chat_id", chat.id )) do
+    case chat = Repo.get_by(Chat, topic: chat_topic) do
+      %Chat{} ->
+        Map.put(payload, "chat_id", chat.id)
+      nil ->
+        payload
+    end
+
+    case Chat.create_message(payload) do
       {:ok, _message} ->
         broadcast socket, "shout", payload
         {:noreply, socket}
