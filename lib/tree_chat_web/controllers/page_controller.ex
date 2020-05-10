@@ -8,9 +8,10 @@ defmodule TreeChatWeb.PageController do
     # redirect to lobby if nothing is passed in
     cond do
       conn.params["chat"] == nil ->
+        # redirect(conn, to: page_path(conn, :index))
         render conn, "index.html", messages: Chat.list_messages("lobby"), chats: chats, current_chat: nil
-      String.downcase(conn.params["chat"]) == "lobby" ->
-        render conn, "index.html", messages: Chat.list_messages("lobby"), chats: chats, current_chat: nil
+      # String.downcase(conn.params["chat"]) == "lobby" ->
+      #   render conn, "index.html", messages: Chat.list_messages("lobby"), chats: chats, current_chat: nil
       true -> {:ok, "do nothing"}
     end
 
