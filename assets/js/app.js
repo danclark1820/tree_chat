@@ -13,7 +13,6 @@ import "phoenix_html"
 import socket from "./socket"
 import WaterCooler from "./water_cooler"
 import page from "./page"
-
 //Does this get called everytime we change paths? or only when we first come to cooler.chat
 WaterCooler.init(socket)
 
