@@ -29,12 +29,12 @@
         <%= if message.user_id === assigns[:user_id] do %>
           <div class="current-user-message">
             <span class="current-user-message-name"><%= message.name %>:</span>
-            <span class="current-user-message-body"><%= message.body %></span>
+            <%= Earmark.as_html!(message.body) %>
           </div>
         <% else %>
           <div class="message">
             <span class="message-name"><%= message.name %>:</span>
-            <span class="message-body"><%= message.body %></span>
+            <%= Earmark.as_html!(message.body) %>
           </div>
         <% end %>
       <% end %>
