@@ -34,7 +34,7 @@
         <% else %>
           <div class="message">
             <span class="message-name"><%= message.name %>:</span>
-            <%= Earmark.as_html!(message.body) %>
+            <%= raw Earmark.as_html!(message.body) %>
           </div>
         <% end %>
       <% end %>
