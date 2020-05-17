@@ -12,7 +12,7 @@
 
   <%= link "New Chat", to: chat_path(@conn, :new), method: :get, class: "new-chat-link" %>
   <%= if @current_chat do %>
-    <span class="chat-description"><%= @current_chat.description %></span>
+    <%= raw "<span class='chat-description' id='#{@current_chat.id}''>#{@current_chat.description}</span>"%>
   <% end %>
 
   <section class="chat-container">

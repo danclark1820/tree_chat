@@ -38,13 +38,12 @@ defmodule TreeChatWeb.WaterCoolerChannel do
     # Currently, if the topic does not exist in the chats table, this will
     # just return nil, which is ok, we will still create messages in the lobby
     # but we can update it so it just not create messages without a channel_id
-
-    case chat = Repo.get_by(Chat, topic: chat_topic) do
-      %Chat{} ->
-        Map.put(payload, "chat_id", chat.id)
-      nil ->
-        payload
-    end
+    # case chat = Repo.get_by(Chat, topic: chat_topic) do
+    #   %Chat{} ->
+    #     hello_payload = Map.put(payload, "chat_id", chat.id)
+    #   nil ->
+    #     payload
+    # end
 
     case Chat.create_message(payload) do
       {:ok, _message} ->
