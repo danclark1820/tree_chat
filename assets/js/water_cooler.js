@@ -40,15 +40,15 @@ let WaterCooler = {
     channel.on('shout', payload => {
       let msgBlock = document.createElement('div')
       if (payload.name == window.userName) {
-        msgBlock.insertAdjacentHTML('beforeend', `<div class='current-user-message'>
-                                                    <span class='current-user-message-name'>${payload.name}:</span>
-                                                    <span class='current-user-message-body'>${payload.body}</span>
+        msgBlock.insertAdjacentHTML('beforeend', `<div class='current-user-message message'>
+                                                    <span class='current-user-message-name message-name'>${payload.name}:</span>
+                                                    ${payload.body}
                                                   </div>`
         )
       } else {
         msgBlock.insertAdjacentHTML('beforeend', `<div class='message'>
                                                     <span class='message-name'>${payload.name}:</span>
-                                                    <span class='message-body'>${payload.body}</span>
+                                                    ${payload.body}
                                                   </div>`
         )
       }

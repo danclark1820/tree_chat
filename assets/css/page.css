@@ -56,10 +56,6 @@
   border: solid #E0E0E0 3px
 }
 
-.current-user-message-name {
-  font-weight: bold;
-}
-
 .current-user-message-body {
 }
 
@@ -67,8 +63,13 @@
   font-weight: bold;
 }
 
-.message-body {
+.message-name + p {
+  display: inline;
 }
+
+/* .message-body {
+  display: inline-block;
+} */
 
 /* The Modal (background) */
 .modal {
