@@ -26,17 +26,10 @@
 
     <div class="chat-window" id="chat-window">
       <%= for message <- @messages do %>
-        <%= if message.user_id === assigns[:user_id] do %>
-          <div class="current-user-message message">
-            <span class="current-user-message-name message-name"><%= message.name %>:</span>
-            <%= Earmark.as_html!(message.body) %>
-          </div>
-        <% else %>
-          <div class="message">
-            <span class="message-name"><%= message.name %>:</span>
-            <%= raw Earmark.as_html!(message.body) %>
-          </div>
-        <% end %>
+        <%= raw "<div class='message' id='message-id-#{message.id}'>"%>
+          <span class="message-name"><%= message.name %>:</span>
+          <%= raw Earmark.as_html!(message.body) %>
+        </div>
       <% end %>
     </div>
   </section>

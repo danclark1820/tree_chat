@@ -3,15 +3,23 @@ var signInModal = document.getElementById("signin-modal");
 var signUpModal = document.getElementById("signup-modal");
 var signUpLinks = document.getElementsByClassName("signup-link");
 var signInLinks = document.getElementsByClassName("signin-link");
-
-// Get the button that opens the modal
+var newChatLink = document.getElementsByClassName("new-chat-link")[0];
 var chatForm = document.getElementById("chat-form");
-
-// Get the <closeSpan> element that closes the modal
+var chatWindow = document.getElementById("chat-window")
 var closeSpans = document.getElementsByClassName("close");
+var searchParams = new URLSearchParams(window.location.search)
 
-// When the user clicks on the button, open the modal
+if (searchParams.has("message_id")) {
+  messageID = searchParams.get("message_id")
+  messageElem = document.getElementById(`message-id-${messageID}`)
+  messageElem.scrollIntoView();
+}
+
 if (window.userToken == null) {
+  // newChatLink.onclick = function() {
+  //   signInModal.style.display = "block"
+  // }
+
   chatForm.onclick = function() {
     signInModal.style.display = "block";
   }

@@ -47,8 +47,12 @@ defmodule TreeChatWeb.WaterCoolerChannel do
     # end
 
     case Chat.create_message(payload) do
-      {:ok, _message} ->
-        broadcast socket, "shout", Map.replace!(payload, "body", Earmark.as_html!(payload["body"]))
+      {:ok, message} ->
+        new_payload = payload
+        |> Map.replace!("body", Earmark.as_html!(payload["body"]))
+        |> Map.put("message_id", message.id)
+
+        broadcast socket, "shout", new_payload
         {:noreply, socket}
       {:error, _error} ->
         {:noreply, socket}

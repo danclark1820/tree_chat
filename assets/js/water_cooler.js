@@ -11,10 +11,14 @@ let WaterCooler = {
     let userId = window.userId
     let chatWindow = document.getElementById('chat-window')
     let chatDescription = document.getElementsByClassName('chat-description')[0]
+    let searchParams = new URLSearchParams(window.location.search)
     var scrolled = false;
 
-    chatWindow.addEventListener("scroll", function(){ scrolled=true })
-    chatWindow.scrollTop = chatWindow.scrollHeight;
+    function setScrolledTrue() {
+      scrolled=true
+    }
+
+    chatWindow.addEventListener("scroll", setScrolledTrue())
 
     function updateScroll(){
       if (!scrolled) {
@@ -39,22 +43,14 @@ let WaterCooler = {
 
     channel.on('shout', payload => {
       let msgBlock = document.createElement('div')
-      if (payload.name == window.userName) {
-        msgBlock.insertAdjacentHTML('beforeend', `<div class='current-user-message message'>
-                                                    <span class='current-user-message-name message-name'>${payload.name}:</span>
-                                                    ${payload.body}
-                                                  </div>`
-        )
-      } else {
-        msgBlock.insertAdjacentHTML('beforeend', `<div class='message'>
-                                                    <span class='message-name'>${payload.name}:</span>
-                                                    ${payload.body}
-                                                  </div>`
-        )
-      }
+      msgBlock.insertAdjacentHTML('beforeend', `<div class='message' id='message-${payload.message_id}'>
+                                                  <span class='message-name'>${payload.name}:</span>
+                                                  ${payload.body}
+                                                </div>`
+      )
       chatWindow.appendChild(msgBlock)
-      updateScroll();
       chatWindow.scrollTop = chatWindow.scrollHeight;
+      updateScroll();
     })
   }
 }
