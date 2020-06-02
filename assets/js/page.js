@@ -3,7 +3,8 @@ var signInModal = document.getElementById("signin-modal");
 var signUpModal = document.getElementById("signup-modal");
 var signUpLinks = document.getElementsByClassName("signup-link");
 var signInLinks = document.getElementsByClassName("signin-link");
-var newChatLink = document.getElementsByClassName("new-chat-link")[0];
+var newChatLink = document.getElementById("new-chat-link");
+var newChatModal = document.getElementById("new-chat-modal")
 var chatForm = document.getElementById("chat-form");
 var chatWindow = document.getElementById("chat-window")
 var closeSpans = document.getElementsByClassName("close");
@@ -16,13 +17,13 @@ if (searchParams.has("message_id")) {
 }
 
 if (window.userToken == null) {
-  // newChatLink.onclick = function() {
-  //   signInModal.style.display = "block"
-  // }
-
   chatForm.onclick = function() {
     signInModal.style.display = "block";
   }
+}
+
+newChatLink.onclick = function() {
+  newChatModal.style.display = "block"
 }
 
 for (var i = 0; i < signInLinks.length; i++) {
@@ -44,6 +45,7 @@ for (var i = 0; i < closeSpans.length; i++) {
   closeSpans[i].onclick = function() {
     signUpModal.style.display = "none";
     signInModal.style.display = "none";
+    newChatModal.style.display = "none";
   }
 }
 
@@ -55,5 +57,9 @@ window.onclick = function(event) {
 
   if (event.target == signInModal) {
     signInModal.style.display = "none";
+  }
+
+  if (event.target == newChatModal) {
+    newChatModal.style.display = "none";
   }
 }

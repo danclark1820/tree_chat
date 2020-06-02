@@ -1,18 +1,17 @@
-<h1>Sign Up</h1>
+<h2>Cooler.Chat<h2>
+<h3>Sign Up</h3>
 
 <%= form_for @conn, user_path(@conn, :create), [as: :user], fn f -> %>
   <div>
-    <%= label f, :username %>
-    <%= text_input f, :username %>
+    <%= text_input f, :username, placeholder: "Username" %>
     <%= error_tag f, :username %>
   </div>
   <div>
-    <%= label f, :password %>
-    <%= password_input f, :encrypted_password %>
+    <%= password_input f, :encrypted_password, placeholder: "Password" %>
     <%= error_tag f, :encrypted_password %>
   </div>
   <div>
     <%= submit "Submit" %>
   </div>
-  Already a member? <span class="signin-link">Sign Up</span>
+  Already a member? <span class="signin-link">Sign In</span>
 <% end %>

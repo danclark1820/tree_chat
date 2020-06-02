@@ -1,4 +1,4 @@
-<h2 class="chat-title">Cooler.Chat<%= "/#{@conn.path_params["chat"]}" %></h2>
+<h2 class="chat-title"><%= "#{@conn.path_params["chat"]}" %></h2>
   <%= if signed_into_app?(@conn) do %>
     <div id="signout-link">
       <%= link "Sign out", to: session_path(@conn, :delete), method: :delete %>
@@ -10,7 +10,7 @@
     </div>
   <% end %>
 
-  <%= link "New Chat", to: chat_path(@conn, :new), method: :get, class: "new-chat-link" %>
+  <span id="new-chat-link">New Chat</span>
   <%= if @current_chat do %>
     <%= raw "<span class='chat-description' id='#{@current_chat.id}''>#{@current_chat.description}</span>"%>
   <% end %>
@@ -37,6 +37,13 @@
   <form id="chat-form" name="chat-form">
     <textarea type="text" placeholder="Enter to send; Shift+Enter for new line" class="message-input" id="user-msg" form="chat-form"></textarea>
   </form>
+
+  <div id="new-chat-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <%= render "new_chat.html", Map.put(assigns, :action, Routes.chat_path(@conn, :create)) %>
+    </div>
+  </div>
 
   <div id="signin-modal" class="modal">
     <div class="modal-content">

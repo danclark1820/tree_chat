@@ -1,0 +1,19 @@
+<h3>Cooler.Chat/NewChatTopic</h3>
+
+<%= form_for :chat, chat_path(@conn, :create), [as: :chat], fn f -> %>
+  <div>
+    <%= text_input f, :topic, placeholder: "NewChatTopic" %>
+    <%= error_tag f, :topic %>
+  </div>
+  <div>
+    <%= text_input f, :description, placeholder: "Description of chat topic." %>
+    <%= error_tag f, :description%>
+  </div>
+  <div>
+    <%= hidden_input f, :created_by, [value: @conn.assigns[:user_id]] %>
+    <%= error_tag f, :user_id %>
+  </div>
+  <div>
+    <%= submit "Submit" %>
+  </div>
+<% end %>
