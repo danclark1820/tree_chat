@@ -46,7 +46,9 @@ defmodule TreeChat.MixProject do
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 1.0"},
       {:distillery, "~> 2.0"},
-      {:earmark, "~> 1.4"}
+      {:earmark, "~> 1.4"},
+      {:floki, "~> 0.26.0"},
+      {:httpoison, "~> 1.6"}
     ]
   end
 

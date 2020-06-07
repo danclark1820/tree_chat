@@ -28,7 +28,7 @@
       <%= for message <- @messages do %>
         <%= raw "<div class='message' id='message-id-#{message.id}'>"%>
           <span class="message-name"><%= message.name %>:</span>
-          <%= raw Earmark.as_html!(message.body) %>
+          <%= decorate_message(message.body) %>
         </div>
       <% end %>
     </div>
