@@ -7,19 +7,19 @@ defmodule TreeChatWeb.PageView do
   import Poison.Parser
 
   def decorate_message(body) do
-    links = body
-    |> Earmark.as_ast
-    |> elem(1)
-    |> Floki.find("a")
+    # links = body
+    # |> Earmark.as_ast
+    # |> elem(1)
+    # |> Floki.find("a")
 
     # [ {"a", [{"href", "https://www.youtube.com/watch?v=4VcTigzWfeQ"}],["https://www.youtube.com/watch?v=4VcTigzWfeQ"]} ]
-    link_preview = case links do
-      [] -> ""
-      ast_links -> hd(ast_links)
-        |> url_from_ast_link
-        |> requestOembed
-        |> compose_preview
-    end
+    # link_preview = case links do
+    #   [] -> ""
+    #   ast_links -> hd(ast_links)
+    #     |> url_from_ast_link
+    #     |> requestOembed
+    #     |> compose_preview
+    # end
 
     body
     |> Earmark.as_html!
@@ -38,28 +38,29 @@ defmodule TreeChatWeb.PageView do
   end
 
   def requestOembed(full_url) do
+    IO.puts(full_url)
+    IO.puts(base_url(full_url))
     case HTTPoison.get("#{base_url(full_url)}/oembed?url=#{full_url}&format=json") do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        require IEx; IEx.pry
         Poison.Parser.parse! body
       {:ok, %HTTPoison.Response{status_code: 404}} ->
-        "Not found :("
+        {:error, "Not found :("}
+      {:ok, %HTTPoison.Response{}} ->
+        {:error, "Something other then a 404 or 200"}
       {:error, %HTTPoison.Error{reason: reason}} ->
-        ""
+        {:error, "not found"}
     end
   end
 
   def compose_preview(%{title: some_title}) do
-    require IEx; IEx.pry
     some_title
-    #You left off here, not sure if request oembed works yet6
   end
 
-  def compose_preview(error) do
-    error
+  def compose_preview({:error, error}) do
+    nil
   end
 
   def base_url(url) do
-    Regex.replace(~r/(?:\/\/)|(\/.*){1}/, url, "")
+    Regex.replace(~r/(http(s)?:\/\/)|(\/.*){1}/, url, "")
   end
 end
