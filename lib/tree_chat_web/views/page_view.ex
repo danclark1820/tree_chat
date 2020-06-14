@@ -7,25 +7,23 @@ defmodule TreeChatWeb.PageView do
   import Poison.Parser
 
   def decorate_message(body) do
-    # links = body
-    # |> Earmark.as_ast
-    # |> elem(1)
-    # |> Floki.find("a")
-
+    links = body
+    |> Earmark.as_ast
+    |> elem(1)
+    |> Floki.find("a")
     # [ {"a", [{"href", "https://www.youtube.com/watch?v=4VcTigzWfeQ"}],["https://www.youtube.com/watch?v=4VcTigzWfeQ"]} ]
-    # link_preview = case links do
-    #   [] -> ""
-    #   ast_links -> hd(ast_links)
-    #     |> url_from_ast_link
-    #     |> requestOembed
-    #     |> compose_preview
-    # end
+    link_preview = case links do
+      [] -> ""
+      ast_links -> hd(ast_links)
+        |> url_from_ast_link
+        |> requestOembed
+        |> compose_preview
+    end
 
     body
     |> Earmark.as_html!
+    |> append_preview(link_preview)
     |> raw
-    # |> link_preview
-    # |> append_link_preview(links)
   end
 
   def url_from_ast_link(ast) do
@@ -52,12 +50,20 @@ defmodule TreeChatWeb.PageView do
     end
   end
 
-  def compose_preview(%{title: some_title}) do
-    some_title
+  def compose_preview(%{"title" => title, "html" => html}) do
+    html
   end
 
   def compose_preview({:error, error}) do
-    nil
+    ""
+  end
+
+  def compose_preview(response = %{}) do
+    ""
+  end
+
+  def append_preview(body, preview) do
+    body <> preview
   end
 
   def base_url(url) do
