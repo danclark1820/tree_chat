@@ -36,14 +36,12 @@ defmodule TreeChatWeb.PageView do
   end
 
   def requestOembed(full_url) do
-    IO.puts(full_url)
-    IO.puts(base_url(full_url))
     case HTTPoison.get("#{base_url(full_url)}/oembed?url=#{full_url}&format=json") do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         Poison.Parser.parse! body
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         {:error, "Not found :("}
-      {:ok, %HTTPoison.Response{}} ->
+      {:ok, response = %HTTPoison.Response{}} ->
         {:error, "Something other then a 404 or 200"}
       {:error, %HTTPoison.Error{reason: reason}} ->
         {:error, "not found"}
@@ -67,6 +65,9 @@ defmodule TreeChatWeb.PageView do
   end
 
   def base_url(url) do
-    Regex.replace(~r/(http(s)?:\/\/)|(\/.*){1}/, url, "")
+    case Regex.replace(~r/(http(s)?:\/\/)|(\/.*){1}/, url, "") do
+      "" -> TreeChatWeb.Endpoint.url
+      external_url -> external_url
+    end
   end
 end
