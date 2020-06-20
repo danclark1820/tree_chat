@@ -1,7 +1,7 @@
 # Maybe remove the word water from all name spacing?
 defmodule TreeChatWeb.WaterCoolerChannel do
   use TreeChatWeb, :channel
-  import Earmark
+  alias TreeChatWeb.PageView
   alias TreeChat.Chat
   alias TreeChat.Repo
 
@@ -49,7 +49,7 @@ defmodule TreeChatWeb.WaterCoolerChannel do
     case Chat.create_message(payload) do
       {:ok, message} ->
         new_payload = payload
-        |> Map.replace!("body", Earmark.as_html!(payload["body"]))
+        |> Map.replace!("body", elem(PageView.decorate_message(payload["body"]), 1))
         |> Map.put("message_id", message.id)
 
         broadcast socket, "shout", new_payload
