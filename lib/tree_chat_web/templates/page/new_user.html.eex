@@ -3,6 +3,10 @@
 
 <%= form_for @conn, user_path(@conn, :create), [as: :user], fn f -> %>
   <div>
+    <%= text_input f, :email, placeholder: "Email" %>
+    <%= error_tag f, :email %>
+  </div>
+  <div>
     <%= text_input f, :username, placeholder: "Username" %>
     <%= error_tag f, :username %>
   </div>

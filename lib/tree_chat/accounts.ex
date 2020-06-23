@@ -26,6 +26,10 @@ defmodule TreeChat.Accounts do
     |> Repo.insert()
   end
 
+  def update_password(%User{} = user) do
+    require IEx; IEx.pry
+  end
+
   def update_user(%User{} = user, attrs) do
     user
     |> User.changeset(attrs)

@@ -58,3 +58,10 @@
       <%= render "new_user.html", Map.put(assigns, :action, Routes.user_path(@conn, :create)) %>
     </div>
   </div>
+
+  <div id="edit-password-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <%= render "edit_password.html", Map.put(assigns, :action, Routes.user_path(@conn, :update)) %>
+    </div>
+  </div>
