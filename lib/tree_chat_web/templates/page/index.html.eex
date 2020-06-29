@@ -59,9 +59,11 @@
     </div>
   </div>
 
-  <div id="edit-password-modal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <%= render "edit_password.html", Map.put(assigns, :action, Routes.user_path(@conn, :edit, @conn.assigns[:user_id])) %>
+  <%= if signed_into_app?(@conn) do %>
+    <div id="edit-password-modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <%= render "edit_password.html", Map.put(assigns, :action, Routes.user_path(@conn, :update, String.to_integer(@conn.assigns[:user_id]))) %>
+      </div>
     </div>
-  </div>
+  <% end %>
