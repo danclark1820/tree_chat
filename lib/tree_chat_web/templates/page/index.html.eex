@@ -1,8 +1,11 @@
 <h2 class="chat-title"><%= "#{@conn.path_params["chat"]}" %></h2>
   <%= if signed_into_app?(@conn) do %>
-    <div id="signout-link">
+    <span id="edit-account-link">
+      Account
+    </span> |
+    <span id="signout-link">
       <%= link "Sign out", to: session_path(@conn, :delete), method: :delete %>
-    </div>
+    </span>
   <% else %>
     <div id="signin-signup-links">
       <span class="signin-link">Sign In</span> |
@@ -59,11 +62,11 @@
     </div>
   </div>
 
-  <%= if signed_into_app?(@conn) do %>
-    <div id="edit-password-modal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <%= render "edit_password.html", Map.put(assigns, :action, Routes.user_path(@conn, :update, String.to_integer(@conn.assigns[:user_id]))) %>
-      </div>
+  <div id="edit-account-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <%= if signed_into_app?(@conn) do %>
+        <%= render "edit_account.html", Map.put(assigns, :action, Routes.user_path(@conn, :edit, String.to_integer(@conn.assigns[:user_id]))) %>
+      <% end %>
     </div>
-  <% end %>
+  </div>

@@ -1,5 +1,6 @@
-<h3>Change Password</h3>
+<h3>Account</h3>
 <%= form_for @conn, user_path(@conn, :update, String.to_integer(@conn.assigns[:user_id])), [as: :user], fn f -> %>
+  <%= text_input f, :email, placeholder: "email" %><br>
   <%= text_input f, :username, placeholder: "username" %><br>
   <%= password_input f, :password, placeholder: "password" %><br>
   <%= password_input f, :new_password, placeholder: "new_password" %><br>
