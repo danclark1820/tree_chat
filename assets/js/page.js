@@ -28,6 +28,12 @@ newChatLink.onclick = function() {
   newChatModal.style.display = "block"
 }
 
+if (editAccountLink) {
+  editAccountLink.onclick = function() {
+    editAccountModal.style.display = "block"
+  }
+}
+
 for (var i = 0; i < signInLinks.length; i++) {
   signInLinks[i].onclick = function() {
     signUpModal.style.display = "none";
@@ -48,6 +54,7 @@ for (var i = 0; i < closeSpans.length; i++) {
     signUpModal.style.display = "none";
     signInModal.style.display = "none";
     newChatModal.style.display = "none";
+    editAccountModal.style.display = "none";
   }
 }
 
@@ -63,5 +70,9 @@ window.onclick = function(event) {
 
   if (event.target == newChatModal) {
     newChatModal.style.display = "none";
+  }
+
+  if (event.target == editAccountModal) {
+    editAccountModal.style.display = "none";
   }
 }
