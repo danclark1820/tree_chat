@@ -1,13 +1,13 @@
 <h2 class="chat-title"><%= "#{@conn.path_params["chat"]}" %></h2>
   <%= if signed_into_app?(@conn) do %>
-    <span id="edit-account-link">
-      Account
-    </span> |
-    <span id="signout-link">
-      <%= link "Sign out", to: session_path(@conn, :delete), method: :delete %>
-    </span>
+    <div id="profile-links">
+      <span id="edit-account-link"> Account </span> |
+      <span id="signout-link">
+        <%= link "Sign out", to: session_path(@conn, :delete), method: :delete %>
+      </span>
+    </div>
   <% else %>
-    <div id="signin-signup-links">
+    <div id="profile-links">
       <span class="signin-link">Sign In</span> |
       <span class="signup-link">Sign Up</span>
     </div>

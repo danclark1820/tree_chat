@@ -31,19 +31,25 @@ defmodule TreeChatWeb.UserController do
   end
 
   def update(conn, %{"user" => user_params}) do
-    case Accounts.update_password(user_params) do
+    user = Accounts.get_user!(conn.assigns[:user_id])
+    case Comeonin.Bcrypt.check_pass(user, user_params["current_password"]) do
       {:ok, user} ->
-        conn
-        |> put_session(:current_user_id, user.id)
-        |> put_session(:current_user_name, user.username)
-        |> put_flash(:info, "Password updated successfully.")
-        |> redirect(to: page_path(conn, :index))
+        case  Accounts.update_user(user, Map.delete(user_params, "current_password")) do
+          {:ok, user} ->
+            conn
+            |> put_flash(:info, "Account updated successfully.")
+            |> redirect(to: page_path(conn, :index))
+          {:error, %Ecto.Changeset{} = changeset} ->
+            conn
+            |> put_flash(:error, "There was an error updating your account")
+            |> render("edit_password.html", changeset: changeset)
+        end
 
-      {:error, %Ecto.Changeset{} = changeset} ->
+      {:error, "invalid password"} ->
         conn
         # Display changeset errors here
-        |> put_flash(:error, "Error updating password")
-        |> render("edit_password.html", changeset: changeset)
+        |> put_flash(:error, "There was an error updating your account, password does not match")
+        |> render("edit_account.html", %{"user" => user_params})
     end
   end
 

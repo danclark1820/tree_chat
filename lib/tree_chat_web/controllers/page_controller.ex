@@ -1,6 +1,6 @@
 defmodule TreeChatWeb.PageController do
   use TreeChatWeb, :controller
-  alias TreeChat.{Chat, Repo}
+  alias TreeChat.{Chat, Repo, Accounts}
 
   def index(conn, _params) do
     chats = Chat.list_chats()

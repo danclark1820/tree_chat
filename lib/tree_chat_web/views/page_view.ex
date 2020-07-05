@@ -1,10 +1,6 @@
 defmodule TreeChatWeb.PageView do
   use TreeChatWeb, :view
-  import Earmark
-  import Floki
-  import HTTPoison
-  import Phoenix.HTML
-  import Poison.Parser
+  alias TreeChat.Accounts
 
   def decorate_message(body) do
     links = body
