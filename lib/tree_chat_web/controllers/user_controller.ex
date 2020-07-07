@@ -52,10 +52,4 @@ defmodule TreeChatWeb.UserController do
         |> render("edit_account.html", %{"user" => user_params})
     end
   end
-
-  def forgot_password(_conn, %{}) do
-  end
-
-  def forgot_username(_conn, %{}) do
-  end
 end
