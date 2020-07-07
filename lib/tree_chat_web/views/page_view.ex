@@ -37,22 +37,22 @@ defmodule TreeChatWeb.PageView do
         Poison.Parser.parse! body
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         {:error, "Not found :("}
-      {:ok, response = %HTTPoison.Response{}} ->
+      {:ok, _response = %HTTPoison.Response{}} ->
         {:error, "Something other then a 404 or 200"}
-      {:error, %HTTPoison.Error{reason: reason}} ->
+      {:error, %HTTPoison.Error{reason: _reason}} ->
         {:error, "not found"}
     end
   end
 
-  def compose_preview(%{"title" => title, "html" => html}) do
+  def compose_preview(%{"title" => _title, "html" => html}) do
     html
   end
 
-  def compose_preview({:error, error}) do
+  def compose_preview({:error, _error}) do
     ""
   end
 
-  def compose_preview(response = %{}) do
+  def compose_preview(_response = %{}) do
     ""
   end
 

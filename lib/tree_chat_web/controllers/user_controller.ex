@@ -27,7 +27,7 @@ defmodule TreeChatWeb.UserController do
     end
   end
 
-  def edit(conn, _params) do
+  def edit(_conn, _params) do
   end
 
   def update(conn, %{"user" => user_params}) do
@@ -35,7 +35,7 @@ defmodule TreeChatWeb.UserController do
     case Comeonin.Bcrypt.check_pass(user, user_params["current_password"]) do
       {:ok, user} ->
         case  Accounts.update_user(user, Map.delete(user_params, "current_password")) do
-          {:ok, user} ->
+          {:ok, _user} ->
             conn
             |> put_flash(:info, "Account updated successfully.")
             |> redirect(to: page_path(conn, :index))
@@ -53,9 +53,9 @@ defmodule TreeChatWeb.UserController do
     end
   end
 
-  def forgot_password(conn, %{}) do
+  def forgot_password(_conn, %{}) do
   end
 
-  def forgot_username(conn, %{}) do
+  def forgot_username(_conn, %{}) do
   end
 end

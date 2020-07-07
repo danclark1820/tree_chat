@@ -10,7 +10,7 @@ defmodule TreeChatWeb.ChatController do
 
   def create(conn, %{"chat" => chat_params}) do
     case Chat.create_chat(chat_params) do
-      {:ok, chat} ->
+      {:ok, _chat} ->
         conn
         |> put_flash(:info, "Chat created successfully.")
         |> redirect(to: page_path(conn, :index))

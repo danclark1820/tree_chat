@@ -5,15 +5,15 @@ defmodule TreeChatWeb.WaterCoolerChannel do
   alias TreeChat.Chat
   alias TreeChat.Repo
 
-  def join("water_cooler:", payload, socket) do
+  def join("water_cooler:", _payload, socket) do
     {:ok, socket}
   end
 
-  def join("water_cooler:lobby", payload, socket) do
+  def join("water_cooler:lobby", _payload, socket) do
     {:ok, socket}
   end
 
-  def join("water_cooler:" <> chat_topic, payload, socket) do
+  def join("water_cooler:" <> chat_topic, _payload, socket) do
     case Repo.get_by(Chat, topic: chat_topic) do
       nil ->
         {:error, "Chat Topic does not exist"}
@@ -34,7 +34,7 @@ defmodule TreeChatWeb.WaterCoolerChannel do
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (water_cooler:lobby).
   # payload will now include channel id.
-  def handle_in("shout", payload, socket = %Phoenix.Socket{topic: "water_cooler:" <> chat_topic}) do
+  def handle_in("shout", payload, socket = %Phoenix.Socket{topic: "water_cooler:" <> _chat_topic}) do
     # Does this go to the whole socket or just the topic?
     # Currently, if the topic does not exist in the chats table, this will
     # just return nil, which is ok, we will still create messages in the lobby

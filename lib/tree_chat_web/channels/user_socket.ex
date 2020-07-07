@@ -19,8 +19,9 @@ defmodule TreeChatWeb.UserSocket do
 
   def connect(%{"token" => token}, socket, _connect_info) do
     # max_age: 1209600 is equivalent to two weeks in seconds
+    # This is probably where we are creating the browser token bug
     case Phoenix.Token.verify(socket, "user socket", token, max_age: 1209600) do
-      {:ok, user_id} ->
+      {:ok, _user_id} ->
         # This is not getting set or is not available for some reason
         # We should really be getting the user from the socket and not the window
         # This should always be getting hit once a user has a token
@@ -28,7 +29,7 @@ defmodule TreeChatWeb.UserSocket do
         # This is getting set on the socket and is only avialbe in the
         # context of a channel.
         {:ok, assign(socket, :user, "PIZZA MESSAGE CHICKEN PARM HIT")}
-      {:error, reason} ->
+      {:error, _reason} ->
         {:ok, socket}
         # {:error, "Could not connect to socket: #{reason}"}
     end

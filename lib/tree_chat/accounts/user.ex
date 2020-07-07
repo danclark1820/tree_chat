@@ -1,7 +1,6 @@
 defmodule TreeChat.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
-  alias TreeChat.Accounts.User
   alias TreeChat.Message
   alias Comeonin.Bcrypt
 
