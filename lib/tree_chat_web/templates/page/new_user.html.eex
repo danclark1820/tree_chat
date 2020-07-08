@@ -3,15 +3,15 @@
 
 <%= form_for @conn, user_path(@conn, :create), [as: :user], fn f -> %>
   <div>
-    <%= text_input f, :email, placeholder: "Email" %>
+    <%= text_input f, :email, placeholder: "Email", required: true %>
     <%= error_tag f, :email %>
   </div>
   <div>
-    <%= text_input f, :username, placeholder: "Username" %>
+    <%= text_input f, :username, placeholder: "Username", required: true %>
     <%= error_tag f, :username %>
   </div>
   <div>
-    <%= password_input f, :encrypted_password, placeholder: "Password" %>
+    <%= password_input f, :encrypted_password, placeholder: "Password", required: true %>
     <%= error_tag f, :encrypted_password %>
   </div>
   <div>

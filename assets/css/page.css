@@ -8,20 +8,6 @@
   top: 0vw;
 }
 
-/* #signout-link {
-  position: absolute;
-  left: 76vw;
-  top: 0vw;
-}
-
-#edit-account-link {
-  position: absolute;
-  color: blue;
-  text-decoration: underline;
-  left: 71vw;
-  top: 0vw;
-} */
-
 #new-chat-link{
   padding-left: 8vw;
   color: blue;
@@ -118,6 +104,7 @@
   cursor: pointer;
 }
 
+#forgot-password-link,
 #edit-account-link,
 .signin-link,
 .signup-link{
@@ -125,6 +112,8 @@
   text-decoration: underline;
 }
 
+#forgot-password-link:hover,
+#forgot-password-link:focus,
 #edit-account-link:hover,
 #edit-account-link:focus,
 .signin-link:hover,

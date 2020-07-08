@@ -2,11 +2,11 @@
 
 <%= form_for :chat, chat_path(@conn, :create), [as: :chat], fn f -> %>
   <div>
-    <%= text_input f, :topic, placeholder: "NewChatTopic" %>
+    <%= text_input f, :topic, placeholder: "NewChatTopic", required: true %>
     <%= error_tag f, :topic %>
   </div>
   <div>
-    <%= text_input f, :description, placeholder: "Description of chat topic." %>
+    <%= text_input f, :description, placeholder: "Description of chat topic.", required: true %>
     <%= error_tag f, :description%>
   </div>
   <div>
