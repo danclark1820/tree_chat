@@ -32,6 +32,15 @@ environment :dev do
   set dev_mode: true
   set include_erts: false
   set cookie: :"06!H_cNN5<S`L!IHqhOWNtCh)PCQdedG_n=vE~(ZR2t_z7P(8ByfdlrupV^`!<*I"
+  config :my_app, TreeChat.Mailer,
+    adapter: Bamboo.SMTPAdapter,
+    server: "smtp.domain",
+    port: 1025,
+    username: SYSTEM.get_env("SMTP_USERNAME"),
+    password: SYSTEM.get_env("SMTP_PASSWORD"),
+    tls: :if_available, # can be `:always` or `:never`
+    ssl: false, # can be `true`
+    retries: 1
 end
 
 environment :prod do
@@ -39,6 +48,15 @@ environment :prod do
   set include_src: false
   set cookie: :"wFvJmNdX]Lc)C~B!kKqHUy_3!ZllJS)8A@5Pp(`mPM6C[}T[XwHz/4W2~6Q=|J!s"
   set vm_args: "rel/vm.args"
+  config :my_app, TreeChat.Mailer,
+    adapter: Bamboo.SMTPAdapter,
+    server: "smtp.domain",
+    port: 1025,
+    username: SYSTEM.get_env("SMTP_USERNAME"),
+    password: SYSTEM.get_env("SMTP_PASSWORD"),
+    tls: :if_available, # can be `:always` or `:never`
+    ssl: false, # can be `true`
+    retries: 1
 end
 
 # You may define one or more releases in this file.

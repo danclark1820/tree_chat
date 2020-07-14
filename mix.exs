@@ -20,7 +20,7 @@ defmodule TreeChat.MixProject do
   def application do
     [
       mod: {TreeChat.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :bamboo]
     ]
   end
 
@@ -48,8 +48,10 @@ defmodule TreeChat.MixProject do
       {:distillery, "~> 2.0"},
       {:earmark, "~> 1.4"},
       {:floki, "~> 0.26.0"},
-      {:httpoison, "~> 1.6"},
-      {:poison, "~> 3.1"}
+      {:httpoison, "~> 1.6.2", override: true},
+      {:poison, "~> 3.1"},
+      {:bamboo, "~> 0.7.0"},
+      {:bamboo_smtp, "~> 1.2.1"}
     ]
   end
 
