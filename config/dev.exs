@@ -65,6 +65,16 @@ config :tree_chat, TreeChatWeb.Endpoint,
     ]
   ]
 
+config :tree_chat, TreeChat.Mailer,
+  adapter: Bamboo.SMTPAdapter,
+  server: System.get_env("SES_SERVER"),
+  port: System.get_env("SES_PORT"),
+  username: System.get_env("SMTP_USERNAME"),
+  password: System.get_env("SMTP_PASSWORD"),
+  tls: :always, # can be `:always` or `:never`
+  ssl: false, # can be `true`
+  retries: 1
+
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
 

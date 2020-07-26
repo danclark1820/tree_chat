@@ -19,7 +19,7 @@ defmodule TreeChat.Accounts.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:username, :encrypted_password, :full_name, :phone_number, :email])
-    |> validate_required([:username, :encrypted_password])
+    |> validate_required([:username, :email, :encrypted_password])
     |> unique_constraint(:username)
     |> unique_constraint(:email)
     |> update_change(:encrypted_password, &Bcrypt.hashpwsalt/1)

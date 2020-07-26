@@ -29,6 +29,16 @@ config :tree_chat, TreeChat.Repo,
   url: System.get_env("DATABASE_URL"),
   pool_size: 10
 
+config :tree_chat, TreeChat.Mailer,
+  adapter: Bamboo.SMTPAdapter,
+  server: System.get_env("SES_SERVER"),
+  port: System.get_env("SES_PORT"),
+  username: System.get_env("SMTP_USERNAME"),
+  password: System.get_env("SMTP_PASSWORD"),
+  tls: :always, # can be `:always` or `:never`
+  ssl: false, # can be `true`
+  retries: 1
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
