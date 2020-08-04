@@ -11,13 +11,17 @@ defmodule TreeChatWeb.UserController do
 
   def create(conn, %{"user" => user_params}) do
 
+    referer = conn.req_headers
+    |> List.keyfind("referer", 0)
+    |> elem(1)
+
     case Accounts.create_user(user_params) do
       {:ok, user} ->
         conn
         |> put_session(:current_user_id, user.id)
         |> put_session(:current_user_name, user.username)
         |> put_flash(:info, "Account created successfully.")
-        |> redirect(to: page_path(conn, :index))
+        |> redirect(external: referer)
 
       {:error, %Ecto.Changeset{} = changeset} ->
         conn
@@ -32,13 +36,18 @@ defmodule TreeChatWeb.UserController do
 
   def update(conn, %{"user" => user_params}) do
     user = Accounts.get_user!(conn.assigns[:user_id])
+
+    referer = conn.req_headers
+    |> List.keyfind("referer", 0)
+    |> elem(1)
+
     case Comeonin.Bcrypt.check_pass(user, user_params["current_password"]) do
       {:ok, user} ->
         case  Accounts.update_user(user, Map.delete(user_params, "current_password")) do
           {:ok, _user} ->
             conn
             |> put_flash(:info, "Account updated successfully.")
-            |> redirect(to: page_path(conn, :index))
+            |> redirect(external: referer)
           {:error, %Ecto.Changeset{} = changeset} ->
             conn
             |> put_flash(:error, "There was an error updating your account")
