@@ -40,15 +40,15 @@ defmodule TreeChat.Chat do
 
   """
   def list_messages(nil) do
-    Repo.all(from m in Message, where: is_nil(m.chat_id))
+    Repo.all(from m in Message, where: is_nil(m.chat_id), order_by: m.inserted_at)
   end
 
   def list_messages("lobby") do
-    Repo.all(from m in Message, where: is_nil(m.chat_id))
+    Repo.all(from m in Message, where: is_nil(m.chat_id), order_by: m.inserted_at)
   end
 
   def list_messages(chat = %Chat{}) do
-    from(m in Message, where: m.chat_id == ^chat.id)
+    from(m in Message, where: m.chat_id == ^chat.id, order_by: m.inserted_at)
     |> Repo.all
   end
 
@@ -57,7 +57,7 @@ defmodule TreeChat.Chat do
       nil ->
         {:error, "Chat Topic does not exist"}
       chat ->
-        from(m in Message, where: m.chat_id == ^chat.id)
+        from(m in Message, where: m.chat_id == ^chat.id, order_by: m.inserted_at)
         |> Repo.all
     end
   end
