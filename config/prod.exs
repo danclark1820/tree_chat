@@ -14,6 +14,13 @@ config :tree_chat, TreeChatWeb.Endpoint,
   url: [host: "cooler.chat", port: 80], #This is critical for ensuring web-sockets properly authorize.
   check_origin: ["//cooler.chat", "//*.cooler.chat"],
   cache_static_manifest: "priv/static/cache_manifest.json",
+  https: [
+    port: 443,
+    cipher_suite: :strong,
+    otp_app: :hello,
+    keyfile: System.get_env("SSL_KEY_PATH"),
+    certfile: System.get_env("SSL_CERT_PATH"),
+  ],
   server: true,
   root: ".",
   version: Application.spec(:tree_chat, :vsn)
