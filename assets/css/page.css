@@ -31,7 +31,8 @@
   margin-right: 1vw;
   float: left;
   border: solid #E0E0E0 3px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .chat-window {
