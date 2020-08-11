@@ -21,6 +21,7 @@ config :tree_chat, TreeChatWeb.Endpoint,
     keyfile: System.get_env("SSL_KEY_PATH"),
     certfile: System.get_env("SSL_CERT_PATH"),
   ],
+  force_ssl: [rewrite_on: [:x_forwarded_proto]],
   server: true,
   root: ".",
   version: Application.spec(:tree_chat, :vsn)
