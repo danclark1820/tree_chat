@@ -18,6 +18,8 @@ if (searchParams.has("message_id")) {
   messageID = searchParams.get("message_id")
   messageElem = document.getElementById(`message-id-${messageID}`)
   messageElem.scrollIntoView();
+} else {
+  chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
 if (window.userToken == null) {
