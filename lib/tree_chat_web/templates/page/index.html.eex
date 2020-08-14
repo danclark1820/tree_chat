@@ -13,7 +13,7 @@
     </div>
   <% end %>
 
-  <span id="new-chat-link">New Chat</span>
+  <span id="new-chat-link">Create A Chat</span>
   <%= if @current_chat do %>
     <%= raw "<span class='chat-description' id='#{@current_chat.id}''>#{@current_chat.description}</span>"%>
   <% end %>

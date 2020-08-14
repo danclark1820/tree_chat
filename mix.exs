@@ -51,7 +51,8 @@ defmodule TreeChat.MixProject do
       {:httpoison, "~> 0.9"},
       {:poison, "~> 3.1"},
       {:bamboo, "~> 1.5"},
-      {:bamboo_smtp, "~> 2.1.0"}
+      {:bamboo_smtp, "~> 2.1.0"},
+      {:ecto_explain, "~> 0.1.2"}
     ]
   end
 
