@@ -26,6 +26,14 @@ let WaterCooler = {
       }
     }
 
+    // document.getElementById("search-form").addEventListener('keydown', function(e) {
+    //   if (e.keyCode == 13) {
+    //     e.preventDefault();
+    //     let query = document.getElementById('search-form').value
+    //     debugger
+    //   }
+    // });
+
     document.getElementById("chat-form").addEventListener('keydown', function(e) {
       if (e.keyCode == 13 && !e.shiftKey) {
         e.preventDefault();

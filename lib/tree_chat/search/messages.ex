@@ -13,7 +13,7 @@ defmodule TreeChat.Search.Messages do
     )
   end
 
-  defp prefix_search(term), do
+  defp prefix_search(term) do
     String.replace(term, ~r/[^a-zA-Z ]/, "")
     |> String.replace( ~r/^\s+|\s+$|\s+(?=\s)/, "")
     |> String.replace(~r/\W/u, " | ")

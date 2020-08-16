@@ -11,7 +11,29 @@
     <main role="main" class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+        <%= if signed_into_app?(@conn) do %>
+          <div id="profile-links">
+            <span id="edit-account-link"> Account </span> |
+            <span id="signout-link">
+              <%= link "Sign out", to: session_path(@conn, :delete), method: :delete %>
+            </span>
+          </div>
+        <% else %>
+          <div id="profile-links">
+            <span class="signin-link">Sign In</span> |
+            <span class="signup-link">Sign Up</span>
+          </div>
+        <% end %>
+
+      <div>
+        <%= form_for @conn, search_path(@conn, :index), [as: :search], fn f -> %>
+          <%= text_input f, :search, placeholder: "Search", id: "search-form" %>
+          <%= submit "Search" %>
+        <% end %>
+      </div>
+
       <%= render @view_module, @view_template, assigns %>
+
       <%= if signed_into_app?(@conn) do %>
         <script>
           window.userToken = "<%= assigns[:user_token] %>";

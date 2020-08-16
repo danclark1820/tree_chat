@@ -22,6 +22,7 @@ defmodule TreeChatWeb.Router do
     get "/", PageController, :index
     get "/lobby", PageController, :index
     get "/:chat", PageController, :index
+    post "/search", SearchController, :index
     resources "/chat", ChatController, only: [:create, :index, :new, :show]
     resources "/user", UserController, only: [:create, :new, :edit, :update]
     resources "/password", PasswordController, only: [:new, :create]
