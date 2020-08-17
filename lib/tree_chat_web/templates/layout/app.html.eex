@@ -32,6 +32,36 @@
         <% end %>
       </div>
 
+      <div id="signin-modal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <%= render "new_session.html", Map.put(assigns, :action, Routes.session_path(@conn, :create)) %>
+        </div>
+      </div>
+
+      <div id="forgot-password-modal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <%= render "forgot_password.html", Map.put(assigns, :action, Routes.password_path(@conn, :create)) %>
+        </div>
+      </div>
+
+      <div id="signup-modal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <%= render "new_user.html", Map.put(assigns, :action, Routes.user_path(@conn, :create)) %>
+        </div>
+      </div>
+
+      <div id="edit-account-modal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <%= if signed_into_app?(@conn) do %>
+            <%= render "edit_account.html", Map.put(assigns, :action, Routes.user_path(@conn, :edit, String.to_integer(@conn.assigns[:user_id]))) %>
+          <% end %>
+        </div>
+      </div>
+
       <%= render @view_module, @view_template, assigns %>
 
       <%= if signed_into_app?(@conn) do %>
