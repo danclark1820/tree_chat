@@ -25,10 +25,10 @@
           </div>
         <% end %>
 
-      <div>
+      <div id="search-container">
         <%= form_for @conn, search_path(@conn, :index), [as: :search], fn f -> %>
-          <%= text_input f, :search, placeholder: "Search", id: "search-form" %>
-          <%= submit "Search" %>
+          <%= text_input f, :query, id: "search-form" %>
+          <%= submit "Search", id: "search-submit" %>
         <% end %>
       </div>
 

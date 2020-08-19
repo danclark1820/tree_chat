@@ -1,1 +1,20 @@
+<section class="chat-container">
+  <div>Chats</div>
+  <div class="chat-list" id="chat-list">
+    <%= for chat <- @chats do %>
+      <div class="chat">
+        <span class="chat-topic"><%= link("#{chat.topic}", to: "/c/#{chat.topic}") %></span>
+      </div>
+    <% end %>
+  </div>
 
+  <div>Messages</div>
+  <div class="chat-window" id="chat-window">
+    <%= for message <- @messages do %>
+        <%= raw "<div class='message' id='message-id-#{message.id}'>"%>
+          <span class="message-name"><%= message.name %>:</span>
+          <%= TreeChatWeb.PageView.decorate_message(message.body) %>
+        </div>
+    <% end %>
+  </div>
+</section>

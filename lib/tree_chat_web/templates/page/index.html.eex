@@ -8,7 +8,7 @@
     <div class="chat-list" id="chat-list">
       <%= for chat <- @chats do %>
         <div class="chat">
-          <span class="chat-topic"><%= link("#{chat.topic}", to: "/#{chat.topic}") %></span>
+          <span class="chat-topic"><%= link("#{chat.topic}", to: "/c/#{chat.topic}") %></span>
         </div>
       <% end %>
     </div>

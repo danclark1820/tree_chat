@@ -3,6 +3,20 @@ body {
   line-height: 1.4;
 }
 
+#search-container {
+  padding-left: 35vw;
+}
+
+#search-form{
+  width: 20vw;
+  height: 25px
+}
+
+#search-submit {
+  width: 5vw;
+  height: 31px;
+}
+
 .chat-title {
   margin-left: 20vw;
 }
