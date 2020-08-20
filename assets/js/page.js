@@ -8,6 +8,7 @@ var forgotPasswordLink = document.getElementById("forgot-password-link")
 var signUpLinks = document.getElementsByClassName("signup-link");
 var signInLinks = document.getElementsByClassName("signin-link");
 var newChatLink = document.getElementById("new-chat-link");
+var createChatLinks = document.getElementsByClassName("create-chat-link");
 var newChatModal = document.getElementById("new-chat-modal")
 var chatForm = document.getElementById("chat-form");
 var chatWindow = document.getElementById("chat-window")
@@ -28,8 +29,10 @@ if (window.userToken == null) {
   }
 }
 
-newChatLink.onclick = function() {
-  newChatModal.style.display = "block"
+if (newChatLink) {
+  newChatLink.onclick = function() {
+    newChatModal.style.display = "block"
+  }
 }
 
 if (forgotPasswordLink) {
@@ -41,6 +44,12 @@ if (forgotPasswordLink) {
 if (editAccountLink) {
   editAccountLink.onclick = function() {
     editAccountModal.style.display = "block"
+  }
+}
+
+for (var i = 0; i < createChatLinks.length; i++) {
+  createChatLinks[i].onclick = function() {
+    newChatModal.style.display = "block"
   }
 }
 

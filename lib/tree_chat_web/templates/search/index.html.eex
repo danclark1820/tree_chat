@@ -1,20 +1,52 @@
-<section class="chat-container">
-  <div>Chats</div>
-  <div class="chat-list" id="chat-list">
-    <%= for chat <- @chats do %>
-      <div class="chat">
-        <span class="chat-topic"><%= link("#{chat.topic}", to: "/c/#{chat.topic}") %></span>
-      </div>
-    <% end %>
-  </div>
+<h2 class="chat-title"><%= @conn.params["search"]["query"]%></h2>
+  <span id="chat-search-results">Chat Results</span>
 
-  <div>Messages</div>
-  <div class="chat-window" id="chat-window">
-    <%= for message <- @messages do %>
-        <%= raw "<div class='message' id='message-id-#{message.id}'>"%>
-          <span class="message-name"><%= message.name %>:</span>
-          <%= TreeChatWeb.PageView.decorate_message(message.body) %>
+  <span class='chat-description'>Message Results</span>
+
+  <section class="chat-container">
+    <div class="chat-list">
+      <%= if Enum.empty?(@chats) do %>
+        <div class="chat">
+          <span class="chat-topic">No chats matching...</span>
         </div>
-    <% end %>
+        <div class="chat">
+          <span class="chat-topic">"<%= @conn.params["search"]["query"]%>"</span>
+        </div>
+        <div class="chat">
+          <span class="chat-topic">But you can</span>
+        </div>
+        <div class="chat">
+          <span class="create-chat-link">Make one</span>
+        </div>
+      <%= else %>
+        <%= for chat <- @chats do %>
+          <div class="chat">
+            <span class="chat-topic"><%= link("#{chat.topic}", to: "/c/#{chat.topic}") %></span>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div class="chat-window" id="chat-window">
+      <%= if Enum.empty?(@messages) do %>
+        <div class="message">
+          No message results for "<%= @conn.params["search"]["query"]%>"...But try
+          <span class="create-chat-link">creating a chat topic.</span>
+        </div>
+      <%= else %>
+        <%= for message <- @messages do %>
+            <%= raw "<div class='message' id='message-id-#{message.id}'>"%>
+              <span class="message-name"><%= message.name %>:</span>
+              <%= TreeChatWeb.PageView.decorate_message(message.body) %>
+            </div>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+
+  <div id="new-chat-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <%= render "new_chat.html", Map.put(assigns, :action, Routes.chat_path(@conn, :create)) %>
+    </div>
   </div>
-</section>

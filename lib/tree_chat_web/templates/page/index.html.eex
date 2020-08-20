@@ -5,7 +5,7 @@
   <% end %>
 
   <section class="chat-container">
-    <div class="chat-list" id="chat-list">
+    <div class="chat-list">
       <%= for chat <- @chats do %>
         <div class="chat">
           <span class="chat-topic"><%= link("#{chat.topic}", to: "/c/#{chat.topic}") %></span>

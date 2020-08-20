@@ -33,6 +33,15 @@ body {
   text-decoration: underline;
 }
 
+.create-chat-link{
+  color: blue;
+  text-decoration: underline;
+}
+
+#chat-search-results{
+  padding-left: 8vw;
+}
+
 .chat-description {
   padding-left: 6vw;
 }
