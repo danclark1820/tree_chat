@@ -64,6 +64,10 @@
 
       <%= render @view_module, @view_template, assigns %>
 
+      <div id="feedback-link">
+        <%= link("Leave Feedback", to: "/c/Feedback") %>
+      </div>
+
       <%= if signed_into_app?(@conn) do %>
         <script>
           window.userToken = "<%= assigns[:user_token] %>";
