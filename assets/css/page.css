@@ -51,6 +51,7 @@ body {
   height: 60vh;
   padding-left: 8vw;
   padding-top: 1vh;
+  overflow-y: auto;
 }
 
 .chat-list {

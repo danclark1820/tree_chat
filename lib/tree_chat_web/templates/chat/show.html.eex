@@ -1,1 +1,35 @@
-<h1>Chat</h1>
+<h2 class="chat-title"><%= "#{@conn.path_params["chat"]}" %></h2>
+  <span id="new-chat-link">Create a Chat</span>
+  <%= if @current_chat do %>
+    <%= raw "<span class='chat-description' id='#{@current_chat.id}''>#{@current_chat.description}</span>"%>
+  <% end %>
+
+  <section class="chat-container">
+    <div class="chat-list">
+      <%= for chat <- @chats do %>
+        <div class="chat">
+          <span class="chat-topic"><%= link("#{chat.topic}", to: "/c/#{chat.topic}") %></span>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="chat-window" id="chat-window">
+      <%= for message <- @messages do %>
+        <%= raw "<div class='message' id='message-id-#{message.id}'>"%>
+          <span class="message-name"><%= message.name %>:</span>
+          <%= TreeChatWeb.PageView.decorate_message(message.body) %>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <form id="chat-form" name="chat-form">
+    <textarea type="text" placeholder="Enter to send; Shift+Enter for new line" class="message-input" id="user-msg" form="chat-form"></textarea>
+  </form>
+
+  <div id="new-chat-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <%= render "new.html", Map.put(assigns, :action, Routes.chat_path(@conn, :create)) %>
+    </div>
+  </div>

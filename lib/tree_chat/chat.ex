@@ -147,7 +147,8 @@ defmodule TreeChat.Chat do
     Repo.all(Chat)
   end
 
-
+  def get_chat(nil), do: nil
+  def get_chat(id), do: Repo.get(Chat, id)
 
   def get_chat!(id), do: Repo.get!(Chat, id)
 

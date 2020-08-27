@@ -13,7 +13,7 @@ defmodule TreeChatWeb.ChatController do
       {:ok, chat} ->
         conn
         |> put_flash(:info, "Chat created successfully.")
-        |> redirect(to: "/#{chat.topic}")
+        |> redirect(to: "c/#{chat.topic}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         errors_map = Ecto.Changeset.traverse_errors(changeset, fn {message, opts} ->
@@ -31,6 +31,19 @@ defmodule TreeChatWeb.ChatController do
         conn
         |> put_flash(:error, formatted_errors)
         |> render("new.html", changeset: changeset)
+    end
+  end
+
+  def index(conn, params) do
+    redirect(conn, to: "/")
+  end
+
+  def show(conn, params) do
+    case current_chat = Chat.get_chat(params["id"]) do
+      %Chat{} ->
+        redirect(conn, to: "/c/#{current_chat.topic}?message_id=#{params["message_id"]}")
+      nil ->
+        redirect(conn, to: "/")
     end
   end
 end
