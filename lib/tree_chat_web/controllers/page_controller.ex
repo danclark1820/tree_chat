@@ -6,10 +6,10 @@ defmodule TreeChatWeb.PageController do
     chats = Chat.list_chats()
 
     # redirect to lobby if nothing is passed in
+    lobby = Chat.get_chat_by_topic("Lobby")
     cond do
       conn.params["chat_topic"] == nil ->
-        render conn, "index.html", messages: Chat.list_messages("lobby"), chats: chats, current_chat: nil
-      # Ahh should probably do something about this
+        render conn, "index.html", messages: Chat.list_messages(lobby), chats: chats, current_chat: lobby
       true -> {:ok, "do nothing"}
     end
 
@@ -18,9 +18,10 @@ defmodule TreeChatWeb.PageController do
       %Chat{} ->
         render conn, "index.html", messages: Chat.list_messages(current_chat), chats: chats, current_chat: current_chat
       nil ->
+        lobby = Chat.get_chat_by_topic("Lobby")
         conn
         |> put_flash(:info, "Chat #{conn.params["chat"]} does not exist, would you like to create it?")
-        |> redirect(to: chat_path(conn, :new))
+        |> render conn, "index.html", messages: Chat.list_messages(lobby), chats: chats, current_chat: lobby
     end
   end
 end
