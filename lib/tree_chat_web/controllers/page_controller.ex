@@ -18,10 +18,9 @@ defmodule TreeChatWeb.PageController do
       %Chat{} ->
         render conn, "index.html", messages: Chat.list_messages(current_chat), chats: chats, current_chat: current_chat
       nil ->
-        lobby = Chat.get_chat_by_topic("Lobby")
         conn
         |> put_flash(:info, "Chat #{conn.params["chat"]} does not exist, would you like to create it?")
-        |> render conn, "index.html", messages: Chat.list_messages(lobby), chats: chats, current_chat: lobby
+        |> redirect(to: "/c/Lobby")
     end
   end
 end

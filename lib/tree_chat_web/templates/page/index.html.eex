@@ -1,4 +1,4 @@
-<h2 class="chat-title"><%= "#{@conn.path_params["chat"]}" %></h2>
+<h2 class="chat-title"><%= "#{@current_chat.topic}" %></h2>
   <span id="new-chat-link">Create a Chat</span>
   <%= if @current_chat do %>
     <%= raw "<span class='chat-description' id='#{@current_chat.id}''>#{@current_chat.description}</span>"%>

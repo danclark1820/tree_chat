@@ -10,7 +10,7 @@ defmodule TreeChatWeb.SessionController do #This handles app sessions but not ch
   def create(conn, %{"session" => auth_params}) do
     user = Accounts.get_by_username(auth_params["username"])
 
-    referer = conn.req_headers
+    refferer = conn.req_headers
     |> List.keyfind("referer", 0)
     |> elem(1)
 
@@ -20,7 +20,7 @@ defmodule TreeChatWeb.SessionController do #This handles app sessions but not ch
         |> put_session(:current_user_id, user.id)
         |> put_session(:current_user_name, user.username)
         |> put_flash(:info, "Signed in successfully.")
-        |> redirect(external: referer) #conn[:req_headers][req_refferer]
+        |> smart_redirect(refferer) #conn[:req_headers][req_refferer]
       {:error, _} ->
         conn
         |> put_flash(:error, "There was a problem with your username/password")
@@ -33,5 +33,15 @@ defmodule TreeChatWeb.SessionController do #This handles app sessions but not ch
     |> delete_session(:current_user_id)
     |> put_flash(:info, "Signed out successfully.")
     |> redirect(to: page_path(conn, :index))
+  end
+
+  defp smart_redirect(conn, refferer) do
+    parsed_refferer = String.split(refferer, "/")
+
+    if Enum.any?(parsed_refferer, fn x -> x == "sign-in" end) || !Enum.any?(parsed_refferer, fn x -> x == "cooler.chat" || x == "localhost:4000" end) do
+      redirect(conn, to: page_path(conn, :index))
+    else
+      redirect(conn, external: refferer)
+    end
   end
 end
