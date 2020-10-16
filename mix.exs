@@ -48,11 +48,12 @@ defmodule TreeChat.MixProject do
       {:distillery, "~> 2.0"},
       {:earmark, "~> 1.4"},
       {:floki, "~> 0.26.0"},
-      {:httpoison, "~> 0.9"},
-      {:poison, "~> 3.1"},
+      {:httpoison, "~> 1.7.0"},
+      {:poison, "~> 4.0.1"},
       {:bamboo, "~> 1.5"},
       {:bamboo_smtp, "~> 2.1.0"},
-      {:ecto_explain, "~> 0.1.2"}
+      {:ecto_explain, "~> 0.1.2"},
+      {:elixir_auth_google, "~> 1.3.0"}
     ]
   end
 
