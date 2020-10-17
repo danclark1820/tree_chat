@@ -34,7 +34,7 @@ defmodule TreeChatWeb.PageView do
   def requestOembed(full_url) do
     case HTTPoison.get("#{base_url(full_url)}/oembed?url=#{full_url}&format=json") do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        Poison.Parser.parse! body
+        Jason.decode! body
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         {:error, "Not found :("}
       {:ok, _response = %HTTPoison.Response{}} ->

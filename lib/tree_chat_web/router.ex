@@ -26,6 +26,8 @@ defmodule TreeChatWeb.Router do
     resources "/chat", ChatController, only: [:create, :index, :new, :show]
     resources "/user", UserController, only: [:create, :new, :edit, :update]
     resources "/password", PasswordController, only: [:new, :create]
+    get "/privacy-policy", PrivacyPolicyController, only: [:index]
+    get "/terms-of-service", TermsOfServiceController, only: [:index]
     get "/sign-in", SessionController, :new
     post "/sign-in", SessionController, :create
     delete "/sign-out", SessionController, :delete
