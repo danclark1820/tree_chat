@@ -1,12 +1,13 @@
 <h3>Account</h3>
 <%= form_for Accounts.User.changeset(Accounts.get_user!(@conn.assigns[:user_id]), %{}), user_path(@conn, :update, Accounts.get_user!(@conn.assigns[:user_id])), [as: :user], fn f -> %>
+  <%= text_input f, :first_name, placeholder: "first name", required: true%><br>
+  <%= error_tag f, :first_name %>
+  <%= text_input f, :last_name, placeholder: "last name", required: true%><br>
+  <%= error_tag f, :last_name %>
   <%= text_input f, :email, placeholder: "email", required: true%><br>
   <%= error_tag f, :email %>
   <%= text_input f, :username, placeholder: "username", required: true%><br>
   <%= error_tag f, :username %>
-  <%= password_input f, :current_password, placeholder: "password" %><br>
-  <%= error_tag f, :current_password %>
-  <%= password_input f, :encrypted_password, placeholder: "new password" %><br>
-  <%= error_tag f, :new_password %>
   <%= submit "Update" %>
 <% end %>
+<span id="edit-password-link">Update Password</span><br>

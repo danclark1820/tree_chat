@@ -3,6 +3,14 @@
 
 <%= form_for @conn, user_path(@conn, :create), [as: :user], fn f -> %>
   <div>
+    <%= text_input f, :first_name, placeholder: "first name", required: true%><br>
+    <%= error_tag f, :first_name %>
+  </div>
+  <div>
+    <%= text_input f, :last_name, placeholder: "last name", required: true%><br>
+    <%= error_tag f, :last_name %>
+  </div>
+  <div>
     <%= text_input f, :email, placeholder: "Email", required: true %>
     <%= error_tag f, :email %>
   </div>
@@ -18,4 +26,7 @@
     <%= submit "Submit" %>
   </div>
   Already a member? <span class="signin-link">Sign In</span>
+  <a href="<%= @oauth_google_url %>">
+    <img id="google-sign-in-link" src="/images/btn_google_signin_light_normal_web.png" alt="Sign in with Google" />
+  </a>
 <% end %>

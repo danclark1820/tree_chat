@@ -133,6 +133,23 @@ body {
   cursor: pointer;
 }
 
+#google-sign-in-link {
+  display: block;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: url("/images/btn_google_signin_light_normal_web.png") no-repeat;
+}
+
+#google-sign-in-link:hover,
+#google-sign-in-link:focus {
+  background: url("/images/btn_google_signin_light_focus_web.png") no-repeat;
+}
+
+#google-sign-in-link:active {
+  background: url("/images/btn_google_signin_light_pressed_web.png") no-repeat;
+}
+
+#edit-password-link,
 #forgot-password-link,
 #edit-account-link,
 .signin-link,
@@ -141,6 +158,8 @@ body {
   text-decoration: underline;
 }
 
+#edit-password-link:hover,
+#edit-password-link:focus,
 #forgot-password-link:hover,
 #forgot-password-link:focus,
 #edit-account-link:hover,

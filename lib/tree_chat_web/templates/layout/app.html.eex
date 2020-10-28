@@ -35,7 +35,8 @@
       <div id="signin-modal" class="modal">
         <div class="modal-content">
           <span class="close">&times;</span>
-          <%= render "new_session.html", Map.put(assigns, :action, Routes.session_path(@conn, :create)) %>
+          updated_assigns
+          <%= render "new_session.html", Map.merge(assigns, %{action: Routes.session_path(@conn, :create), oauth_google_url: ElixirAuthGoogle.generate_oauth_url(@conn)}) %>
         </div>
       </div>
 
@@ -62,6 +63,15 @@
         </div>
       </div>
 
+      <div id="edit-password-modal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <%= if signed_into_app?(@conn) do %>
+            <%= render "edit_password.html", Map.put(assigns, :action, Routes.user_path(@conn, :edit, String.to_integer(@conn.assigns[:user_id]))) %>
+          <% end %>
+        </div>
+      </div>
+
       <%= render @view_module, @view_template, assigns %>
 
       <div id="feedback-link">
@@ -72,6 +82,8 @@
         <script>
           window.userToken = "<%= assigns[:user_token] %>";
           window.userName = "<%= assigns[:user_name] %>";
+          window.userFirst = "<%= assigns[:user_first] %>";
+          window.userLast = "<%= assigns[:user_last] %>";
           window.userId = "<%= assigns[:user_id] %>";
         </script>
       <% end %>

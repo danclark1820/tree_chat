@@ -5,6 +5,8 @@ var editAccountModal = document.getElementById("edit-account-modal")
 var editAccountLink = document.getElementById("edit-account-link")
 var forgotPasswordModal = document.getElementById("forgot-password-modal")
 var forgotPasswordLink = document.getElementById("forgot-password-link")
+var editPasswordModal = document.getElementById("edit-password-modal")
+var editPasswordLink = document.getElementById("edit-password-link")
 var signUpLinks = document.getElementsByClassName("signup-link");
 var signInLinks = document.getElementsByClassName("signin-link");
 var newChatLink = document.getElementById("new-chat-link");
@@ -14,6 +16,7 @@ var chatForm = document.getElementById("chat-form");
 var chatWindow = document.getElementById("chat-window")
 var closeSpans = document.getElementsByClassName("close");
 var searchParams = new URLSearchParams(window.location.search)
+
 
 if (searchParams.has("message_id")) {
   messageID = searchParams.get("message_id")
@@ -47,6 +50,13 @@ if (editAccountLink) {
   }
 }
 
+if (editPasswordLink) {
+  editPasswordLink.onclick = function() {
+    editAccountModal.style.display = "none"
+    editPasswordModal.style.display = "block"
+  }
+}
+
 for (var i = 0; i < createChatLinks.length; i++) {
   createChatLinks[i].onclick = function() {
     newChatModal.style.display = "block"
@@ -74,6 +84,7 @@ for (var i = 0; i < closeSpans.length; i++) {
     signInModal.style.display = "none";
     newChatModal.style.display = "none";
     editAccountModal.style.display = "none";
+    editPasswordModal.style.display = "none";
     forgotPasswordModal.style.display = "none";
   }
 }
@@ -98,5 +109,9 @@ window.onclick = function(event) {
 
   if (event.target == forgotPasswordModal) {
     forgotPasswordModal.style.display = "none";
+  }
+
+  if (event.target == editPasswordModal) {
+    editPasswordModal.style.display = "none";
   }
 }

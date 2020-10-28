@@ -4,11 +4,13 @@ defmodule TreeChatWeb.SessionController do #This handles app sessions but not ch
   alias TreeChat.Accounts
 
   def new(conn, _params) do
-    render(conn, "new.html")
+    oauth_google_url = ElixirAuthGoogle.generate_oauth_url(conn)
+    render(conn, "new.html", [oauth_google_url: oauth_google_url])
   end
 
   def create(conn, %{"session" => auth_params}) do
-    user = Accounts.get_by_username(auth_params["username"])
+    oauth_google_url = ElixirAuthGoogle.generate_oauth_url(conn)
+    user = Accounts.get_by_email(auth_params["email"])
 
     refferer = conn.req_headers
     |> List.keyfind("referer", 0)
@@ -18,13 +20,17 @@ defmodule TreeChatWeb.SessionController do #This handles app sessions but not ch
       {:ok, user} ->
         conn
         |> put_session(:current_user_id, user.id)
+        |> put_session(:current_user_first, user.first_name)
+        |> put_session(:current_user_last, user.last_name)
         |> put_session(:current_user_name, user.username)
         |> put_flash(:info, "Signed in successfully.")
+        |> assign(:oauth_google_url, oauth_google_url)
         |> smart_redirect(refferer) #conn[:req_headers][req_refferer]
       {:error, _} ->
         conn
-        |> put_flash(:error, "There was a problem with your username/password")
-        |> render("new.html")
+        |> assign(:oauth_google_url, oauth_google_url)
+        |> put_flash(:error, "There was a problem with your email/password")
+        |> render("new.html", [oauth_google_url: oauth_google_url])
     end
   end
 

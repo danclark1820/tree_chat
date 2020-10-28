@@ -19,6 +19,8 @@ defmodule TreeChatWeb.UserController do
       {:ok, user} ->
         conn
         |> put_session(:current_user_id, user.id)
+        |> put_session(:current_user_first, user.first_name)
+        |> put_session(:current_user_last, user.last_name)
         |> put_session(:current_user_name, user.username)
         |> put_flash(:info, "Account created successfully.")
         |> redirect(external: referer)
@@ -41,9 +43,9 @@ defmodule TreeChatWeb.UserController do
     |> List.keyfind("referer", 0)
     |> elem(1)
 
-    case Comeonin.Bcrypt.check_pass(user, user_params["current_password"]) do
-      {:ok, user} ->
-        case  Accounts.update_user(user, Map.delete(user_params, "current_password")) do
+    case user_params["current_password"] do
+      nil ->
+        case Accounts.update_user(user, user_params) do
           {:ok, _user} ->
             conn
             |> put_flash(:info, "Account updated successfully.")
@@ -51,14 +53,28 @@ defmodule TreeChatWeb.UserController do
           {:error, %Ecto.Changeset{} = changeset} ->
             conn
             |> put_flash(:error, "There was an error updating your account")
-            |> render("edit_password.html", changeset: changeset)
+            |> render("edit_account.html", changeset: changeset)
         end
+      current_password ->
+        case Comeonin.Bcrypt.check_pass(user, user_params["current_password"]) do
+          {:ok, user} ->
+            case  Accounts.update_user(user, Map.delete(user_params, "current_password")) do
+              {:ok, _user} ->
+                conn
+                |> put_flash(:info, "Account updated successfully.")
+                |> redirect(external: referer)
+              {:error, %Ecto.Changeset{} = changeset} ->
+                conn
+                |> put_flash(:error, "There was an error updating your account")
+                |> render("edit_password.html", changeset: changeset)
+            end
 
-      {:error, "invalid password"} ->
-        conn
-        # Display changeset errors here
-        |> put_flash(:error, "There was an error updating your account, password does not match")
-        |> render("edit_account.html", %{"user" => user_params})
+          {:error, "invalid password"} ->
+            conn
+            # Display changeset errors here
+            |> put_flash(:error, "There was an error updating your account, password does not match")
+            |> render("edit_account.html", %{"user" => user_params})
+        end
     end
   end
 end

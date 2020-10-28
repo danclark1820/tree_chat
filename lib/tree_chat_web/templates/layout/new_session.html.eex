@@ -1,9 +1,14 @@
 <h3>Sign in</h3>
 <%= form_for @conn, session_path(@conn, :new), [as: :session], fn f -> %>
-  <%= text_input f, :username, placeholder: "username", required: true %><br>
+  <%= text_input f, :email, placeholder: "email", required: true %><br>
   <%= password_input f, :password, placeholder: "password", required: true %><br>
   <%= submit "Sign in" %>
 <% end %>
+
+<a href="<%= @oauth_google_url %>">
+  <img id="google-sign-in-link" src="/images/btn_google_signin_light_normal_web.png" alt="Sign in with Google" />
+</a>
+
 <div>
   <span id="forgot-password-link">Forgot Password?</span><br>
   Not a member? <span class="signup-link">Sign Up</span>

@@ -8,6 +8,8 @@ let WaterCooler = {
 
   listenForChats(channel) {
     let userName = window.userName
+    let userFirst = window.userFirst || ""
+    let userLast = window.userLast || ""
     let userId = window.userId
     let chatWindow = document.getElementById('chat-window')
     let chatDescription = document.getElementsByClassName('chat-description')[0]
@@ -38,11 +40,12 @@ let WaterCooler = {
       if (e.keyCode == 13 && !e.shiftKey) {
         e.preventDefault();
         let userMsg = document.getElementById('user-msg').value
+        message_name = (userFirst !== "" && userLast !== "" ? `${userFirst} ${userLast}` : userName)
 
         if (chatDescription) {
-          channel.push('shout', {name: userName, body: userMsg, user_id: userId, chat_id: chatDescription.id})
+          channel.push('shout', {name: message_name, body: userMsg, user_id: userId, chat_id: chatDescription.id})
         } else {
-          channel.push('shout', {name: userName, body: userMsg, user_id: userId})
+          channel.push('shout', {name: message_name, body: userMsg, user_id: userId})
         }
 
         document.getElementById('user-msg').value = ''
