@@ -40,7 +40,7 @@ let WaterCooler = {
       if (e.keyCode == 13 && !e.shiftKey) {
         e.preventDefault();
         let userMsg = document.getElementById('user-msg').value
-        message_name = (userFirst !== "" && userLast !== "" ? `${userFirst} ${userLast}` : userName)
+        let message_name = (userFirst !== "" && userLast !== "" ? `${userFirst} ${userLast}` : userName)
 
         if (chatDescription) {
           channel.push('shout', {name: message_name, body: userMsg, user_id: userId, chat_id: chatDescription.id})
