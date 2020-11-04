@@ -13,7 +13,7 @@ defmodule TreeChat.AuthGoogle do
   see: https://github.com/dwyl/elixir-auth-google/issues/35
   """
   def inject_poison() do
-    Mix.env() == :test && TreeChat.AuthGoogle.HTTPoisonMock || HTTPoison
+    Application.get_env(:tree_chat, :env) == :test && TreeChat.AuthGoogle.HTTPoisonMock || HTTPoison
   end
 
   @doc """
