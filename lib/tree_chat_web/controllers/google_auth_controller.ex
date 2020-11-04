@@ -3,11 +3,12 @@ defmodule TreeChatWeb.GoogleAuthController do #This handles app sessions but not
 
   alias TreeChat.Accounts
   alias TreeChat.Accounts.User
+  alias TreeChat.AuthGoogle
 
   def index(conn, %{"code" => code}) do
-    {:ok, token} = ElixirAuthGoogle.get_token(code, conn)
-    {:ok, profile} = ElixirAuthGoogle.get_user_profile(token.access_token)
-    oauth_google_url = ElixirAuthGoogle.generate_oauth_url(conn)
+    {:ok, token} = AuthGoogle.get_token(code, conn)
+    {:ok, profile} = AuthGoogle.get_user_profile(token.access_token)
+    oauth_google_url = AuthGoogle.generate_oauth_url(conn)
 
     case Accounts.get_by_email(profile[:email]) do
       user = %Accounts.User{} ->

@@ -47,6 +47,10 @@ config :tree_chat, TreeChat.Mailer,
   ssl: false, # can be `true`
   retries: 1
 
+config :tree_chat, TreeChat.AuthGoogle,
+  client_id: System.get_env("GOOGLE_CLIENT_ID"),
+  client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

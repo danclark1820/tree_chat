@@ -17,6 +17,10 @@ config :tree_chat, TreeChatWeb.Endpoint,
   render_errors: [view: TreeChatWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: TreeChat.PubSub, adapter: Phoenix.PubSub.PG2]
 
+config :tree_chat, TreeChat.AuthGoogle,
+  client_id: System.get_env("GOOGLE_CLIENT_ID"),
+  client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

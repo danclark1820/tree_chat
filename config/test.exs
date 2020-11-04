@@ -14,5 +14,9 @@ config :tree_chat, TreeChatWeb.Endpoint,
   http: [port: 4002],
   server: false
 
+config :tree_chat, TreeChat.AuthGoogle,
+  client_id: System.get_env("GOOGLE_CLIENT_ID"),
+  client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
+
 # Print only warnings and errors during test
 config :logger, level: :warn

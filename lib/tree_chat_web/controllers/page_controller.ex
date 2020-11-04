@@ -4,7 +4,7 @@ defmodule TreeChatWeb.PageController do
   alias TreeChat.Chat
 
   def index(conn, _params) do
-    oauth_google_url = ElixirAuthGoogle.generate_oauth_url(conn)
+    oauth_google_url = TreeChat.AuthGoogle.generate_oauth_url(conn)
     chats = Chat.list_chats()
 
     # redirect to lobby if nothing is passed i

@@ -2,14 +2,15 @@ defmodule TreeChatWeb.SessionController do #This handles app sessions but not ch
   use TreeChatWeb, :controller
 
   alias TreeChat.Accounts
+  alias TreeChat.AuthGoogle
 
   def new(conn, _params) do
-    oauth_google_url = ElixirAuthGoogle.generate_oauth_url(conn)
+    oauth_google_url = AuthGoogle.generate_oauth_url(conn)
     render(conn, "new.html", [oauth_google_url: oauth_google_url])
   end
 
   def create(conn, %{"session" => auth_params}) do
-    oauth_google_url = ElixirAuthGoogle.generate_oauth_url(conn)
+    oauth_google_url = AuthGoogle.generate_oauth_url(conn)
     user = Accounts.get_by_email(auth_params["email"])
 
     refferer = conn.req_headers
