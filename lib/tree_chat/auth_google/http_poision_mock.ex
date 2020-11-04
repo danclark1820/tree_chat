@@ -16,7 +16,7 @@ defmodule TreeChat.AuthGoogle.HTTPoisonMock do
   get/1 using a dummy _url to test body decoding.
   """
   def get(_url) do
-    {:ok, %{body: Poison.encode!(
+    {:ok, %{body: Jason.encode!(
      %{
        email: "nelson@gmail.com",
        email_verified: true,
@@ -34,6 +34,6 @@ defmodule TreeChat.AuthGoogle.HTTPoisonMock do
   post/2 passing in dummy _url & _body to test return of access_token.
   """
   def post(_url, _body) do
-    {:ok, %{body: Poison.encode!(%{access_token: "token1"})}}
+    {:ok, %{body: Jason.encode!(%{access_token: "token1"})}}
   end
 end

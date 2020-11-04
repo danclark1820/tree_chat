@@ -66,7 +66,7 @@ defmodule TreeChat.AuthGoogle do
   """
   @spec get_token(String.t, Map) :: String.t
   def get_token(code, conn) do
-    body = Poison.encode!(
+    body = Jason.encode!(
       %{ client_id: Application.get_env(:tree_chat, __MODULE__)[:client_id],
          client_secret: Application.get_env(:tree_chat, __MODULE__)[:client_secret],
          redirect_uri: generate_redirect_uri(conn),
