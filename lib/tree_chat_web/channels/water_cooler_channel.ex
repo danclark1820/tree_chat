@@ -58,4 +58,13 @@ defmodule TreeChatWeb.WaterCoolerChannel do
         {:noreply, socket}
     end
   end
+
+  def handle_info(:after_join, socket) do
+    {:ok, _} = Presence.track(socket, socket.assigns.user_id, %{
+      online_at: inspect(System.system_time(:second))
+    })
+
+    push(socket, "presence_state", Presence.list(socket))
+    {:noreply, socket}
+  end
 end
