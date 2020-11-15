@@ -16,6 +16,7 @@ var chatForm = document.getElementById("chat-form");
 var chatWindow = document.getElementById("chat-window")
 var closeSpans = document.getElementsByClassName("close");
 var searchParams = new URLSearchParams(window.location.search)
+var pathName = window.location.pathname;
 
 
 if (searchParams.has("message_id")) {
@@ -28,7 +29,8 @@ if (searchParams.has("message_id")) {
 
 if (window.userToken == null) {
   chatForm.onclick = function() {
-    signInModal.style.display = "block";
+    signUpModal.style.display = "block";
+    ga('send', 'event', 'SignUps', 'click chat form: unlogged in', 'signup loaded', pathName);
   }
 }
 
@@ -72,6 +74,7 @@ for (var i = 0; i < signInLinks.length; i++) {
 
 for (var i = 0; i < signUpLinks.length; i++) {
   signUpLinks[i].onclick = function() {
+    ga('send', 'event', 'SignUps', 'sign up link clicked', 'signup loaded', pathName);
     signInModal.style.display = "none";
     signUpModal.style.display = "block";
   }
@@ -80,6 +83,7 @@ for (var i = 0; i < signUpLinks.length; i++) {
 // When the user clicks on <closeSpan> (x), close the modal
 for (var i = 0; i < closeSpans.length; i++) {
   closeSpans[i].onclick = function() {
+    ga('send', 'event', 'Form Closed', 'close button clicked', 'form closed', pathName);
     signUpModal.style.display = "none";
     signInModal.style.display = "none";
     newChatModal.style.display = "none";
@@ -92,26 +96,32 @@ for (var i = 0; i < closeSpans.length; i++) {
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == signUpModal) {
+    ga('send', 'event', 'Form Closed', 'clicked out of sign up', 'form closed', pathName);
     signUpModal.style.display = "none";
   }
 
   if (event.target == signInModal) {
+    ga('send', 'event', 'Form Closed', 'clicked out of sign in', 'form closed', pathName);
     signInModal.style.display = "none";
   }
 
   if (event.target == newChatModal) {
+    ga('send', 'event', 'Form Closed', 'clicked out of new chat', 'form closed', pathName);
     newChatModal.style.display = "none";
   }
 
   if (event.target == editAccountModal) {
+    ga('send', 'event', 'Form Closed', 'clicked out of edit account', 'form closed', pathName);
     editAccountModal.style.display = "none";
   }
 
   if (event.target == forgotPasswordModal) {
+    ga('send', 'event', 'Form Closed', 'clicked out of forgot password', 'form closed', pathName);
     forgotPasswordModal.style.display = "none";
   }
 
   if (event.target == editPasswordModal) {
+    ga('send', 'event', 'Form Closed', 'clicked out of edit password', 'form closed', pathName);
     editPasswordModal.style.display = "none";
   }
 }

@@ -44,7 +44,6 @@
       <div id="signin-modal" class="modal">
         <div class="modal-content">
           <span class="close">&times;</span>
-          updated_assigns
           <%= render "new_session.html", Map.merge(assigns, %{action: Routes.session_path(@conn, :create), oauth_google_url: TreeChat.AuthGoogle.generate_oauth_url(@conn)}) %>
         </div>
       </div>
