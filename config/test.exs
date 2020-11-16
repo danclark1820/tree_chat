@@ -20,3 +20,5 @@ config :tree_chat, TreeChat.AuthGoogle,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+config :tree_chat, env: Mix.env()

@@ -30,6 +30,7 @@ if (searchParams.has("message_id")) {
 if (window.userToken == null) {
   chatForm.onclick = function() {
     signUpModal.style.display = "block";
+    mixpanel.track("Unlogged in chat attempt", {"path": pathName})
     ga('send', 'event', 'SignUps', 'click chat form: unlogged in', 'signup loaded', pathName);
   }
 }
@@ -83,6 +84,7 @@ for (var i = 0; i < signUpLinks.length; i++) {
 // When the user clicks on <closeSpan> (x), close the modal
 for (var i = 0; i < closeSpans.length; i++) {
   closeSpans[i].onclick = function() {
+    mixpanel.track("closed out of modal", {"path": pathName})
     ga('send', 'event', 'Form Closed', 'close button clicked', 'form closed', pathName);
     signUpModal.style.display = "none";
     signInModal.style.display = "none";
@@ -96,6 +98,7 @@ for (var i = 0; i < closeSpans.length; i++) {
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == signUpModal) {
+    mixpanel.track("clicked out of sign up", {"path": pathName})
     ga('send', 'event', 'Form Closed', 'clicked out of sign up', 'form closed', pathName);
     signUpModal.style.display = "none";
   }
