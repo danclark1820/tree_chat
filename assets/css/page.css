@@ -114,8 +114,7 @@ body {
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
-  width: 40%; /* Could be more or less, depending on screen size */
-  text-align: left;
+  width: 20vw; /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button */
@@ -133,11 +132,36 @@ body {
   cursor: pointer;
 }
 
+.form-header {
+  text-align: center;
+}
+
+.form-element {
+  text-align: center;
+  padding: 5px;
+}
+
+.form-input {
+  height: 30px;
+  width: 140px;
+  text-align: center;
+}
+
+.form-submit {
+  height: 32px;
+  width: 144px;
+}
+
+.sign-up-or {
+  padding: 20px !important
+}
+
 #google-sign-in-link {
   display: block;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+  margin: auto;
   background: url("/images/btn_google_signin_light_normal_web.png") no-repeat;
+  height: 50px;
+  width: 200px;
 }
 
 #google-sign-in-link:hover,

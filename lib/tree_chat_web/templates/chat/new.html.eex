@@ -2,12 +2,6 @@
 
 <%= form_for :chat, chat_path(@conn, :create), [as: :chat], fn f -> %>
   <div>
-    Chat topics allow only letters and underscores. No spaces.
-  </div>
-  <div>
-    ex: DevisivePoliticalEventTopic or devisive_political_event_topic
-  </div>
-  <div>
     <%= text_input f, :topic, placeholder: "ChatTopic", required: true %>
     <%= error_tag f, :topic %>
   </div>

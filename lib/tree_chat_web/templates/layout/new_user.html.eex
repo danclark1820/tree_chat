@@ -1,32 +1,32 @@
-<h2>Cooler.Chat<h2>
-<h3>Sign Up</h3>
+<h3 class="form-header">Sign Up</h3>
 
 <%= form_for @conn, user_path(@conn, :create), [as: :user], fn f -> %>
-  <div>
-    <%= text_input f, :first_name, placeholder: "first name", required: true%><br>
+  <div class="form-element">
+    <%= text_input f, :first_name, placeholder: "First", required: true, class: "form-input"%>
     <%= error_tag f, :first_name %>
   </div>
-  <div>
-    <%= text_input f, :last_name, placeholder: "last name", required: true%><br>
+  <div class="form-element">
+    <%= text_input f, :last_name, placeholder: "Last", required: true, class: "form-input"%>
     <%= error_tag f, :last_name %>
   </div>
-  <div>
-    <%= text_input f, :email, placeholder: "Email", required: true %>
+  <div class="form-element">
+    <%= text_input f, :email, placeholder: "Email", required: true, class: "form-input" %>
     <%= error_tag f, :email %>
   </div>
-  <div>
-    <%= text_input f, :username, placeholder: "Username", required: true %>
+  <div class="form-element">
+    <%= text_input f, :username, placeholder: "Username", required: true, class: "form-input"  %>
     <%= error_tag f, :username %>
   </div>
-  <div>
-    <%= password_input f, :encrypted_password, placeholder: "Password", required: true %>
+  <div class="form-element">
+    <%= password_input f, :encrypted_password, placeholder: "Password", required: true, class: "form-input" %>
     <%= error_tag f, :encrypted_password %>
   </div>
-  <div>
-    <%= submit "Submit" %>
+  <div class="form-element">
+    <%= submit "Submit", class: "form-submit" %>
   </div>
-  Already a member? <span class="signin-link">Sign In</span>
-  <a href="<%= @oauth_google_url %>">
-    <img id="google-sign-in-link" src="/images/btn_google_signin_light_normal_web.png" alt="Sign in with Google" />
-  </a>
+  <div class="form-element sign-up-or">-OR-</div>
+  <a id="google-sign-in-link" class="form-element" href="<%= @oauth_google_url %>"></a>
+  <div class="form-element">
+    Already a member? <span class="signin-link">Sign In</span>
+  </div>
 <% end %>
