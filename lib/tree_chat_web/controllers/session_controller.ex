@@ -13,7 +13,7 @@ defmodule TreeChatWeb.SessionController do #This handles app sessions but not ch
     oauth_google_url = AuthGoogle.generate_oauth_url(conn)
     user = Accounts.get_by_email(auth_params["email"])
 
-    refferer = conn.req_headers
+    referer = conn.req_headers
     |> List.keyfind("referer", 0)
     |> elem(1)
 
@@ -26,7 +26,7 @@ defmodule TreeChatWeb.SessionController do #This handles app sessions but not ch
         |> put_session(:current_user_name, user.username)
         |> put_flash(:info, "Signed in successfully.")
         |> assign(:oauth_google_url, oauth_google_url)
-        |> smart_redirect(refferer) #conn[:req_headers][req_refferer]
+        |> smart_redirect(referer) #conn[:req_headers][req_referer]
       {:error, _} ->
         conn
         |> assign(:oauth_google_url, oauth_google_url)
@@ -42,13 +42,13 @@ defmodule TreeChatWeb.SessionController do #This handles app sessions but not ch
     |> redirect(to: page_path(conn, :index))
   end
 
-  defp smart_redirect(conn, refferer) do
-    parsed_refferer = String.split(refferer, "/")
+  defp smart_redirect(conn, referer) do
+    parsed_referer = String.split(referer, "/")
 
-    if Enum.any?(parsed_refferer, fn x -> x == "sign-in" end) || !Enum.any?(parsed_refferer, fn x -> x == "cooler.chat" || x == "localhost:4000" end) do
+    if Enum.any?(parsed_referer, fn x -> x == "sign-in" end) || !Enum.any?(parsed_referer, fn x -> x == "cooler.chat" || x == "localhost:4000" end) do
       redirect(conn, to: page_path(conn, :index))
     else
-      redirect(conn, external: refferer)
+      redirect(conn, external: referer)
     end
   end
 end

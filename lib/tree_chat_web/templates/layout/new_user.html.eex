@@ -14,10 +14,6 @@
     <%= error_tag f, :email %>
   </div>
   <div class="form-element">
-    <%= text_input f, :username, placeholder: "Username", required: true, class: "form-input"  %>
-    <%= error_tag f, :username %>
-  </div>
-  <div class="form-element">
     <%= password_input f, :encrypted_password, placeholder: "Password", required: true, class: "form-input" %>
     <%= error_tag f, :encrypted_password %>
   </div>

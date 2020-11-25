@@ -76,6 +76,7 @@ defmodule TreeChatWeb.Router do
       conn
     end
   end
+
   # Other scopes may use custom stacks.
   # scope "/api", TreeChatWeb do
   #   pipe_through :api

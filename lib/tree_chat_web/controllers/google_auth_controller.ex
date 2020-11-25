@@ -18,7 +18,7 @@ defmodule TreeChatWeb.GoogleAuthController do #This handles app sessions but not
         |> put_session(:current_user_last, user.last_name)
         |> put_session(:current_user_name, user.username)
         |> put_flash(:info, "Signed in successfully.")
-        |> redirect(to: page_path(conn, :index))
+        |> smart_redirect
       _ ->
         generated_user_name = generate_user_name("#{profile[:given_name]}#{profile[:family_name]}", 0)
 
@@ -30,7 +30,7 @@ defmodule TreeChatWeb.GoogleAuthController do #This handles app sessions but not
             |> put_session(:current_user_last, user.last_name)
             |> put_session(:current_user_name, user.username)
             |> put_flash(:info, "Account created successfully.")
-            |> redirect(to: page_path(conn, :index))
+            |> smart_redirect
 
           {:error, %Ecto.Changeset{} = changeset} ->
             conn
@@ -46,6 +46,15 @@ defmodule TreeChatWeb.GoogleAuthController do #This handles app sessions but not
         proposed
       %Accounts.User{} ->
         generate_user_name("#{proposed}#{acc + 1}", acc+1)
+    end
+  end
+
+  defp smart_redirect(conn) do
+    case conn |> get_session |> Map.get("current_chat_topic") do
+      nil ->
+        redirect(conn, to: page_path(conn, :index))
+      chat_topic ->
+        redirect(conn, to: "/c/#{chat_topic}")
     end
   end
 end

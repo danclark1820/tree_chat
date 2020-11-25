@@ -18,7 +18,9 @@ defmodule TreeChatWeb.PageController do
     # list messages for specifc chat if it exists, redirect to new chats page if it does not
     case current_chat = Chat.get_chat_by_topic(conn.params["chat_topic"]) do
       %Chat{} ->
-        render conn, "index.html", messages: Chat.list_messages(current_chat), chats: chats, current_chat: current_chat, oauth_google_url: oauth_google_url
+        conn
+        |> put_session(:current_chat_topic, conn.params["chat_topic"])
+        |> render "index.html", messages: Chat.list_messages(current_chat), chats: chats, current_chat: current_chat, oauth_google_url: oauth_google_url
       nil ->
         conn
         |> assign(:oauth_google_url, oauth_google_url)
