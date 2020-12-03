@@ -201,3 +201,71 @@ body {
   margin-top: 3vh;
   margin-left: 45vw;
 }
+
+
+@media only screen and (max-width: 600px) {
+  body {
+    margin: 0px;
+  }
+
+  #search-container {
+    padding-left: 5vw;
+  }
+
+  #search-form{
+    width: 50vw;
+    height: 25px
+  }
+
+  #search-submit {
+    width: 15vw;
+    height: 31px;
+  }
+
+  .chat-title {
+    margin: 0vw;
+  }
+
+  #new-chat-link {
+    display: none;
+  }
+
+  #profile-links {
+    display: none;
+  }
+
+  .chat-description {
+    display: none;
+  }
+
+  .chat-list {
+    display: none;
+    margin-right: 0vw
+  }
+
+  .chat-container {
+    float: none;
+    padding: 0px;
+    overflow-x: hidden;
+    width: 100vw;
+    height: 60vh;
+  }
+
+  .message-input {
+    margin-left: 0vw;
+    margin-top: 0vh;
+    height: 20vh;
+    width: 100vw;
+    overflow: auto;
+    overflow-wrap: break-word;
+    font-size: 16px;
+    font-family: arial;
+    border: solid #E0E0E0 3px
+  }
+
+
+  #feedback-link {
+    display: none;
+  }
+
+}
