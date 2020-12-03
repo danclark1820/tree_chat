@@ -209,7 +209,7 @@ body {
   }
 
   #search-container {
-    padding-left: 5vw;
+    padding-left: 15vw;
   }
 
   #search-form{
@@ -218,7 +218,7 @@ body {
   }
 
   #search-submit {
-    width: 15vw;
+    width: 16vw;
     height: 31px;
   }
 
@@ -244,16 +244,17 @@ body {
   }
 
   .chat-container {
-    float: none;
-    padding: 0px;
+    padding: 1px;
     overflow-x: hidden;
+    overflow-y: hidden;
     width: 100vw;
-    height: 60vh;
+    height: 70vh;
   }
 
   .message-input {
     margin-left: 0vw;
     margin-top: 0vh;
+    padding: 0px;
     height: 20vh;
     width: 100vw;
     overflow: auto;
@@ -263,9 +264,12 @@ body {
     border: solid #E0E0E0 3px
   }
 
+  .modal-content {
+    width: 60vw; /* Could be more or less, depending on screen size */
+  }
+
 
   #feedback-link {
     display: none;
   }
-
 }
