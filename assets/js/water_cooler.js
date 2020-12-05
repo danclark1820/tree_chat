@@ -1,9 +1,11 @@
+import { EmojiButton } from '@joeattardi/emoji-button';
 let WaterCooler = {
   init(socket) {
     let channel_name = window.location.pathname.replace(/\/c\//g, '')
     let channel = socket.channel(`water_cooler:${channel_name}`, {})
     channel.join()
     this.listenForChats(channel)
+    this.listenForReactions(channel)
   },
 
   listenForChats(channel) {
@@ -64,6 +66,23 @@ let WaterCooler = {
       chatWindow.scrollTop = chatWindow.scrollHeight;
       updateScroll();
     })
+  },
+
+  listenForReactions(channel) {
+    const picker = new EmojiButton();
+    const reactionButtons = document.getElementsByClassName('add-reaction-button');
+
+    picker.on('emoji', selection => {
+      // reaction_button.innerHTML = selection.emoji;
+      // Do exacctly what is on line 47 to broadcast the reaction
+      // Add a version of whats on line 57 for reaction instead of shout
+    });
+
+    for (var i = 0; i < reactionButtons.length; i++) {
+      reactionButtons[i].addEventListener('click', (e) => {
+        picker.togglePicker(e.currentTarget)
+      });
+    }
   }
 }
 
