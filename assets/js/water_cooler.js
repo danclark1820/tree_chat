@@ -55,7 +55,8 @@ let WaterCooler = {
     channel.on('shout', payload => {
       let msgBlock = document.createElement('div')
       msgBlock.insertAdjacentHTML('beforeend', `<div class='message' id='message-${payload.message_id}'>
-                                                  <span class='message-name'>${payload.name}:</span>
+                                                  <span class='message-name'>${payload.name}</span><span>+</span>
+                                                  <br>
                                                   ${payload.body}
                                                 </div>`
       )

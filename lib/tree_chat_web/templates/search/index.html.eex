@@ -36,7 +36,8 @@
       <%= else %>
         <%= for message <- @messages do %>
           <%= raw "<div class='message' id='message-id-#{message.id}'>"%>
-            <%= link "#{message.name}:", to: chat_path(TreeChatWeb.Endpoint, :show, message.chat_id || "", message_id: message.id) %>
+            <%= link "#{message.name}", to: chat_path(TreeChatWeb.Endpoint, :show, message.chat_id || "", message_id: message.id) %>
+            <br>
             <%= TreeChatWeb.PageView.decorate_message(message.body) %>
           </div>
         <% end %>

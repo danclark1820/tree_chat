@@ -16,9 +16,11 @@
     <div class="chat-window" id="chat-window">
       <%= for message <- @messages do %>
         <%= raw "<div class='message' id='message-id-#{message.id}'>"%>
-          <span class="message-name"><%= message.name %>:</span>
+          <span class="message-name"><%= message.name %></span>
+          <br>
           <%= decorate_message(message.body) %>
         </div>
+        <span class="add-reaction-button">+🙂</span>
       <% end %>
     </div>
   </section>

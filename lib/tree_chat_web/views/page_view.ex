@@ -17,7 +17,7 @@ defmodule TreeChatWeb.PageView do
     end
 
     body
-    |> Earmark.as_html!
+    # |> Earmark.as_html!
     |> append_preview(link_preview)
     |> raw
   end
