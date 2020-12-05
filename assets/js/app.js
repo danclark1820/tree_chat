@@ -20,3 +20,18 @@ WaterCooler.init(socket)
 //
 // Local files can be imported directly using relative paths, for example:
 // import socket from "./socket"
+import { EmojiButton } from '@joeattardi/emoji-button';
+
+const picker = new EmojiButton();
+const reactionButtons = document.getElementsByClassName('add-reaction-button');
+const chatLink = document.getElementById('new-chat-link')
+
+picker.on('emoji', selection => {
+  // reaction_button.innerHTML = selection.emoji;
+});
+
+for (var i = 0; i < reactionButtons.length; i++) {
+  reactionButtons[i].addEventListener('click', (e) => {
+    picker.togglePicker(e.currentTarget)
+  });
+}
