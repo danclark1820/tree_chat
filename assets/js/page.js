@@ -20,8 +20,8 @@ var pathName = window.location.pathname;
 
 
 if (searchParams.has("message_id")) {
-  messageID = searchParams.get("message_id")
-  messageElem = document.getElementById(`message-id-${messageID}`)
+  messageId = searchParams.get("message_id")
+  messageElem = document.getElementById(`message-id-${messageId}`)
   messageElem.scrollIntoView();
 } else {
   chatWindow.scrollTop = chatWindow.scrollHeight;

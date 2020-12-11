@@ -20,7 +20,7 @@
           <br>
           <%= decorate_message(message.body) %>
         </div>
-        <span class="add-reaction-button">+🙂</span>
+        <%= raw "<span class='add-reaction-button' id='reaction-message-id-#{message.id}'>+🙂</span>" %>
       <% end %>
     </div>
   </section>
