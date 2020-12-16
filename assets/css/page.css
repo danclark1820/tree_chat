@@ -268,6 +268,10 @@ body {
     width: 60vw; /* Could be more or less, depending on screen size */
   }
 
+  .embedded-youtube-video {
+    width: 240px;
+    height: 197px;
+  }
 
   #feedback-link {
     display: none;

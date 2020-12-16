@@ -12,7 +12,7 @@ defmodule TreeChatWeb.PageView do
       [] -> ""
       ast_links -> hd(ast_links)
         |> url_from_ast_link
-        |> requestOembed
+        |> get_youtube_video_id
         |> compose_preview
     end
 
@@ -31,28 +31,29 @@ defmodule TreeChatWeb.PageView do
     end
   end
 
-  def requestOembed(full_url) do
-    case HTTPoison.get("#{base_url(full_url)}/oembed?url=#{full_url}&format=json") do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        Jason.decode! body
-      {:ok, %HTTPoison.Response{status_code: 404}} ->
-        {:error, "Not found :("}
-      {:ok, _response = %HTTPoison.Response{}} ->
-        {:error, "Something other then a 404 or 200"}
-      {:error, %HTTPoison.Error{reason: _reason}} ->
-        {:error, "not found"}
-    end
+  # def requestOembed(full_url) do
+  #   require IEx; IEx.pry
+  #   case HTTPoison.get("#{base_url(full_url)}/oembed?url=#{full_url}&format=json") do
+  #     {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+  #       Jason.decode! body
+  #     {:ok, %HTTPoison.Response{status_code: 404}} ->
+  #       {:error, "Not found :("}
+  #     {:ok, _response = %HTTPoison.Response{}} ->
+  #       {:error, "Something other then a 404 or 200"}
+  #     {:error, %HTTPoison.Error{reason: _reason}} ->
+  #       {:error, "not found"}
+  #   end
+  # end
+
+  def compose_preview(youtube_video_id) do
+    "<br>
+      <iframe class='embedded-youtube-video' width='480' height='385'
+        src='https://www.youtube.com/embed/#{youtube_video_id}'>
+      </iframe>
+    "
   end
 
-  def compose_preview(%{"title" => _title, "html" => html}) do
-    html
-  end
-
-  def compose_preview({:error, _error}) do
-    ""
-  end
-
-  def compose_preview(_response = %{}) do
+  def compose_preview(nil) do
     ""
   end
 
@@ -60,10 +61,10 @@ defmodule TreeChatWeb.PageView do
     body <> preview
   end
 
-  def base_url(url) do
-    case Regex.replace(~r/(http(s)?:\/\/)|(\/.*){1}/, url, "") do
-      "" -> TreeChatWeb.Endpoint.url
-      external_url -> external_url
+  def get_youtube_video_id(url) do
+    case Regex.run(~r/youtube\.com\/watch\?v=([\w-]{11})/, url) do
+      nil -> nil
+      youtube_string_matches -> List.last(youtube_string_matches)
     end
   end
 end
