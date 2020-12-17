@@ -4,7 +4,7 @@ defmodule TreeChat.Reaction do
   alias TreeChat.Accounts.User
   alias TreeChat.Message
 
-  schema "reaction" do
+  schema "reactions" do
     field :value, :string
     belongs_to :user, User
     belongs_to :message, Message

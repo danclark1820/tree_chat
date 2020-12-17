@@ -8,7 +8,7 @@ defmodule TreeChat.Chat do
 
   use Ecto.Schema
 
-  alias TreeChat.{Chat, Message, Accounts.User, Repo}
+  alias TreeChat.{Chat, Message, Accounts.User, Reaction, Repo}
 
 
 
@@ -94,6 +94,12 @@ defmodule TreeChat.Chat do
   def create_message(attrs \\ %{}) do
     %Message{}
     |> Message.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def create_reaction(attrs \\ %{}) do
+    %Reaction{}
+    |> Reaction.changeset(attrs)
     |> Repo.insert()
   end
 
