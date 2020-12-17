@@ -47,7 +47,7 @@ defmodule TreeChatWeb.PageView do
 
   def compose_preview(youtube_video_id) do
     "<br>
-      <iframe class='embedded-youtube-video' width='480' height='385'
+      <iframe class='embedded-youtube-video' width='560' height='315'
         src='https://www.youtube.com/embed/#{youtube_video_id}'>
       </iframe>
     "
