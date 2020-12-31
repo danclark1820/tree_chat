@@ -17,7 +17,6 @@ defmodule TreeChatWeb.PageView do
     end
 
     body
-    # |> Earmark.as_html!
     |> append_preview(link_preview)
     |> raw
   end
@@ -30,20 +29,6 @@ defmodule TreeChatWeb.PageView do
         nil
     end
   end
-
-  # def requestOembed(full_url) do
-  #   require IEx; IEx.pry
-  #   case HTTPoison.get("#{base_url(full_url)}/oembed?url=#{full_url}&format=json") do
-  #     {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-  #       Jason.decode! body
-  #     {:ok, %HTTPoison.Response{status_code: 404}} ->
-  #       {:error, "Not found :("}
-  #     {:ok, _response = %HTTPoison.Response{}} ->
-  #       {:error, "Something other then a 404 or 200"}
-  #     {:error, %HTTPoison.Error{reason: _reason}} ->
-  #       {:error, "not found"}
-  #   end
-  # end
 
   def compose_preview(youtube_video_id) do
     "<br>

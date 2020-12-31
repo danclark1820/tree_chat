@@ -17,6 +17,7 @@ defmodule TreeChat.Chat do
     field :description, :string
     field :created_by, :integer
     belongs_to :user, User, define_field: false
+    has_many :messages, Message
 
     timestamps()
   end
@@ -49,7 +50,12 @@ defmodule TreeChat.Chat do
   end
 
   def list_messages(chat = %Chat{}) do
-    from(m in Message, where: m.chat_id == ^chat.id, order_by: m.inserted_at)
+    messages = from m in Message,
+                  where: m.chat_id == ^chat.id,
+                  order_by: m.inserted_at
+
+    messages
+    # |> Repo.paginate(cursor_fields: [:inserted_at, :id], limit: 1)
     |> Repo.all
   end
 
@@ -58,9 +64,24 @@ defmodule TreeChat.Chat do
       nil ->
         {:error, "Chat Topic does not exist"}
       chat ->
-        from(m in Message, where: m.chat_id == ^chat.id, order_by: m.inserted_at)
+        Message
+        |> where([m], m.chat_id == ^chat.id)
+        |> order_by([m], m.inserted_at)
         |> Repo.all
     end
+  end
+
+  def reactions_for_messages(messages) do
+    message_ids = Enum.map(messages, &(&1.id))
+    reactions_for_messages = from m in Message,
+                                where: m.id in ^message_ids,
+                                preload: :reactions,
+                                join: r in Reaction, on: m.id == r.message_id,
+                                group_by: [m.id, r.value],
+                                select: %{message: m, id: m.id, reaction: r.value, count: count(r.value)}
+
+    reactions_for_messages
+    |> Repo.all
   end
 
   @doc """
@@ -98,6 +119,7 @@ defmodule TreeChat.Chat do
   end
 
   def create_reaction(attrs \\ %{}) do
+    #if the reaction exists, delete it, or use seperate code?
     %Reaction{}
     |> Reaction.changeset(attrs)
     |> Repo.insert()

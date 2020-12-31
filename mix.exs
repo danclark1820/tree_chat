@@ -54,6 +54,7 @@ defmodule TreeChat.MixProject do
       {:bamboo_smtp, "~> 2.1.0"},
       {:ecto_explain, "~> 0.1.2"},
       {:elixir_auth_google, "~> 1.3.0"},
+      {:paginator, "~> 1.0.3"}
     ]
   end
 

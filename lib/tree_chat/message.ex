@@ -2,12 +2,14 @@ defmodule TreeChat.Message do
   use Ecto.Schema
   import Ecto.Changeset
   alias TreeChat.Accounts.User
+  alias TreeChat.Reaction
 
   schema "messages" do
     field :body, :string
     field :name, :string
     belongs_to :user, User
     belongs_to :chat, Chat
+    has_many :reactions, Reaction
 
     timestamps()
   end

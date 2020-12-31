@@ -3,4 +3,5 @@ defmodule TreeChat.Repo do
     otp_app: :tree_chat,
     adapter: Ecto.Adapters.Postgres
   use Ecto.Explain
+  use Paginator
 end
