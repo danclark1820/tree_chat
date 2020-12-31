@@ -21,6 +21,11 @@
           <%= decorate_message(message.body) %>
         </div>
         <%= raw "<span class='add-reaction-button' id='reaction-message-id-#{message.id}'>+🙂</span>" %>
+        <%= for reaction <- @reactions do %>
+          <%= if message.id == reaction.id do %>
+            <%= raw "<span class='add-reaciton-button'>#{reaction.count}#{reaction.reaction}</span>" %>
+          <% end %>
+        <% end %>
       <% end %>
     </div>
   </section>

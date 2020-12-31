@@ -18,7 +18,7 @@ defmodule TreeChat.Reaction do
     reaction
     |> cast(attrs, [:value, :user_id, :message_id])
     |> validate_required([:value, :user_id, :message_id])
-    # |> unique_constraint([:value, :user_id, :message_id])
+    # |> unique_constraint([:value, :user_id, :message_id]) #This also needs a migration
     |> assoc_constraint(:user)
     |> assoc_constraint(:message)
   end
