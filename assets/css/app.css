@@ -9,7 +9,14 @@
   border-radius: 8px;
 }
 
-.add-reaction-button:hover {
+.add-reaction-button-selected {
+  background-color: #b3ffff;
+  border: 1px solid #1ad1ff;
+  border-radius: 8px;
+}
+
+.add-reaction-button:hover,
+.add-reaction-button-selected:hover {
   background-color: #b3ffff;
   border: 2px solid #1ad1ff;
   border-radius: 8px;
