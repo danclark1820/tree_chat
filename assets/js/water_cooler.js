@@ -62,7 +62,7 @@ let WaterCooler = {
                                                   <br>
                                                   ${payload.body}
                                                 </div>
-                                                <span class='add-reaction-button' id='reaction-message-id-${payload.message_id}'>+🙂</span>
+                                                <span class='add-new-reaction-button add-reaction-button' id='reaction-message-id-${payload.message_id}'>+🙂</span>
                                                 `
       )
       chatWindow.appendChild(msgBlock)
@@ -74,18 +74,42 @@ let WaterCooler = {
   listenForReactions(channel) {
     let userId = window.userId
     const picker = new EmojiButton();
-    const reactionButtons = document.getElementsByClassName('add-reaction-button');
+    const newReactionButtons = document.getElementsByClassName('add-new-reaction-button');
+    const incrementReactionButtons = document.getElementsByClassName('increment-reaction-button')
+
+    channel.on('increment_reaction', payload => {
+      console.log("Pizza")
+      let messageReactionEl = document.getElementById(`message-id-${payload.message_id}-${payload.value}`)
+      if (messageReactionEl) {
+        let newCount = parseInt(messageReactionEl.dataset.count) + 1
+        messageReactionEl.dataset.count = newCount
+        messageReactionEl.innerText = `${newCount}${payload.value}`
+        // Highlight it because we know the user clicked it
+      } else {
+        let reactionBlock = document.getElementById(`reaction-message-id-${payload.message_id}`)
+
+        if (reactionBlock) {
+          reactionBlock.insertAdjacentHTML('beforeend', `<span class='add-reaction-button increment-reaction-button' id='message-id-${message.id}-${reaction.reaction}' data-count=1 data-reaction=${payload.value} data-message-id=${message.id}>1${payload.value}</span>`)
+          // Highlight it because we know the user clicked it
+        }
+      }
+    })
 
     picker.on('emoji', selection => {
-      // reaction_button.innerHTML = selection.emoji;
-      // Do exacctly what is on line 47 to broadcast the reaction
       let messageId = picker["message_id"].replace(/\D*/, '')
       channel.push('reaction', {value: selection.emoji, user_id: userId, message_id: messageId})
       // Add a version of whats on line 57 for reaction instead of shout
     });
 
-    for (var i = 0; i < reactionButtons.length; i++) {
-      reactionButtons[i].addEventListener('click', (e) => {
+    for (var i = 1; i < incrementReactionButtons.length; i++) {
+      incrementReactionButtons[i].addEventListener('click', (e) => {
+        let elData = e.toElement.dataset
+        channel.push('reaction', {value: elData.reaction, user_id: userId, message_id: elData.messageId})
+      });
+    }
+
+    for (var i = 0; i < newReactionButtons.length; i++) {
+      newReactionButtons[i].addEventListener('click', (e) => {
         picker["message_id"] = e.currentTarget.id
         picker.togglePicker(e.currentTarget)
         //Need to set data on picker saying which message id it is

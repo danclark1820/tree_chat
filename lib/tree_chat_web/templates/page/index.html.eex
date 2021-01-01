@@ -20,10 +20,10 @@
           <br>
           <%= decorate_message(message.body) %>
         </div>
-        <%= raw "<span class='add-reaction-button' id='reaction-message-id-#{message.id}'>+🙂</span>" %>
+        <%= raw "<span class='add-new-reaction-button add-reaction-button' id='reaction-message-id-#{message.id}'>+🙂</span>" %>
         <%= for reaction <- @reactions do %>
           <%= if message.id == reaction.id do %>
-            <%= raw "<span class='add-reaction-button'>#{reaction.count}#{reaction.reaction}</span>" %>
+            <%= raw "<span class='add-reaction-button increment-reaction-button' id='message-id-#{message.id}-#{reaction.reaction}' data-count=#{reaction.count} data-reaction=#{reaction.reaction} data-message-id=#{message.id}>#{reaction.count}#{reaction.reaction}</span>" %>
           <% end %>
         <% end %>
       <% end %>

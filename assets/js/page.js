@@ -12,6 +12,7 @@ var signInLinks = document.getElementsByClassName("signin-link");
 var newChatLink = document.getElementById("new-chat-link");
 var createChatLinks = document.getElementsByClassName("create-chat-link");
 var newChatModal = document.getElementById("new-chat-modal")
+var reactionButtons = document.getElementsByClassName("add-reaction-button")
 var chatForm = document.getElementById("chat-form");
 var chatWindow = document.getElementById("chat-window")
 var closeSpans = document.getElementsByClassName("close");
@@ -32,6 +33,14 @@ if (window.userToken == null) {
     signUpModal.style.display = "block";
     mixpanel.track("Unlogged in chat attempt", {"path": pathName})
     ga('send', 'event', 'SignUps', 'click chat form: unlogged in', 'signup loaded', pathName);
+  }
+
+  for (var i = 0; i < reactionButtons.length; i++) {
+    reactionButtons[i].onclick = function() {
+      signUpModal.style.display = "block";
+      mixpanel.track("Unlogged in reaction attempt", {"path": pathName})
+      ga('send', 'event', 'SignUps', 'click reaction button: unlogged in', 'signup loaded', pathName);
+    }
   }
 }
 

@@ -43,7 +43,7 @@ defmodule TreeChatWeb.WaterCoolerChannel do
   def handle_in("reaction", payload, socket = %Phoenix.Socket{topic: "water_cooler:" <> _chat_topic}) do
     case Chat.create_reaction(payload) do
       {:ok, reaction} ->
-        # broadcast socket, "increment_reaction", new_payload
+        broadcast socket, "increment_reaction", payload
         {:noreply, socket}
       {:error, _error} ->
         {:noreply, socket}
