@@ -31,14 +31,6 @@ let WaterCooler = {
       }
     }
 
-    // document.getElementById("search-form").addEventListener('keydown', function(e) {
-    //   if (e.keyCode == 13) {
-    //     e.preventDefault();
-    //     let query = document.getElementById('search-form').value
-    //     debugger
-    //   }
-    // });
-
     document.getElementById("chat-form").addEventListener('keydown', function(e) {
       if (e.keyCode == 13 && !e.shiftKey) {
         e.preventDefault();
@@ -62,7 +54,7 @@ let WaterCooler = {
                                                   <br>
                                                   ${payload.body}
                                                 </div>
-                                                <span class='add-new-reaction-button add-reaction-button' id='reaction-message-id-${payload.message_id}'>+🙂</span>
+                                                <span class='add-new-reaction-button reaction-button' id='reaction-message-id-${payload.message_id}'>+🙂</span>
                                                 `
       )
       chatWindow.appendChild(msgBlock)
@@ -76,29 +68,44 @@ let WaterCooler = {
     const picker = new EmojiButton();
     const newReactionButtons = document.getElementsByClassName('add-new-reaction-button');
     const incrementReactionButtons = document.getElementsByClassName('increment-reaction-button')
+    const decrementReactionButtons = document.getElementsByClassName('decrement-reaction-button')
 
     channel.on('increment_reaction', payload => {
-      console.log("Pizza")
       let messageReactionEl = document.getElementById(`message-id-${payload.message_id}-${payload.value}`)
       if (messageReactionEl) {
         let newCount = parseInt(messageReactionEl.dataset.count) + 1
         messageReactionEl.dataset.count = newCount
         messageReactionEl.innerText = `${newCount}${payload.value}`
-        // Highlight it because we know the user clicked it
+        messageReactionEl.classList.remove("increment-reaction-button")
+        messageReactionEl.classList.add("decrement-reaction-button")
+        listenForReactions(channel)
       } else {
         let reactionBlock = document.getElementById(`reaction-message-id-${payload.message_id}`)
 
         if (reactionBlock) {
-          reactionBlock.insertAdjacentHTML('beforeend', `<span class='add-reaction-button increment-reaction-button' id='message-id-${message.id}-${reaction.reaction}' data-count=1 data-reaction=${payload.value} data-message-id=${message.id}>1${payload.value}</span>`)
-          // Highlight it because we know the user clicked it
+          reactionBlock.insertAdjacentHTML('afterend', `<span class='reaction-button decrement-reaction-button' id='message-id-${payload.message_id}-${payload.value}' data-count=1 data-reaction=${payload.value} data-message-id=${payload.message_id}>1${payload.value}</span>`)
         }
+        listenForReactions(channel)
+      }
+    })
+
+    channel.on('decrement_reaction', payload => {
+      let messageReactionEl = document.getElementById(`message-id-${payload.message_id}-${payload.value}`)
+      if (messageReactionEl && parseInt(messageReactionEl.dataset.count) > 1) {
+        let newCount = parseInt(messageReactionEl.dataset.count) - 1
+        messageReactionEl.dataset.count = newCount
+        messageReactionEl.innerText = `${newCount}${payload.value}`
+        messageReactionEl.classList.add("increment-reaction-button")
+        messageReactionEl.classList.remove("decrement-reaction-button")
+        listenForReactions(channel)
+      } else {
+        messageReactionEl.remove()
       }
     })
 
     picker.on('emoji', selection => {
       let messageId = picker["message_id"].replace(/\D*/, '')
       channel.push('reaction', {value: selection.emoji, user_id: userId, message_id: messageId})
-      // Add a version of whats on line 57 for reaction instead of shout
     });
 
     for (var i = 1; i < incrementReactionButtons.length; i++) {
@@ -108,11 +115,18 @@ let WaterCooler = {
       });
     }
 
+    for (var i = 1; i < decrementReactionButtons.length; i++) {
+      decrementReactionButtons[i].addEventListener('click', (e) => {
+        let elData = e.toElement.dataset
+        channel.push('remove_reaction', {value: elData.reaction, user_id: userId, message_id: elData.messageId})
+      });
+    }
+
+
     for (var i = 0; i < newReactionButtons.length; i++) {
       newReactionButtons[i].addEventListener('click', (e) => {
         picker["message_id"] = e.currentTarget.id
         picker.togglePicker(e.currentTarget)
-        //Need to set data on picker saying which message id it is
       });
     }
   }

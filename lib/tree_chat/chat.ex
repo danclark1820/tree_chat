@@ -119,7 +119,6 @@ defmodule TreeChat.Chat do
   end
 
   def create_reaction(attrs \\ %{}) do
-    #if the reaction exists, delete it, or use seperate code?
     %Reaction{}
     |> Reaction.changeset(attrs)
     |> Repo.insert()
@@ -157,6 +156,11 @@ defmodule TreeChat.Chat do
   """
   def delete_message(%Message{} = message) do
     Repo.delete(message)
+  end
+
+  def delete_reaction(payload) do
+    reaction = Repo.get_by(Reaction, %{value: payload["value"], user_id: payload["user_id"], message_id: payload["message_id"]})
+    Repo.delete(reaction)
   end
 
   @doc """

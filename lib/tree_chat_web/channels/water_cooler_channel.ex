@@ -49,4 +49,14 @@ defmodule TreeChatWeb.WaterCoolerChannel do
         {:noreply, socket}
     end
   end
+
+  def handle_in("remove_reaction", payload, socket = %Phoenix.Socket{topic: "water_cooler:" <> _chat_topic}) do
+    case Chat.delete_reaction(payload) do
+      {:ok, reaction} ->
+        broadcast socket, "decrement_reaction", payload
+        {:noreply, socket}
+      {:error, _error} ->
+        {:noreply, socket}
+    end
+  end
 end

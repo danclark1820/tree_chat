@@ -20,15 +20,14 @@
           <br>
           <%= decorate_message(message.body) %>
         </div>
-        <%= raw "<span class='add-new-reaction-button add-reaction-button' id='reaction-message-id-#{message.id}'>+🙂</span>" %>
+        <%= raw "<span class='add-new-reaction-button reaction-button' id='reaction-message-id-#{message.id}'>+🙂</span>" %>
         <%= for reaction <- @reactions do %>
           <%= if message.id == reaction.id do %>
-            <% require IEx; IEx.pry %>
-            <%= case Enum.member?(Enum.map(reaction.message.reactions, &(&1.user_id)), Integer.parse(@conn.assigns[:current_user_id])) do %>
+            <%= case Enum.any?(reaction.message.reactions, & "#{&1.user_id}" == @conn.assigns[:user_id] && &1.value == reaction.reaction) do %>
               <%= true -> %>
-                <%= raw "<span class='add-reaction-button-selected decrement-reaction-button' id='message-id-#{message.id}-#{reaction.reaction}' data-count=#{reaction.count} data-reaction=#{reaction.reaction} data-message-id=#{message.id}>#{reaction.count}#{reaction.reaction}</span>" %>
+                <%= raw "<span class='decrement-reaction-button' id='message-id-#{message.id}-#{reaction.reaction}' data-count=#{reaction.count} data-reaction=#{reaction.reaction} data-message-id=#{message.id}>#{reaction.count}#{reaction.reaction}</span>" %>
               <%= false -> %>
-                <%= raw "<span class='add-reaction-button increment-reaction-button' id='message-id-#{message.id}-#{reaction.reaction}' data-count=#{reaction.count} data-reaction=#{reaction.reaction} data-message-id=#{message.id}>#{reaction.count}#{reaction.reaction}</span>" %>
+                <%= raw "<span class='reaction-button increment-reaction-button' id='message-id-#{message.id}-#{reaction.reaction}' data-count=#{reaction.count} data-reaction=#{reaction.reaction} data-message-id=#{message.id}>#{reaction.count}#{reaction.reaction}</span>" %>
             <% end %>
           <% end %>
         <% end %>

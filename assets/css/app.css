@@ -3,20 +3,20 @@
 /* @import "./phoenix.css"; */
 @import "./page.css";
 
-.add-reaction-button {
+.reaction-button {
   background-color: lightgray;
   border: 1px solid darkgray;
   border-radius: 8px;
 }
-
-.add-reaction-button-selected {
+/* can change this to decrement reaction button? */
+.decrement-reaction-button {
   background-color: #b3ffff;
   border: 1px solid #1ad1ff;
   border-radius: 8px;
 }
 
-.add-reaction-button:hover,
-.add-reaction-button-selected:hover {
+.reaction-button:hover,
+.decrement-reaction-button:hover {
   background-color: #b3ffff;
   border: 2px solid #1ad1ff;
   border-radius: 8px;
