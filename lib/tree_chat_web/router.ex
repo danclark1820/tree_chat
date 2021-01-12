@@ -36,6 +36,12 @@ defmodule TreeChatWeb.Router do
     get "/auth/google/callback", GoogleAuthController, :index
   end
 
+  scope "/api", TreeChatWeb do
+    pipe_through :api
+
+    resources "/messages", MessageController, only: [:index]
+  end
+
   defp put_user_token(conn, _) do
     if current_user_id = Plug.Conn.get_session(conn, :current_user_id) do
       token = Phoenix.Token.sign(conn, "user socket", current_user_id)

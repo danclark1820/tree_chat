@@ -45,30 +45,32 @@ defmodule TreeChat.Chat do
     Repo.all(from m in Message, where: is_nil(m.chat_id), order_by: m.inserted_at)
   end
 
-  def list_messages("lobby") do
-    Repo.all(from m in Message, where: is_nil(m.chat_id), order_by: m.inserted_at)
-  end
-
   def list_messages(chat = %Chat{}) do
     messages = from m in Message,
                   where: m.chat_id == ^chat.id,
-                  order_by: m.inserted_at
+                  order_by: [desc: m.inserted_at]
 
     messages
-    # |> Repo.paginate(cursor_fields: [:inserted_at, :id], limit: 1)
-    |> Repo.all
+    |> Repo.paginate(cursor_fields: [:inserted_at], limit: 3)
+    # |> Repo.all
   end
 
-  def list_messages(chat_topic) do
-    case Repo.get_by(Chat, topic: chat_topic) do
-      nil ->
-        {:error, "Chat Topic does not exist"}
-      chat ->
-        Message
-        |> where([m], m.chat_id == ^chat.id)
-        |> order_by([m], m.inserted_at)
-        |> Repo.all
-    end
+  def list_messages(chat = %Chat{}, after: cursor_after) do
+    messages = from m in Message,
+                  where: m.chat_id == ^chat.id,
+                  order_by: [desc: m.inserted_at]
+
+    messages
+    |> Repo.paginate(after: cursor_after, cursor_fields: [:inserted_at], limit: 3)
+  end
+
+  def list_messages(chat = %Chat{}, before: cursor_before) do
+    messages = from m in Message,
+                  where: m.chat_id == ^chat.id,
+                  order_by: [desc: m.inserted_at]
+
+    messages
+    |> Repo.paginate(before: cursor_before, cursor_fields: [:inserted_at], limit: 2)
   end
 
   def reactions_for_messages(messages) do
