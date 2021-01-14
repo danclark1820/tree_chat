@@ -16,9 +16,57 @@ var reactionButtons = document.getElementsByClassName("reaction-button")
 var chatForm = document.getElementById("chat-form");
 var chatWindow = document.getElementById("chat-window")
 var closeSpans = document.getElementsByClassName("close");
+var paginationTrigger = document.getElementById("pagination-trigger")
 var searchParams = new URLSearchParams(window.location.search)
 var pathName = window.location.pathname;
+let userId = window.userId
 
+function isScrolledIntoView(el) {
+    var rect = el.getBoundingClientRect();
+    var elemBottom = rect.bottom;
+    var isVisible = (elemBottom >= 0 && elemBottom <= 50)
+    return isVisible;
+}
+
+chatWindow.addEventListener("scroll", function(e) {
+  if (paginationTrigger && isScrolledIntoView(paginationTrigger)) {
+    var cursorAfter = paginationTrigger.dataset.cursorAfter
+    var chatId = paginationTrigger.dataset.chatId
+    let firstChild = chatWindow.firstChild
+    var xhr = new XMLHttpRequest();
+
+    xhr.onload = function () {
+    	if (xhr.status >= 200 && xhr.status < 300) {
+    		console.log('success!', xhr);
+        messages = JSON.parse(xhr.response)["messages"]
+
+        for (var i = 0; i < messages.length; i++) {
+          let msgBlock = document.createElement('div')
+          msgBlock.insertAdjacentHTML('beforeend', `<div class='message' id='message-${messages[i].id}'>
+                                                      <span class='message-name'>${messages[i].name}</span>
+                                                      <br>
+                                                      ${messages[i].body}
+                                                    </div>
+                                                    <span class='add-new-reaction-button reaction-button' id='reaction-message-id-${messages[i].id}'>+🙂</span>
+                                                    `
+          )
+          chatWindow.insertBefore(msgBlock, firstChild)
+        }
+    	} else {
+    		console.log('The request failed!');
+    	}
+    	console.log('This always runs...');
+    };
+    xhr.open('GET', `http://localhost:4000/api/messages?chat_id=${chatId}&&cursor_after=${cursorAfter}`);
+    xhr.send();
+    paginationTrigger.remove();
+    paginationTrigger = null
+  }
+})
+
+// if (isScrolledIntoView(paginationTrigger)) {
+//   console.log("PIIIZZAA")
+// }
 
 if (searchParams.has("message_id")) {
   messageId = searchParams.get("message_id")

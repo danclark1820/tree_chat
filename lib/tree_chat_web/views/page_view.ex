@@ -18,7 +18,7 @@ defmodule TreeChatWeb.PageView do
 
     body
     |> append_preview(link_preview)
-    |> raw
+    # |> raw
   end
 
   def url_from_ast_link(ast) do

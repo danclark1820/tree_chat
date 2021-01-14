@@ -30,7 +30,7 @@ defmodule TreeChatWeb.WaterCoolerChannel do
     case Chat.create_message(payload) do
       {:ok, message} ->
         new_payload = payload
-        |> Map.replace!("body", elem(PageView.decorate_message(payload["body"]), 1))
+        |> Map.replace!("body", PageView.decorate_message(payload["body"]))
         |> Map.put("message_id", message.id)
 
         broadcast socket, "shout", new_payload
