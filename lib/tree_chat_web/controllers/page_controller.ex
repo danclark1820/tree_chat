@@ -20,7 +20,6 @@ defmodule TreeChatWeb.PageController do
     case current_chat = Chat.get_chat_by_topic(conn.params["chat_topic"]) do
       %Chat{} ->
         %{entries: messages, metadata: metadata} = Chat.list_messages(current_chat)
-        require IEx; IEx.pry
         conn
         |> put_session(:current_chat_topic, conn.params["chat_topic"])
         |> render "index.html", messages: Enum.reverse(messages), metadata: metadata, reactions: Chat.reactions_for_messages(messages), chats: chats, current_chat: current_chat, oauth_google_url: oauth_google_url

@@ -38,9 +38,22 @@ chatWindow.addEventListener("scroll", function(e) {
     xhr.onload = function () {
     	if (xhr.status >= 200 && xhr.status < 300) {
     		console.log('success!', xhr);
-        messages = JSON.parse(xhr.response)["messages"]
-
+        response = JSON.parse(xhr.response)
+        chat = response["chat"]
+        messages = response["messages"]
+        metadata = response["metadata"]
         for (var i = 0; i < messages.length; i++) {
+          if (i == 0) {
+            paginationTrigger.remove();
+            paginationTrigger = null
+            var newPageTrigger = document.createElement("span")
+            newPageTrigger.innerText = "PIZZZZZZAAAA"
+            newPageTrigger.id = 'pagination-trigger'
+            newPageTrigger.dataset.cursorAfter = metadata.after
+            newPageTrigger.dataset.chatId = chat.id
+            chatWindow.insertBefore(newPageTrigger, firstChild)
+            paginationTrigger = document.getElementById("pagination-trigger")
+          }
           let msgBlock = document.createElement('div')
           msgBlock.insertAdjacentHTML('beforeend', `<div class='message' id='message-${messages[i].id}'>
                                                       <span class='message-name'>${messages[i].name}</span>
@@ -57,10 +70,9 @@ chatWindow.addEventListener("scroll", function(e) {
     	}
     	console.log('This always runs...');
     };
+    // need to update this to check local vs prod
     xhr.open('GET', `http://localhost:4000/api/messages?chat_id=${chatId}&&cursor_after=${cursorAfter}`);
     xhr.send();
-    paginationTrigger.remove();
-    paginationTrigger = null
   }
 })
 

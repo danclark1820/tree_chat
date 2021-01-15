@@ -18,7 +18,7 @@
         <%= if i == 0  do %>
           <%= raw "<span id='pagination-trigger' data-cursor-after='#{@metadata.after}' data-chat-id='#{@current_chat.id}'>Hello World</span>" %>
         <% end %>
-        <%= raw "<div class='message' id='message-id-#{message.id}' data-pagination-index='#{i}' data-cursor-after='#{@metadata.after}'>"%>
+        <%= raw "<div class='message' id='message-id-#{message.id}'>"%>
           <span class="message-name"><%= message.name %></span>
           <br>
           <%= raw decorate_message(message.body)%>
