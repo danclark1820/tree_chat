@@ -23,7 +23,74 @@ let WaterCooler = {
       scrolled=true
     }
 
-    chatWindow.addEventListener("scroll", setScrolledTrue())
+    function isScrolledIntoView(el) {
+        var rect = el.getBoundingClientRect();
+        var elemBottom = rect.bottom;
+        var isVisible = (elemBottom >= 0)
+        return isVisible;
+    }
+
+    function firePagination() {
+      var paginationTrigger = document.getElementById("pagination-trigger")
+      var executed = false
+      return function() {
+        if (!executed && paginationTrigger && isScrolledIntoView(paginationTrigger)) {
+          executed = true
+          var cursorAfter = paginationTrigger.dataset.cursorAfter
+          var chatId = paginationTrigger.dataset.chatId
+          paginationTrigger.remove();
+          paginationTrigger = null
+          let firstChild = chatWindow.firstChild
+          var newPageTrigger = document.createElement("span")
+          var xhr = new XMLHttpRequest();
+
+          xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              console.log('success!', xhr);
+              var response = JSON.parse(xhr.response)
+              var chat = response["chat"]
+              var messages = response["messages"]
+              var metadata = response["metadata"]
+              for (var i = 0; i < messages.length; i++) {
+                if (i == 0) {
+                  newPageTrigger.innerText = "PIZZZZZZAAAA"
+                  newPageTrigger.id = 'pagination-trigger'
+                  newPageTrigger.dataset.cursorAfter = metadata.after
+                  newPageTrigger.dataset.chatId = chat.id
+                  chatWindow.insertBefore(newPageTrigger, firstChild)
+                }
+                let msgBlock = document.createElement('div')
+                msgBlock.insertAdjacentHTML('beforeend', `<div class='message' id='message-${messages[i].id}'>
+                                                            <span class='message-name'>${messages[i].name}</span>
+                                                            <br>
+                                                            ${messages[i].body}
+                                                          </div>
+                                                          <span class='add-new-reaction-button reaction-button' id='reaction-message-id-${messages[i].id}'>+🙂</span>
+                                                          `
+                )
+                chatWindow.insertBefore(msgBlock, firstChild)
+              }
+            } else {
+              console.log('The request failed!');
+            }
+
+            console.log('This always runs...');
+          };
+          // need to update this to check local vs prod
+          if (cursorAfter) {
+            xhr.open('GET', `http://localhost:4000/api/messages?chat_id=${chatId}&&cursor_after=${cursorAfter}`);
+            xhr.send();
+          }
+        }
+      }
+    }
+
+    chatWindow.addEventListener("scroll", function(){
+        setScrolledTrue()
+        var fp = firePagination()
+        fp()
+      }
+    )
 
     function updateScroll(){
       if (!scrolled) {

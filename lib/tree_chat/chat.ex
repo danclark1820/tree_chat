@@ -51,7 +51,7 @@ defmodule TreeChat.Chat do
                   order_by: [desc: m.inserted_at, desc: m.id]
 
     messages
-    |> Repo.paginate(cursor_fields: [:inserted_at, :id], sort_direction: :desc, limit: 2)
+    |> Repo.paginate(cursor_fields: [:inserted_at, :id], sort_direction: :desc, limit: 4)
   end
 
   def list_messages(chat = %Chat{}, after: cursor_after) do
@@ -60,7 +60,7 @@ defmodule TreeChat.Chat do
                   order_by: [desc: m.inserted_at, desc: m.id]
 
     messages
-    |> Repo.paginate(after: cursor_after, cursor_fields: [:inserted_at, :id], sort_direction: :desc, limit: 2)
+    |> Repo.paginate(after: cursor_after, cursor_fields: [:inserted_at, :id], sort_direction: :desc, limit: 4)
   end
 
   def list_messages(chat = %Chat{}, before: cursor_before) do
@@ -69,7 +69,7 @@ defmodule TreeChat.Chat do
                   order_by: [desc: m.inserted_at, desc: m.id]
 
     messages
-    |> Repo.paginate(before: cursor_before, cursor_fields: [:inserted_at, :id], sort_direction: :desc, limit: 2)
+    |> Repo.paginate(before: cursor_before, cursor_fields: [:inserted_at, :id], sort_direction: :desc, limit: 4)
   end
 
   def reactions_for_messages(messages) do
