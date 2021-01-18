@@ -4,6 +4,7 @@ defmodule TreeChatWeb.MessageView do
   alias TreeChatWeb.PageView
 
   def render("index.json", params = %{chat: chat, messages: messages, reactions: reactions, metadata: metadata,}) do
+    # require IEx; IEx.pry
     %{
       chat: chat_json(chat),
       messages: Enum.map(messages, &message_json/1),
@@ -31,7 +32,8 @@ defmodule TreeChatWeb.MessageView do
     %{
       value: reaction.reaction,
       count: reaction.count,
-      user_ids: Enum.map(reaction.message.reactions, &(&1.user_id))
+      message_id: reaction.message.id,
+      user_ids: Enum.filter(reaction.message.reactions, & &1.value == reaction.reaction) |> Enum.map(& (Integer.to_string(&1.user_id)))
     }
   end
 
