@@ -2,17 +2,18 @@ import { EmojiButton } from '@joeattardi/emoji-button';
 
 let WaterCooler = {
   init(socket) {
+    // This is extremely fragile that your entire socket/channel connection is based on a parsed variable in the path
     let channel_name = window.location.pathname.replace(/\/c\//g, '')
     let channel = socket.channel(`water_cooler:${channel_name}`, {})
+    let picker = new EmojiButton();
     channel.join()
-    this.listenForChats(channel)
-    this.listenForReactions(channel)
+    this.listenForChats(channel, picker)
+    this.listenForReactions(channel, picker)
   },
 
-  listenForReactions(channel) {
-    debugger;
+  listenForReactions(channel, picker) {
     let userId = window.userId
-    let picker = new EmojiButton();
+
     let newReactionButtons = document.getElementsByClassName('add-new-reaction-button');
     let incrementReactionButtons = document.getElementsByClassName('increment-reaction-button')
     let decrementReactionButtons = document.getElementsByClassName('decrement-reaction-button')
@@ -83,7 +84,7 @@ let WaterCooler = {
     }
   },
 
-  listenForChats(channel) {
+  listenForChats(channel, picker) {
     let userName = window.userName
     let userFirst = window.userFirst || ""
     let userLast = window.userLast || ""
@@ -104,7 +105,17 @@ let WaterCooler = {
         return isVisible;
     }
 
-    function firePagination() {
+    function addReactionEventListener(e) {
+      let elData = e.toElement.dataset
+      channel.push('reaction', {value: elData.reaction, user_id: userId, message_id: elData.messageId})
+    }
+
+    function removeReactionEventListener(e) {
+      let elData = e.toElement.dataset
+      channel.push('remove_reaction', {value: elData.reaction, user_id: userId, message_id: elData.messageId})
+    }
+
+    function firePagination(picker) {
       var paginationTrigger = document.getElementById("pagination-trigger")
       var executed = false
       return function() {
@@ -147,13 +158,19 @@ let WaterCooler = {
                 chatWindow.insertBefore(msgBlock, firstChild)
 
                 let reactionBlock = document.getElementById(`reaction-message-id-${messages[i].id}`)
+                reactionBlock.addEventListener('click', (e) => {
+                  picker["message_id"] = e.currentTarget.id
+                  picker.togglePicker(e.currentTarget)
+                });
 
                 for (var j = 0; j < reactions.length; j ++ ) {
                   if (reactions[j].message_id == messages[i].id) {
                     if (reactions[j].user_ids.includes(userId)) {
                       reactionBlock.insertAdjacentHTML('afterend', `<span class='reaction-button decrement-reaction-button' id='message-id-${reactions[j].message_id}-${reactions[j].value}' data-count=1 data-reaction=${reactions[j].value} data-message-id=${reactions[j].message_id}>${reactions[j].count}${reactions[j].value}</span>`)
+                      document.getElementById(`message-id-${reactions[j].message_id}-${reactions[j].value}`).addEventListener('click', (e) => removeReactionEventListener(e))
                     } else {
                       reactionBlock.insertAdjacentHTML('afterend', `<span class='reaction-button increment-reaction-button' id='message-id-${reactions[j].message_id}-${reactions[j].value}' data-count=1 data-reaction=${reactions[j].value} data-message-id=${reactions[j].message_id}>${reactions[j].count}${reactions[j].value}</span>`)
+                      document.getElementById(`message-id-${reactions[j].message_id}-${reactions[j].value}`).addEventListener('click', (e) => addReactionEventListener(e))
                     }
                   }
                 }
@@ -161,7 +178,7 @@ let WaterCooler = {
             } else {
               console.log('The request failed!');
             }
-
+            // addReactionEventListeners()
             console.log('This always runs...');
           };
           // need to update this to check local vs prod
@@ -171,12 +188,12 @@ let WaterCooler = {
           }
         }
       }
-      // this.listenForReactions(channel)
+      console.log("PIZZZAAA FIRED")
     }
 
     chatWindow.addEventListener("scroll", function(){
         setScrolledTrue()
-        var fp = firePagination()
+        var fp = firePagination(picker)
         fp()
       }
     )
