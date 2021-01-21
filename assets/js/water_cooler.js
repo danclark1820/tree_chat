@@ -123,6 +123,7 @@ let WaterCooler = {
           executed = true
           var cursorAfter = paginationTrigger.dataset.cursorAfter
           var chatId = paginationTrigger.dataset.chatId
+          paginationTrigger.innerText = "PIZZA"
           paginationTrigger.remove();
           paginationTrigger = null
           let firstChild = chatWindow.firstChild
@@ -140,7 +141,6 @@ let WaterCooler = {
 
               for (var i = 0; i < messages.length; i++) {
                 if (i == 0) {
-                  newPageTrigger.innerText = "PIZZZZZZAAAA"
                   newPageTrigger.id = 'pagination-trigger'
                   newPageTrigger.dataset.cursorAfter = metadata.after
                   newPageTrigger.dataset.chatId = chat.id

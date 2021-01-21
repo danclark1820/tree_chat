@@ -16,7 +16,7 @@
     <div class="chat-window" id="chat-window">
       <%= for {message, i} <- Enum.with_index(@messages) do %>
         <%= if i == 0  do %>
-          <%= raw "<span id='pagination-trigger' data-cursor-after='#{@metadata.after}' data-chat-id='#{@current_chat.id}'>Hello World</span>" %>
+          <%= raw "<span id='pagination-trigger' data-cursor-after='#{@metadata.after}' data-chat-id='#{@current_chat.id}'>SMORES</span>" %>
         <% end %>
         <%= raw "<div class='message' id='message-id-#{message.id}'>"%>
           <span class="message-name"><%= message.name %></span>
