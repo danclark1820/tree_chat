@@ -20,31 +20,13 @@ var searchParams = new URLSearchParams(window.location.search)
 var pathName = window.location.pathname;
 let userId = window.userId
 
-function triggerPagination() {
-  var paginationTrigger = document.getElementById("pagination-trigger")
-  if (paginationTrigger) {
-    paginationTrigger.scrollIntoView();
-    // scrollMessageIntoView()
-  } else {
-    chatWindow.scrollHeight = chatWindow.scrollTop
-    return
-  }
+if (searchParams.has("message_id")) {
+  messageId = searchParams.get("message_id")
+  messageElem = document.getElementById(`message-id-${messageId}`)
+  messageElem.scrollIntoView();
+} else {
+  chatWindow.scrollTop = chatWindow.scrollHeight;
 }
-
-function scrollMessageIntoView() {
-  if (searchParams.has("message_id")) {
-    messageId = searchParams.get("message_id")
-    messageElem = document.getElementById(`message-id-${messageId}`)
-    if (messageElem) {
-      messageElem.scrollIntoView();
-      return
-    } else {
-      triggerPagination()
-    }
-  }
-}
-
-scrollMessageIntoView()
 
 if (window.userToken == null) {
   chatForm.onclick = function() {
