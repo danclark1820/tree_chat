@@ -16,17 +16,8 @@ var reactionButtons = document.getElementsByClassName("reaction-button")
 var chatForm = document.getElementById("chat-form");
 var chatWindow = document.getElementById("chat-window")
 var closeSpans = document.getElementsByClassName("close");
-var searchParams = new URLSearchParams(window.location.search)
 var pathName = window.location.pathname;
 let userId = window.userId
-
-if (searchParams.has("message_id")) {
-  messageId = searchParams.get("message_id")
-  messageElem = document.getElementById(`message-id-${messageId}`)
-  messageElem.scrollIntoView();
-} else {
-  chatWindow.scrollTop = chatWindow.scrollHeight;
-}
 
 if (window.userToken == null) {
   chatForm.onclick = function() {

@@ -18,11 +18,13 @@
         <%= if i == 0  do %>
           <%= raw "<span id='pagination-trigger' data-cursor-after='#{@metadata.after}' data-chat-id='#{@current_chat.id}'>SMORES</span>" %>
         <% end %>
+
         <%= raw "<div class='message' id='message-id-#{message.id}'>"%>
           <span class="message-name"><%= message.name %></span>
           <br>
           <%= raw decorate_message(message.body)%>
         </div>
+
         <%= raw "<span class='add-new-reaction-button reaction-button' id='reaction-message-id-#{message.id}'>+🙂</span>" %>
         <%= for reaction <- @reactions do %>
           <%= if message.id == reaction.id do %>
@@ -33,6 +35,10 @@
                 <%= raw "<span class='reaction-button increment-reaction-button' id='message-id-#{message.id}-#{reaction.reaction}' data-count=#{reaction.count} data-reaction=#{reaction.reaction} data-message-id=#{message.id}>#{reaction.count}#{reaction.reaction}</span>" %>
             <% end %>
           <% end %>
+        <% end %>
+
+        <%= if i == length(@messages) - 1  do %>
+          <%= raw "<span id='before-pagination-trigger' data-cursor-before='#{@metadata.before}' data-chat-id='#{@current_chat.id}'>ICE CREAM</span>" %>
         <% end %>
       <% end %>
     </div>

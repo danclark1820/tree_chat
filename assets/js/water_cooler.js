@@ -91,10 +91,14 @@ let WaterCooler = {
     let userId = window.userId
     let chatWindow = document.getElementById('chat-window')
     let chatDescription = document.getElementsByClassName('chat-description')[0]
-    let searchParams = new URLSearchParams(window.location.search)
+    var pageTrigger = document.getElementById("pagination-trigger")
     var scrolled = false;
 
+
     function setScrolledTrue() {
+      // The purpose of this method is to prevent users
+      //from getting scrolled when they get linked to a
+      // specific message
       scrolled=true
     }
 
@@ -115,7 +119,7 @@ let WaterCooler = {
       channel.push('remove_reaction', {value: elData.reaction, user_id: userId, message_id: elData.messageId})
     }
 
-    function firePagination(picker) {
+    function firePagination(picker, messageScroller = null) {
       var paginationTrigger = document.getElementById("pagination-trigger")
       var executed = false
       return function() {
@@ -146,8 +150,9 @@ let WaterCooler = {
                   newPageTrigger.dataset.chatId = chat.id
                   chatWindow.insertBefore(newPageTrigger, firstChild)
                 }
+
                 let msgBlock = document.createElement('div')
-                msgBlock.insertAdjacentHTML('beforeend', `<div class='message' id='message-${messages[i].id}'>
+                msgBlock.insertAdjacentHTML('beforeend', `<div class='message' id='message-id-${messages[i].id}'>
                                                             <span class='message-name'>${messages[i].name}</span>
                                                             <br>
                                                             ${messages[i].body}
@@ -178,8 +183,12 @@ let WaterCooler = {
             } else {
               console.log('The request failed!');
             }
-            // addReactionEventListeners()
             console.log('This always runs...');
+
+            if (messageScroller) {
+              messageScroller()
+            }
+
           };
           // need to update this to check local vs prod
           if (cursorAfter) {
@@ -191,12 +200,116 @@ let WaterCooler = {
       console.log("PIZZZAAA FIRED")
     }
 
+    function fireBeforePagination(picker, messageScroller = null) {
+      var beforePaginationTrigger = document.getElementById("before-pagination-trigger")
+      var executed = false
+      return function() {
+        if (!executed && beforePaginationTrigger && isScrolledIntoView(beforePaginationTrigger)) {
+          executed = true
+          var cursorAfter = beforePaginationTrigger.dataset.cursorAfter
+          var chatId = beforePaginationTrigger.dataset.chatId
+          beforePaginationTrigger.innerText = "PIZZA"
+          beforePaginationTrigger.remove();
+          beforePaginationTrigger = null
+          let lastChild = chatWindow.lastChild
+          var newPageTrigger = document.createElement("span")
+          var xhr = new XMLHttpRequest();
+
+          xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              console.log('success!', xhr);
+              var response = JSON.parse(xhr.response)
+              var chat = response["chat"]
+              var messages = response["messages"]
+              var metadata = response["metadata"]
+              var reactions = response["reactions"]
+
+              for (var i = 0; i < messages.length; i++) {
+                let msgBlock = document.createElement('div')
+                msgBlock.insertAdjacentHTML('beforeend', `<div class='message' id='message-id-${messages[i].id}'>
+                                                            <span class='message-name'>${messages[i].name}</span>
+                                                            <br>
+                                                            ${messages[i].body}
+                                                          </div>
+                                                          <span class='add-new-reaction-button reaction-button' id='reaction-message-id-${messages[i].id}'>+🙂</span>
+                                                          `
+                )
+                lastChild.parentNode.insertBefore(msgBlock, lastChild.nextSibling)
+                lastChild = chatWindow.lastChild //Could we avoid this by not reversing the messages we get back? // Also may have to not revers anyway for this scenario
+
+                let reactionBlock = document.getElementById(`reaction-message-id-${messages[i].id}`)
+                reactionBlock.addEventListener('click', (e) => {
+                  picker["message_id"] = e.currentTarget.id
+                  picker.togglePicker(e.currentTarget)
+                });
+
+                for (var j = 0; j < reactions.length; j ++ ) {
+                  if (reactions[j].message_id == messages[i].id) {
+                    if (reactions[j].user_ids.includes(userId)) {
+                      reactionBlock.insertAdjacentHTML('afterend', `<span class='reaction-button decrement-reaction-button' id='message-id-${reactions[j].message_id}-${reactions[j].value}' data-count=1 data-reaction=${reactions[j].value} data-message-id=${reactions[j].message_id}>${reactions[j].count}${reactions[j].value}</span>`)
+                      document.getElementById(`message-id-${reactions[j].message_id}-${reactions[j].value}`).addEventListener('click', (e) => removeReactionEventListener(e))
+                    } else {
+                      reactionBlock.insertAdjacentHTML('afterend', `<span class='reaction-button increment-reaction-button' id='message-id-${reactions[j].message_id}-${reactions[j].value}' data-count=1 data-reaction=${reactions[j].value} data-message-id=${reactions[j].message_id}>${reactions[j].count}${reactions[j].value}</span>`)
+                      document.getElementById(`message-id-${reactions[j].message_id}-${reactions[j].value}`).addEventListener('click', (e) => addReactionEventListener(e))
+                    }
+                  }
+                }
+
+                if (i == messages.length) {
+                  newPageTrigger.id = 'before-pagination-trigger'
+                  newPageTrigger.dataset.cursorAfter = metadata.after
+                  newPageTrigger.dataset.chatId = chat.id
+                  // Insert the new page trigger after the last child
+                  lastChild.parentNode.insertBefore(newPageTrigger, lastChild.nextSibling)
+                }
+              }
+            } else {
+              console.log('The request failed!');
+            }
+            console.log('This always runs...');
+
+            if (messageScroller) {
+              messageScroller()
+            }
+
+          };
+          // need to update this to check local vs prod
+          if (cursorBefore) {
+            xhr.open('GET', `http://localhost:4000/api/messages?chat_id=${chatId}&&cursor_before=${cursorBefore}`);
+            xhr.send();
+          }
+        }
+      }
+      console.log("PIZZZAAA FIRED")
+    }
+
     chatWindow.addEventListener("scroll", function(){
         setScrolledTrue()
         var fp = firePagination(picker)
         fp()
+
+        var bfp = fireBeforePagination(picker)
+        bfp()
       }
     )
+
+    function scrollMessageIntoViewWhenQueried() {
+      var searchParams = new URLSearchParams(window.location.search)
+      if (searchParams.has("message_id")) {
+        var messageId = searchParams.get("message_id")
+        var messageElem = document.getElementById(`message-id-${messageId}`)
+
+        if (messageElem) {
+          setScrolledTrue();
+          messageElem.scrollIntoView();
+        }
+      }
+    }
+
+    if (pageTrigger.scrollHeight == 0) {
+      var fp = firePagination(picker, scrollMessageIntoViewWhenQueried)
+      fp()
+    }
 
     function updateScroll(){
       if (!scrolled) {

@@ -1,3 +1,4 @@
+
 #This will be a table/repo now...
 defmodule TreeChat.Chat do
   @moduledoc """
@@ -54,7 +55,7 @@ defmodule TreeChat.Chat do
     |> Repo.paginate(cursor_fields: [:inserted_at, :id], sort_direction: :desc, limit: 5)
   end
 
-  def list_messages(chat = %Chat{}, message_id) do
+  def list_messages(chat = %Chat{}, message_id: message_id) do
     messages = from m in Message,
                   where: m.chat_id == ^chat.id,
                   order_by: [desc: m.inserted_at, desc: m.id]

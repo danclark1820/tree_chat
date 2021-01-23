@@ -1,6 +1,7 @@
 defmodule TreeChat.Message do
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query, warn: false
   alias TreeChat.Accounts.User
   alias TreeChat.Reaction
 

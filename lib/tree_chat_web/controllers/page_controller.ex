@@ -7,7 +7,7 @@ defmodule TreeChatWeb.PageController do
   def index(conn, _params) do
     oauth_google_url = TreeChat.AuthGoogle.generate_oauth_url(conn)
     chats = Chat.list_chats()
-    # redirect to lobby if nothing is passed i
+    # redirect to lobby if nothing is passed in
     lobby = Chat.get_chat_by_topic("Lobby")
     cond do
       conn.params["chat_topic"] == nil ->
@@ -19,11 +19,11 @@ defmodule TreeChatWeb.PageController do
     # list messages for specifc chat if it exists, redirect to new chats page if it does not
     case current_chat = Chat.get_chat_by_topic(conn.params["chat_topic"]) do
       %Chat{} ->
-        # %{entries: messages, metadata: metadata} = case conn.params["message_id"] do
-        #   message_id -> Chat.list_messages(current_chat, message_id)
-        #   nil -> Chat.list_messages(current_chat)
-        # end
-        %{entries: messages, metadata: metadata} = Chat.list_messages(current_chat)
+        %{entries: messages, metadata: metadata} = case conn.params["message_id"] do
+          nil -> Chat.list_messages(current_chat)
+          message_id -> Chat.list_messages(current_chat, message_id: message_id)
+        end
+
         conn
         |> put_session(:current_chat_topic, conn.params["chat_topic"])
         |> render "index.html", messages: Enum.reverse(messages), metadata: metadata, reactions: Chat.reactions_for_messages(messages), chats: chats, current_chat: current_chat, oauth_google_url: oauth_google_url
