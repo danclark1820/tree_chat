@@ -206,7 +206,7 @@ let WaterCooler = {
       return function() {
         if (!executed && beforePaginationTrigger && isScrolledIntoView(beforePaginationTrigger)) {
           executed = true
-          var cursorAfter = beforePaginationTrigger.dataset.cursorAfter
+          var cursorBefore = beforePaginationTrigger.dataset.cursorBefore
           var chatId = beforePaginationTrigger.dataset.chatId
           beforePaginationTrigger.innerText = "PIZZA"
           beforePaginationTrigger.remove();
