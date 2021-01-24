@@ -93,7 +93,13 @@ let WaterCooler = {
     let chatDescription = document.getElementsByClassName('chat-description')[0]
     var pageTrigger = document.getElementById("pagination-trigger")
     var scrolled = false;
+    var host = null
 
+    if (location.hostname == "localhost") {
+      host = `http://localhost:4000`
+    } else {
+      host = `https://cooler.chat`
+    }
 
     function setScrolledTrue() {
       // The purpose of this method is to prevent users
@@ -127,7 +133,6 @@ let WaterCooler = {
           executed = true
           var cursorAfter = paginationTrigger.dataset.cursorAfter
           var chatId = paginationTrigger.dataset.chatId
-          paginationTrigger.innerText = "PIZZA"
           paginationTrigger.remove();
           paginationTrigger = null
           let firstChild = chatWindow.firstChild
@@ -192,7 +197,7 @@ let WaterCooler = {
           };
           // need to update this to check local vs prod
           if (cursorAfter) {
-            xhr.open('GET', `http://localhost:4000/api/messages?chat_id=${chatId}&&cursor_after=${cursorAfter}`);
+            xhr.open('GET', `${host}/api/messages?chat_id=${chatId}&&cursor_after=${cursorAfter}`);
             xhr.send();
           }
         }
@@ -208,7 +213,6 @@ let WaterCooler = {
           executed = true
           var cursorBefore = beforePaginationTrigger.dataset.cursorBefore
           var chatId = beforePaginationTrigger.dataset.chatId
-          beforePaginationTrigger.innerText = "PIZZA"
           beforePaginationTrigger.remove();
           beforePaginationTrigger = null
           let lastChild = chatWindow.lastChild
@@ -273,9 +277,9 @@ let WaterCooler = {
             }
 
           };
-          // need to update this to check local vs prod
+
           if (cursorBefore) {
-            xhr.open('GET', `http://localhost:4000/api/messages?chat_id=${chatId}&&cursor_before=${cursorBefore}`);
+            xhr.open('GET', `${host}/api/messages?chat_id=${chatId}&&cursor_before=${cursorBefore}`);
             xhr.send();
           }
         }
@@ -306,6 +310,8 @@ let WaterCooler = {
       }
     }
 
+    /// You may need to add something like this for before page trigger for when
+    // someone has a larger window and the bfp() doesn't fire cuz its above trigger point
     if (pageTrigger.scrollHeight == 0) {
       var fp = firePagination(picker, scrollMessageIntoViewWhenQueried)
       fp()
