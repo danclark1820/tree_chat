@@ -108,6 +108,15 @@ let WaterCooler = {
       scrolled=true
     }
 
+    function updateScroll(){
+      if (!scrolled) {
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+      }
+    }
+
+    var us = updateScroll()
+    us()
+
     function isScrolledIntoView(el) {
         var rect = el.getBoundingClientRect();
         var elemBottom = rect.bottom;
@@ -315,12 +324,6 @@ let WaterCooler = {
     if (pageTrigger.scrollHeight == 0) {
       var fp = firePagination(picker, scrollMessageIntoViewWhenQueried)
       fp()
-    }
-
-    function updateScroll(){
-      if (!scrolled) {
-        chatWindow.scrollTop = chatWindow.scrollHeight;
-      }
     }
 
     document.getElementById("chat-form").addEventListener('keydown', function(e) {
