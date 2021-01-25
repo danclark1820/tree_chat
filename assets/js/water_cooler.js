@@ -354,6 +354,11 @@ let WaterCooler = {
       )
       chatWindow.appendChild(msgBlock)
       chatWindow.scrollTop = chatWindow.scrollHeight;
+      let reactionBlock = document.getElementById(`reaction-message-id-${payload.message_id}`)
+      reactionBlock.addEventListener('click', (e) => {
+        picker["message_id"] = e.currentTarget.id
+        picker.togglePicker(e.currentTarget)
+      });
       updateScroll();
     })
   }
