@@ -115,7 +115,7 @@ let WaterCooler = {
     }
 
     var us = updateScroll()
-    us()
+    us
 
     function isScrolledIntoView(el) {
         var rect = el.getBoundingClientRect();
