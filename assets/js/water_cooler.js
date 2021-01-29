@@ -321,7 +321,7 @@ let WaterCooler = {
 
     /// You may need to add something like this for before page trigger for when
     // someone has a larger window and the bfp() doesn't fire cuz its above trigger point
-    if (pageTrigger.scrollHeight == 0) {
+    if (pageTrigger != null && pageTrigger.scrollHeight == 0) {
       var fp = firePagination(picker, scrollMessageIntoViewWhenQueried)
       fp()
     }
