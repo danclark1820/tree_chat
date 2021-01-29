@@ -3,6 +3,22 @@
 /* @import "./phoenix.css"; */
 @import "./page.css";
 
+.add-new-reply-button {
+  padding: 1px;
+  margin: 1px;
+  background-color: lightgray;
+  border: 1px solid darkgray;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.add-new-reply-button:hover {
+  background-color: #b3ffff;
+  border: 2px solid #1ad1ff;
+  border-radius: 4px;
+}
+
+
 .reaction-button {
   background-color: lightgray;
   border: 1px solid darkgray;

@@ -15,7 +15,7 @@
 
     <div class="chat-window" id="chat-window">
       <%= for {message, i} <- Enum.with_index(@messages) do %>
-        <%= if i == 0  do %>
+        <%= if i == 0 do %>
           <%= raw "<span id='pagination-trigger' data-cursor-after='#{@metadata.after}' data-chat-id='#{@current_chat.id}'></span>" %>
         <% end %>
 
@@ -24,7 +24,7 @@
           <br>
           <%= raw decorate_message(message.body)%>
         </div>
-
+        <%= raw "<span class='add-new-reply-button' id='reply-message-id-#{message.id}'>+Reply</span>" %>
         <%= raw "<span class='add-new-reaction-button reaction-button' id='reaction-message-id-#{message.id}'>+🙂</span>" %>
         <%= for reaction <- @reactions do %>
           <%= if message.id == reaction.id do %>
@@ -37,7 +37,7 @@
           <% end %>
         <% end %>
 
-        <%= if i == length(@messages) - 1  do %>
+        <%= if i == length(@messages) - 1 do %>
           <%= raw "<span id='before-pagination-trigger' data-cursor-before='#{@metadata.before}' data-chat-id='#{@current_chat.id}'></span>" %>
         <% end %>
       <% end %>
