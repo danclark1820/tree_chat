@@ -51,6 +51,7 @@ body {
   height: 60vh;
   padding-left: 8vw;
   padding-top: 1vh;
+  position: relative;
 }
 
 .chat-list {
@@ -65,9 +66,30 @@ body {
 
 .chat-window {
   height: 60vh;
+  /* width: auto; */
+  width: 61vw;
+  top: .25vw;
+  left: 19.5vw;
   border: solid #E0E0E0 3px;
   overflow-wrap: break-word;
   overflow-y: auto;
+  position: absolute;
+  z-index: 0;
+}
+
+.reply-window {
+  height: 60vh;
+  top: .25vw;
+  left: 19.5vw;
+  width: 61vw;
+  /* padding-left: 10vw; */
+  border: solid #E0E0E0 3px;
+  overflow-wrap: break-word;
+  overflow-y: auto;
+  visibility: hidden;
+  background-color: blue;
+  position: absolute;
+  z-index: 1;
 }
 
 .message-input {
@@ -80,6 +102,10 @@ body {
   font-size: 16px;
   font-family: arial;
   border: solid #E0E0E0 3px
+}
+
+.message {
+  z-index: 0;
 }
 
 .message-name {

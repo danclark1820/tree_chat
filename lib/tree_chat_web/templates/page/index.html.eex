@@ -13,6 +13,10 @@
       <% end %>
     </div>
 
+    <div class="reply-window" id="reply-window">
+      HELLLLLOOOO WOORRRLLLD PIZZA FRIDAY
+    </div>
+
     <div class="chat-window" id="chat-window">
       <%= for {message, i} <- Enum.with_index(@messages) do %>
         <%= if i == 0 do %>
@@ -24,7 +28,7 @@
           <br>
           <%= raw decorate_message(message.body)%>
         </div>
-        <%= raw "<span class='add-new-reply-button' id='reply-message-id-#{message.id}'>+Reply</span>" %>
+        <%= raw "<span class='add-new-reply-button' id='reply-message-id-#{message.id}' data-message-id='#{message.id}'>+Reply</span>" %>
         <%= raw "<span class='add-new-reaction-button reaction-button' id='reaction-message-id-#{message.id}'>+🙂</span>" %>
         <%= for reaction <- @reactions do %>
           <%= if message.id == reaction.id do %>

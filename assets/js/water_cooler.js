@@ -9,6 +9,31 @@ let WaterCooler = {
     channel.join()
     this.listenForChats(channel, picker)
     this.listenForReactions(channel, picker)
+    this.listenForReplies(channel, picker)
+  },
+
+  listenForReplies(channel, picker) {
+    var pathName = window.location.pathname;
+    let replyButtons = document.getElementsByClassName("add-new-reply-button")
+    let chatWindow = document.getElementById('chat-window')
+    let replyWindow = document.getElementById("reply-window")
+    for (var i = 0; i < replyButtons.length; i++) {
+      replyButtons[i].onclick = function(e) {
+        // replyBlock = e.target
+        chatWindow.style.opacity = 0.1
+        replyWindow.style.hidden = false
+        var messageId = e.target.dataset.messageId
+        // https://stackoverflow.com/questions/2941189/how-to-overlay-one-div-over-another-div
+        // messageBlock.style.zIndex = "1"
+        replyWindow.style.visibility = "visible"
+        debugger;
+        //showReplies that are loaded with messages
+        // Do we want an api endpoint for this, NO, just load them like reactions...
+        // Get replies working without replies or reactions for replies
+        ga('send', 'event', 'Reply Button', 'view replies or reply', 'replies opened', pathName);
+      }
+    }
+    //This will handle on channel communication of message replies
   },
 
   listenForReactions(channel, picker) {

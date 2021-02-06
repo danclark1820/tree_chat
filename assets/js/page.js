@@ -15,6 +15,7 @@ var newChatModal = document.getElementById("new-chat-modal")
 var reactionButtons = document.getElementsByClassName("reaction-button")
 var chatForm = document.getElementById("chat-form");
 var chatWindow = document.getElementById("chat-window")
+// var replyWindow = document.getElementById("reply-window")
 var closeSpans = document.getElementsByClassName("close");
 var pathName = window.location.pathname;
 let userId = window.userId

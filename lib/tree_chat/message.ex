@@ -10,6 +10,7 @@ defmodule TreeChat.Message do
     field :name, :string
     belongs_to :user, User
     belongs_to :chat, Chat
+    has_many :replies, Message
     has_many :reactions, Reaction
 
     timestamps()
