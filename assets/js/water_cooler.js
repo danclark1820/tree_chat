@@ -17,17 +17,29 @@ let WaterCooler = {
     let replyButtons = document.getElementsByClassName("add-new-reply-button")
     let chatWindow = document.getElementById('chat-window')
     let replyWindow = document.getElementById("reply-window")
+    let messageInput = document.getElementById("user-msg")
     for (var i = 0; i < replyButtons.length; i++) {
       replyButtons[i].onclick = function(e) {
         // replyBlock = e.target
-        chatWindow.style.opacity = 0.1
-        replyWindow.style.hidden = false
+        chatWindow.style.opacity = 0.05
+        // replyWindow.style.hidden = false
         var messageId = e.target.dataset.messageId
-        // https://stackoverflow.com/questions/2941189/how-to-overlay-one-div-over-another-div
-        // messageBlock.style.zIndex = "1"
+        var replyMessageBlock = document.getElementById(`message-id-${messageId}`).cloneNode(true)
         replyWindow.style.visibility = "visible"
-        debugger;
-        //showReplies that are loaded with messages
+        replyWindow.appendChild(replyMessageBlock)
+        replyWindow.dataset.messageId = messageId
+        messageInput.focus()
+
+        document.addEventListener("click", (e) => {
+          if (!e.target.classList.contains('add-new-reply-button') && !e.target.classList.contains('message-input')) {
+            replyWindow.style.visibility = "hidden"
+            chatWindow.style.opacity = 1
+            replyWindow.textContent = ''
+            replyWindow.dataset.messageId = null;
+            messageInput.blur()
+          }
+        })
+        // showReplies that are loaded with messages
         // Do we want an api endpoint for this, NO, just load them like reactions...
         // Get replies working without replies or reactions for replies
         ga('send', 'event', 'Reply Button', 'view replies or reply', 'replies opened', pathName);
@@ -352,15 +364,16 @@ let WaterCooler = {
     }
 
     document.getElementById("chat-form").addEventListener('keydown', function(e) {
+      let replyWindow = document.getElementById("reply-window")
       if (e.keyCode == 13 && !e.shiftKey) {
         e.preventDefault();
         let userMsg = document.getElementById('user-msg').value
         let message_name = (userFirst !== "" && userLast !== "" ? `${userFirst} ${userLast}` : userName)
 
-        if (chatDescription) {
-          channel.push('shout', {name: message_name, body: userMsg, user_id: userId, chat_id: chatDescription.id})
+        if (replyWindow.dataset.messageId) {
+          channel.push('shout', {name: message_name, body: userMsg, user_id: userId, chat_id: chatDescription.id, reply_id: replyWindow.dataset.messageId})
         } else {
-          channel.push('shout', {name: message_name, body: userMsg, user_id: userId})
+          channel.push('shout', {name: message_name, body: userMsg, user_id: userId, chat_id: chatDescription.id})
         }
 
         document.getElementById('user-msg').value = ''

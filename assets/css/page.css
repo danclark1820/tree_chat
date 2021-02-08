@@ -87,7 +87,6 @@ body {
   overflow-wrap: break-word;
   overflow-y: auto;
   visibility: hidden;
-  background-color: blue;
   position: absolute;
   z-index: 1;
 }
