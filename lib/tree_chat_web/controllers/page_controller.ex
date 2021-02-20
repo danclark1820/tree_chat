@@ -12,7 +12,7 @@ defmodule TreeChatWeb.PageController do
     cond do
       conn.params["chat_topic"] == nil ->
         %{entries: messages, metadata: metadata} = Chat.list_messages(lobby)
-        render conn, "index.html", messages: Enum.reverse(messages), metadata: metadata, reactions: Chat.reactions_for_messages(messages), chats: chats, current_chat: lobby, oauth_google_url: oauth_google_url
+        render conn, "index.html", messages: Enum.reverse(messages), replies: Chat.replies_for_messages(messages), metadata: metadata, reactions: Chat.reactions_for_messages(messages), chats: chats, current_chat: lobby, oauth_google_url: oauth_google_url
       true -> {:ok, "do nothing"}
     end
 
@@ -26,7 +26,7 @@ defmodule TreeChatWeb.PageController do
 
         conn
         |> put_session(:current_chat_topic, conn.params["chat_topic"])
-        |> render "index.html", messages: Enum.reverse(messages), metadata: metadata, reactions: Chat.reactions_for_messages(messages), chats: chats, current_chat: current_chat, oauth_google_url: oauth_google_url
+        |> render "index.html", messages: Enum.reverse(messages), replies: Chat.replies_for_messages(messages), metadata: metadata, reactions: Chat.reactions_for_messages(messages), chats: chats, current_chat: current_chat, oauth_google_url: oauth_google_url
       nil ->
         conn
         |> assign(:oauth_google_url, oauth_google_url)

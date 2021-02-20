@@ -91,6 +91,10 @@ body {
   z-index: 1;
 }
 
+.message-reply {
+  visibility: hidden;
+}
+
 .message-input {
   margin-left: 19.5vw;
   margin-top: 4vh;

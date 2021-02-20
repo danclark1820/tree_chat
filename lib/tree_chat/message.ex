@@ -4,12 +4,14 @@ defmodule TreeChat.Message do
   import Ecto.Query, warn: false
   alias TreeChat.Accounts.User
   alias TreeChat.Reaction
+  alias TreeChat.Message
 
   schema "messages" do
     field :body, :string
     field :name, :string
     belongs_to :user, User
     belongs_to :chat, Chat
+    belongs_to :reply, Message
     has_many :replies, Message
     has_many :reactions, Reaction
 
@@ -19,8 +21,9 @@ defmodule TreeChat.Message do
   @doc false
   def changeset(message, attrs) do
     message
-    |> cast(attrs, [:name, :user_id, :body, :chat_id])
+    |> cast(attrs, [:name, :user_id, :body, :chat_id, :reply_id])
     |> validate_required([:name, :user_id, :body])
+    |> assoc_constraint(:reply)
     |> assoc_constraint(:user)
     |> assoc_constraint(:chat)
   end

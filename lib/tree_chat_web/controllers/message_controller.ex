@@ -11,10 +11,10 @@ defmodule TreeChatWeb.MessageController do
     cond do
       cursor_after ->
         %{entries: messages, metadata: metadata} = Chat.list_messages(chat, after: cursor_after)
-        render conn, "index.json", chat: chat, messages: Enum.reverse(messages), metadata: metadata, reactions: Chat.reactions_for_messages(messages)
+        render conn, "index.json", chat: chat, messages: Enum.reverse(messages), replies: Chat.replies_for_messages(messages),  metadata: metadata, reactions: Chat.reactions_for_messages(messages)
       cursor_before ->
         %{entries: messages, metadata: metadata} = Chat.list_messages(chat, before: cursor_before)
-        render conn, "index.json", chat: chat, messages: Enum.reverse(messages), metadata: metadata, reactions: Chat.reactions_for_messages(messages)
+        render conn, "index.json", chat: chat, messages: Enum.reverse(messages), replies: Chat.replies_for_messages(messages), metadata: metadata, reactions: Chat.reactions_for_messages(messages)
     end
   end
 end

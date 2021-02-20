@@ -27,8 +27,17 @@
           <br>
           <%= raw decorate_message(message.body)%>
         </div>
+
+        <%= for reply <- @replies do %>
+          <%= if reply.reply_id == message.id do %>
+            <br>
+            <%= raw "<span class='message-reply reply-message-#{message.id} data-reply-messge-id=#{message.id}' data-reply-name='#{reply.name}' data-reply-id='#{reply.id}' data-reply-body='#{decorate_message(reply.body)}'></span>" %>
+          <% end %>
+        <% end %>
+
         <%= raw "<span class='add-new-reply-button' id='reply-message-id-#{message.id}' data-message-id='#{message.id}'>+Reply</span>" %>
         <%= raw "<span class='add-new-reaction-button reaction-button' id='reaction-message-id-#{message.id}'>+🙂</span>" %>
+
         <%= for reaction <- @reactions do %>
           <%= if message.id == reaction.id do %>
             <%= case Enum.any?(reaction.message.reactions, & "#{&1.user_id}" == @conn.assigns[:user_id] && &1.value == reaction.reaction) do %>

@@ -84,6 +84,15 @@ defmodule TreeChat.Chat do
     |> Repo.paginate(before: cursor_before, cursor_fields: [:inserted_at, :id], sort_direction: :desc, limit: 11)
   end
 
+  def replies_for_messages(messages) do
+    message_ids = Enum.map(messages, &(&1.id))
+    replies_for_messages = from m in Message,
+                                where: m.reply_id in ^message_ids
+
+    replies_for_messages
+    |> Repo.all
+  end
+
   def reactions_for_messages(messages) do
     message_ids = Enum.map(messages, &(&1.id))
     reactions_for_messages = from m in Message,
