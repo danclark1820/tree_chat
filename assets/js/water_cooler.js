@@ -9,10 +9,10 @@ let WaterCooler = {
     channel.join()
     this.listenForChats(channel, picker)
     this.listenForReactions(channel, picker)
-    this.listenForReplies(channel, picker)
+    this.listenForReplies(channel)
   },
 
-  listenForReplies(channel, picker) {
+  listenForReplies(channel) {
     var pathName = window.location.pathname;
     let replyButtons = document.getElementsByClassName("add-new-reply-button")
     let chatWindow = document.getElementById('chat-window')
@@ -25,10 +25,27 @@ let WaterCooler = {
         // replyWindow.style.hidden = false
         var messageId = e.target.dataset.messageId
         var replyMessageBlock = document.getElementById(`message-id-${messageId}`).cloneNode(true)
+        replyMessageBlock.id = `message-id-clone-${messageId}`
+        var replies = document.getElementsByClassName(`reply-message-${messageId}`)
+        // debugger;
         replyWindow.style.visibility = "visible"
         replyWindow.appendChild(replyMessageBlock)
         replyWindow.dataset.messageId = messageId
         messageInput.focus()
+
+        for (var i = 0; i < replies.length; i++) {
+          var replyData = replies[i].dataset
+          let msgBlock = document.createElement('div')
+          msgBlock.insertAdjacentHTML('beforeend', `<div class='message' id='message-id-${replyData.replyId}'>
+                                                      <span class='message-name'>${replyData.replyName}</span>
+                                                      <br>
+                                                      ${replyData.replyBody}
+                                                    </div>
+                                                    `
+          )
+          replyWindow.appendChild(msgBlock)
+
+        }
 
         document.addEventListener("click", (e) => {
           if (!e.target.classList.contains('add-new-reply-button') && !e.target.classList.contains('message-input')) {
@@ -381,17 +398,41 @@ let WaterCooler = {
     });
 
     channel.on('shout', payload => {
+      let replyWindow = document.getElementById("reply-window")
       let msgBlock = document.createElement('div')
-      msgBlock.insertAdjacentHTML('beforeend', `<div class='message' id='message-${payload.message_id}'>
+      let msgHTML = `<div class='message' id='message-${payload.message_id}'>
                                                   <span class='message-name'>${payload.name}</span>
                                                   <br>
                                                   ${payload.body}
                                                 </div>
-                                                <span class='add-new-reaction-button reaction-button' id='reaction-message-id-${payload.message_id}'>+🙂</span>
                                                 `
-      )
+
+      if (replyWindow.style.visibility == "visible" && replyWindow.dataset.messageId == payload.reply_id) {
+        let replyBlock = document.createElement('div')
+        replyBlock.insertAdjacentHTML('beforeend', msgHTML)
+        replyWindow.appendChild(replyBlock)
+        // Create span that adds message to list of hidden spans with data
+      }
+
+      var originalMessageReplyContainer = document.getElementById(`message-replies-container-${payload.message_id}`)
+      debugger;
+      if (originalMessage != null) {
+        let replyDataSpan = document.createElement('span')
+        replyDataSpan.classList.add('message-reply')
+        replyDataSpan.classList.add(`reply-message-${payload.reply_id}`)
+        replyDataSpan.dataset.replyMessageId = payload.reply_id
+        replyDataSpan.dataset.replyName = payload.name
+        replyDataSpan.dataset.replyId = payload.message_id
+        replyDataSpan.dataset.replyBody = payload.body
+        originalMessageReplyContainer.insertAdjacentElement('beforeend', replyDataSpan)
+      }
+
+      msgBlock.insertAdjacentHTML('beforeend', msgHTML + `<span class='add-new-reply-button' id='reply-message-id-${payload.message_id}' data-message-id='${payload.message_id}'>+Reply</span>` + `<span class='add-new-reaction-button reaction-button' id='reaction-message-id-${payload.message_id}'>+🙂</span>`)
+      // Need to add event trigger to new reply buttong
+
       chatWindow.appendChild(msgBlock)
       chatWindow.scrollTop = chatWindow.scrollHeight;
+
       let reactionBlock = document.getElementById(`reaction-message-id-${payload.message_id}`)
       reactionBlock.addEventListener('click', (e) => {
         picker["message_id"] = e.currentTarget.id
