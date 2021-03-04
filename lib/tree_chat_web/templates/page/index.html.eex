@@ -36,8 +36,8 @@
           <% end %>
         <%= raw "</span>" %>
 
-        <%= raw "<span class='add-new-reply-button' id='reply-message-id-#{message.id}' data-message-id='#{message.id}'>+Reply</span>" %>
         <%= raw "<span class='add-new-reaction-button reaction-button' id='reaction-message-id-#{message.id}'>+🙂</span>" %>
+        <%= raw "<span class='add-new-reply-button' id='reply-message-id-#{message.id}' data-message-id='#{message.id}'>+Reply</span>" %>
 
         <%= for reaction <- @reactions do %>
           <%= if message.id == reaction.id do %>

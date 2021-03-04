@@ -20,7 +20,6 @@ let WaterCooler = {
     let messageInput = document.getElementById("user-msg")
     for (var i = 0; i < replyButtons.length; i++) {
       replyButtons[i].onclick = function(e) {
-        // replyBlock = e.target
         chatWindow.style.opacity = 0.05
         // replyWindow.style.hidden = false
         var messageId = e.target.dataset.messageId
@@ -208,6 +207,7 @@ let WaterCooler = {
               var response = JSON.parse(xhr.response)
               var chat = response["chat"]
               var messages = response["messages"]
+              var replies = response["replies"]
               var metadata = response["metadata"]
               var reactions = response["reactions"]
 
@@ -219,6 +219,21 @@ let WaterCooler = {
                   chatWindow.insertBefore(newPageTrigger, firstChild)
                 }
 
+                var replyCount = 0
+                var replyButtonInnerText = `+Reply`
+                var replyDataSpans = `<span id='message-replies-container-${messages[i].id}'>`
+                for (var k = 0; k < replies.length; k++) {
+                  // feels really dumb to iterate through replies twice hear
+                  if (replies[k].reply_id == messages[i].id) {
+                    replyDataSpans += `<span class='message-reply reply-message-${messages[i].id} data-reply-messge-id=${messages[i].id}' data-reply-name='${replies[k].name}' data-reply-id='${replies[k].id}' data-reply-body='${replies[k].body}'></span>`
+                    replyCount += 1
+                  }
+                  if (replyCount > 0) {
+                    replyButtonInnerText = `${replyCount} Replies`
+                  }
+                }
+                replyDataSpans += `</span>`
+
                 let msgBlock = document.createElement('div')
                 msgBlock.insertAdjacentHTML('beforeend', `<div class='message' id='message-id-${messages[i].id}'>
                                                             <span class='message-name'>${messages[i].name}</span>
@@ -226,9 +241,55 @@ let WaterCooler = {
                                                             ${messages[i].body}
                                                           </div>
                                                           <span class='add-new-reaction-button reaction-button' id='reaction-message-id-${messages[i].id}'>+🙂</span>
+                                                          <span class='add-new-reply-button' id='reply-message-id-${messages[i].id}' data-message-id='${messages[i].id}'>${replyButtonInnerText}</span>
+                                                          ${replyDataSpans}
                                                           `
                 )
                 chatWindow.insertBefore(msgBlock, firstChild)
+
+                let messageInput = document.getElementById("user-msg")
+                let replyBlock = document.getElementById(`reply-message-id-${messages[i].id}`)
+                replyBlock.addEventListener('click', (e) => {
+                  let replyWindow = document.getElementById("reply-window")
+                  chatWindow.style.opacity = 0.05
+                  var messageId = e.target.dataset.messageId
+                  var replyMessageBlock = document.getElementById(`message-id-${messageId}`).cloneNode(true)
+                  replyMessageBlock.id = `message-id-clone-${messageId}`
+                  var replies = document.getElementsByClassName(`reply-message-${messageId}`)
+                  replyWindow.style.visibility = "visible"
+                  replyWindow.appendChild(replyMessageBlock)
+                  replyWindow.dataset.messageId = messageId
+                  messageInput.focus()
+
+                  for (var i = 0; i < replies.length; i++) {
+                    var replyData = replies[i].dataset
+                    let msgBlock = document.createElement('div')
+                    msgBlock.insertAdjacentHTML('beforeend', `<div class='message' id='message-id-${replyData.replyId}'>
+                                                                <span class='message-name'>${replyData.replyName}</span>
+                                                                <br>
+                                                                ${replyData.replyBody}
+                                                              </div>
+                                                              `
+                    )
+                    replyWindow.appendChild(msgBlock)
+
+                  }
+
+                  document.addEventListener("click", (e) => {
+                    if (!e.target.classList.contains('add-new-reply-button') && !e.target.classList.contains('message-input')) {
+                      replyWindow.style.visibility = "hidden"
+                      chatWindow.style.opacity = 1
+                      replyWindow.textContent = ''
+                      replyWindow.dataset.messageId = null;
+                      messageInput.blur()
+                    }
+                  })
+                  // showReplies that are loaded with messages
+                  // Do we want an api endpoint for this, NO, just load them like reactions...
+                  // Get replies working without replies or reactions for replies
+                  var pathName = window.location.pathname;
+                  ga('send', 'event', 'Reply Button', 'view replies or reply', 'replies opened', pathName);
+                });
 
                 let reactionBlock = document.getElementById(`reaction-message-id-${messages[i].id}`)
                 reactionBlock.addEventListener('click', (e) => {
@@ -415,8 +476,7 @@ let WaterCooler = {
       }
 
       var originalMessageReplyContainer = document.getElementById(`message-replies-container-${payload.message_id}`)
-      debugger;
-      if (originalMessage != null) {
+      if (originalMessageReplyContainer != null) {
         let replyDataSpan = document.createElement('span')
         replyDataSpan.classList.add('message-reply')
         replyDataSpan.classList.add(`reply-message-${payload.reply_id}`)
@@ -428,7 +488,7 @@ let WaterCooler = {
       }
 
       msgBlock.insertAdjacentHTML('beforeend', msgHTML + `<span class='add-new-reply-button' id='reply-message-id-${payload.message_id}' data-message-id='${payload.message_id}'>+Reply</span>` + `<span class='add-new-reaction-button reaction-button' id='reaction-message-id-${payload.message_id}'>+🙂</span>`)
-      // Need to add event trigger to new reply buttong
+      // Need to add event trigger to new reply button
 
       chatWindow.appendChild(msgBlock)
       chatWindow.scrollTop = chatWindow.scrollHeight;

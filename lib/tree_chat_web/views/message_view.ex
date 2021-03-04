@@ -3,11 +3,11 @@ defmodule TreeChatWeb.MessageView do
 
   alias TreeChatWeb.PageView
 
-  def render("index.json", params = %{chat: chat, messages: messages, reactions: reactions, metadata: metadata,}) do
-    # require IEx; IEx.pry
+  def render("index.json", params = %{chat: chat, messages: messages, replies: replies, reactions: reactions, metadata: metadata,}) do
     %{
       chat: chat_json(chat),
       messages: Enum.map(messages, &message_json/1),
+      replies: Enum.map(replies, &message_json/1),
       reactions: Enum.map(reactions, &reaction_json/1),
       metadata: metadata_json(metadata)
     }
@@ -24,6 +24,7 @@ defmodule TreeChatWeb.MessageView do
       id: message.id,
       name: message.name,
       body: PageView.decorate_message(message.body),
+      reply_id: message.reply_id,
       inserted_at: message.inserted_at
     }
   end
