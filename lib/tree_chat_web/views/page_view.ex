@@ -21,6 +21,18 @@ defmodule TreeChatWeb.PageView do
     # |> raw
   end
 
+  def reply_count_and_spans(replies, message) do
+    {reply_count_acc, reply_span_acc} = Enum.map_reduce(replies, {0, ""}, fn reply, {count_acc, span_acc} ->
+      case reply.reply_id == message.id do
+        true ->
+          {count_acc + 1, span_acc + "<span class='message-reply reply-message-#{message.id} data-reply-messge-id=#{message.id}' data-reply-name='#{reply.name}' data-reply-id='#{reply.id}' data-reply-body='#{decorate_message(reply.body)}'></span>"}
+        false ->
+          {count_acc, span_acc}
+      end
+    end)
+    {reply_count_acc, reply_span_acc}
+  end
+
   def url_from_ast_link(ast) do
     case ast do
       {"a", [{"href", url}], _} ->
