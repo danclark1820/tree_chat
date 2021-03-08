@@ -29,7 +29,7 @@
         </div>
 
 
-        <% {reply_count_acc, reply_span_acc} = reply_count_and_spans(@replies, message) #this is not coming through i think %>
+        <% {reply_count_acc, reply_span_acc} = reply_count_and_spans(@replies, message)  %>
         <%= raw "<span id='message-replies-container-#{message.id}'>" %>
           <%= raw reply_span_acc %>
         <%= raw "</span>" %>
