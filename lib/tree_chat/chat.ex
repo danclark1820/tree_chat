@@ -87,7 +87,7 @@ defmodule TreeChat.Chat do
   def replies_for_messages(messages) do
     message_ids = Enum.map(messages, &(&1.id))
     replies_for_messages = from m in Message,
-                                where: m.reply_id in ^message_ids
+                              where: m.reply_id in ^message_ids
 
     replies_for_messages
     |> Repo.all

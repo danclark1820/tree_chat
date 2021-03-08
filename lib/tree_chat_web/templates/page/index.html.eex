@@ -29,9 +29,9 @@
         </div>
 
 
-        <%= {reply_count_acc, reply_span_acc} = reply_count_and_spans(@replies, message) %>
+        <% {reply_count_acc, reply_span_acc} = reply_count_and_spans(@replies, message) #this is not coming through i think %>
         <%= raw "<span id='message-replies-container-#{message.id}'>" %>
-          <%= reply_span_acc %>
+          <%= raw reply_span_acc %>
         <%= raw "</span>" %>
 
         <%= raw "<span class='add-new-reaction-button reaction-button' id='reaction-message-id-#{message.id}'>+🙂</span>" %>
