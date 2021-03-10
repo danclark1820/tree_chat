@@ -1,6 +1,7 @@
 body {
   font-family: arial;
   line-height: 1.4;
+  font-size: 13px;
 }
 
 #search-container {
@@ -102,7 +103,7 @@ body {
   width: 61vw;
   overflow: auto;
   overflow-wrap: break-word;
-  font-size: 16px;
+  font-size: 12px;
   font-family: arial;
   border: solid #E0E0E0 3px
 }
@@ -288,7 +289,7 @@ body {
     width: 100vw;
     overflow: auto;
     overflow-wrap: break-word;
-    font-size: 16px;
+    font-size: 12px;
     font-family: arial;
     border: solid #E0E0E0 3px
   }

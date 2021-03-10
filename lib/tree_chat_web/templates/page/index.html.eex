@@ -34,14 +34,13 @@
           <%= raw reply_span_acc %>
         <%= raw "</span>" %>
 
-        <%= raw "<span class='add-new-reaction-button reaction-button' id='reaction-message-id-#{message.id}'>+🙂</span>" %>
         <%= if reply_count_acc > 0 do %>
           <%= raw "<span class='add-new-reply-button' id='reply-message-id-#{message.id}' data-message-id='#{message.id}'>#{reply_count_acc} Replies</span>" %>
         <%= else %>
           <%= raw "<span class='add-new-reply-button' id='reply-message-id-#{message.id}' data-message-id='#{message.id}'>+Reply</span>" %>
         <% end %>
 
-
+        <%= raw "<span class='add-new-reaction-button reaction-button' id='reaction-message-id-#{message.id}'>+🙂</span>" %>
         <%= for reaction <- @reactions do %>
           <%= if message.id == reaction.id do %>
             <%= case Enum.any?(reaction.message.reactions, & "#{&1.user_id}" == @conn.assigns[:user_id] && &1.value == reaction.reaction) do %>

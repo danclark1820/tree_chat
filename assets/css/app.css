@@ -8,14 +8,15 @@
   margin: 1px;
   background-color: lightgray;
   border: 1px solid darkgray;
-  border-radius: 4px;
-  font-size: 13px;
+  border-radius: 8px;
+  margin-bottom: 2px;
+  font-size: 10px;
 }
 
 .add-new-reply-button:hover {
   background-color: #b3ffff;
   border: 2px solid #1ad1ff;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
 
@@ -23,6 +24,8 @@
   background-color: lightgray;
   border: 1px solid darkgray;
   border-radius: 8px;
+  margin-bottom: 2px;
+  /* font-size: 10px; */
 }
 /* can change this to decrement reaction button? */
 .decrement-reaction-button {

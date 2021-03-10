@@ -240,8 +240,8 @@ let WaterCooler = {
                                                             <br>
                                                             ${messages[i].body}
                                                           </div>
-                                                          <span class='add-new-reaction-button reaction-button' id='reaction-message-id-${messages[i].id}'>+🙂</span>
                                                           <span class='add-new-reply-button' id='reply-message-id-${messages[i].id}' data-message-id='${messages[i].id}'>${replyButtonInnerText}</span>
+                                                          <span class='add-new-reaction-button reaction-button' id='reaction-message-id-${messages[i].id}'>+🙂</span>
                                                           ${replyDataSpans}
                                                           `
                 )
