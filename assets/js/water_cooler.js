@@ -446,12 +446,12 @@ let WaterCooler = {
       if (e.keyCode == 13 && !e.shiftKey) {
         e.preventDefault();
         let userMsg = document.getElementById('user-msg').value
-        let message_name = (userFirst !== "" && userLast !== "" ? `${userFirst} ${userLast}` : userName)
+        // let message_name = (userFirst !== "" && userLast !== "" ? `${userFirst} ${userLast}` : userName)
 
         if (replyWindow.dataset.messageId) {
-          channel.push('shout', {name: message_name, body: userMsg, user_id: userId, chat_id: chatDescription.id, reply_id: replyWindow.dataset.messageId})
+          channel.push('shout', {name: userName, body: userMsg, user_id: userId, chat_id: chatDescription.id, reply_id: replyWindow.dataset.messageId})
         } else {
-          channel.push('shout', {name: message_name, body: userMsg, user_id: userId, chat_id: chatDescription.id})
+          channel.push('shout', {name: userName, body: userMsg, user_id: userId, chat_id: chatDescription.id})
         }
 
         document.getElementById('user-msg').value = ''

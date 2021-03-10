@@ -21,8 +21,6 @@ defmodule TreeChatWeb.SessionController do #This handles app sessions but not ch
       {:ok, user} ->
         conn
         |> put_session(:current_user_id, user.id)
-        |> put_session(:current_user_first, user.first_name)
-        |> put_session(:current_user_last, user.last_name)
         |> put_session(:current_user_name, user.username)
         |> put_flash(:info, "Signed in successfully.")
         |> assign(:oauth_google_url, oauth_google_url)
