@@ -274,24 +274,60 @@ body {
   }
 
   .chat-container {
-    padding: 1px;
+    /* padding: 1px; */
     overflow-x: hidden;
     overflow-y: hidden;
-    width: 100vw;
+    width: 98vw;
     height: 70vh;
+  }
+
+  .chat-window {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width: 98vw;
+    height: 70vh;
+    left: .25vw;
+    border: solid #E0E0E0 1px;
+    overflow-wrap: break-word;
+    overflow-y: auto;
+    position: absolute;
+    /* padding: 1px; */
+
+    /* height: 60vh;
+    width: auto;
+    width: 61vw;
+    top: .25vw;
+    left: 19.5vw;
+
+
+    z-index: 0; */
+  }
+
+  .reply-window {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width: 98vw;
+    height: 70vh;
+    left: .25vw;
+    border: solid #E0E0E0 1px;
+    overflow-wrap: break-word;
+    overflow-y: auto;
+    position: absolute;
   }
 
   .message-input {
     margin-left: 0vw;
     margin-top: 0vh;
+    position: absolute;
+    top: 80vh;
     padding: 0px;
-    height: 20vh;
-    width: 100vw;
+    height: 15vh;
+    width: 98vw;
     overflow: auto;
     overflow-wrap: break-word;
     font-size: 12px;
     font-family: arial;
-    border: solid #E0E0E0 3px
+    /* border: solid #E0E0E0 3px */
   }
 
   .modal-content {
