@@ -112,6 +112,10 @@ body {
   z-index: 0;
 }
 
+.message > p {
+  margin: 2px;
+}
+
 .message-name {
   font-weight: bold;
 }

@@ -17,8 +17,8 @@ defmodule TreeChatWeb.PageView do
     end
 
     body
+    |> Earmark.as_html!
     |> append_preview(link_preview)
-    # |> raw
   end
 
   def reply_count_and_spans(replies, message) do
