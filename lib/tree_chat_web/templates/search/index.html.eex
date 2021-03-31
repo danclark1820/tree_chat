@@ -38,7 +38,8 @@
           <%= raw "<div class='message' id='message-id-#{message.id}'>"%>
             <%= link "#{message.name}", to: chat_path(TreeChatWeb.Endpoint, :show, message.chat_id || "", message_id: message.id) %>
             <br>
-            <%= TreeChatWeb.PageView.decorate_message(message.body) %>
+             <span class="This is odd because we don't call raw elsewhere, so not sure why we need this here"></span>
+            <%= raw TreeChatWeb.PageView.decorate_message(message.body) %>
           </div>
         <% end %>
       <% end %>
