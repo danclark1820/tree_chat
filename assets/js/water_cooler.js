@@ -312,10 +312,10 @@ let WaterCooler = {
             } else {
               console.log('The request failed!');
             }
-            console.log('This always runs...');
 
             if (messageScroller) {
-              messageScroller()
+              var ms = messageScroller
+              ms()
             }
 
           };
@@ -383,12 +383,13 @@ let WaterCooler = {
                   }
                 }
 
-                if (i == messages.length) {
+                if (i == messages.length - 1) {
                   newPageTrigger.id = 'before-pagination-trigger'
-                  newPageTrigger.dataset.cursorAfter = metadata.after
+                  newPageTrigger.dataset.cursorBefore = metadata.before
                   newPageTrigger.dataset.chatId = chat.id
                   // Insert the new page trigger after the last child
                   lastChild.parentNode.insertBefore(newPageTrigger, lastChild.nextSibling)
+
                 }
               }
             } else {
@@ -397,7 +398,8 @@ let WaterCooler = {
             console.log('This always runs...');
 
             if (messageScroller) {
-              messageScroller()
+              var ms = messageScroller
+              ms()
             }
 
           };
@@ -413,16 +415,17 @@ let WaterCooler = {
 
     chatWindow.addEventListener("scroll", function(){
         setScrolledTrue()
-        var fp = firePagination(picker)
+        var fp = firePagination(picker, scrollMessageIntoViewWhenQueried)
         fp()
 
-        var bfp = fireBeforePagination(picker)
+        var bfp = fireBeforePagination(picker, scrollMessageIntoViewWhenQueried)
         bfp()
       }
     )
 
     function scrollMessageIntoViewWhenQueried() {
       var searchParams = new URLSearchParams(window.location.search)
+
       if (searchParams.has("message_id")) {
         var messageId = searchParams.get("message_id")
         var messageElem = document.getElementById(`message-id-${messageId}`)

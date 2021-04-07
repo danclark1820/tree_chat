@@ -62,8 +62,11 @@ defmodule TreeChat.Chat do
 
     cursor_for_message = Paginator.cursor_for_record(%Message{id: message_id}, [inserted_at: :desc, id: :desc])
 
-    messages
+    cursor_including_messages = messages
     |> Repo.paginate(before: cursor_for_message, cursor_fields: [:inserted_at, :id], sort_direction: :desc, limit: 11)
+
+    messages
+    |> Repo.paginate(after: cursor_including_messages.metadata.after, cursor_fields: [:inserted_at, :id], sort_direction: :desc, limit: 11)
   end
 
   def list_messages(chat = %Chat{}, after: cursor_after) do

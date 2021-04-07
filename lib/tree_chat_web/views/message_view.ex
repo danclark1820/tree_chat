@@ -3,7 +3,7 @@ defmodule TreeChatWeb.MessageView do
 
   alias TreeChatWeb.PageView
 
-  def render("index.json", params = %{chat: chat, messages: messages, replies: replies, reactions: reactions, metadata: metadata,}) do
+  def render("index.json", params = %{chat: chat, messages: messages, replies: replies, reactions: reactions, metadata: metadata}) do
     %{
       chat: chat_json(chat),
       messages: Enum.map(messages, &message_json/1),
@@ -40,7 +40,8 @@ defmodule TreeChatWeb.MessageView do
 
   def metadata_json(metadata) do
     %{
-      after: metadata.after
+      after: metadata.after,
+      before: metadata.before
     }
   end
 
