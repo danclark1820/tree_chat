@@ -21,12 +21,11 @@ let WaterCooler = {
     for (var i = 0; i < replyButtons.length; i++) {
       replyButtons[i].onclick = function(e) {
         chatWindow.style.opacity = 0.05
-        // replyWindow.style.hidden = false
         var messageId = e.target.dataset.messageId
         var replyMessageBlock = document.getElementById(`message-id-${messageId}`).cloneNode(true)
         replyMessageBlock.id = `message-id-clone-${messageId}`
+
         var replies = document.getElementsByClassName(`reply-message-${messageId}`)
-        // debugger;
         replyWindow.style.visibility = "visible"
         replyWindow.appendChild(replyMessageBlock)
         replyWindow.dataset.messageId = messageId
@@ -146,6 +145,7 @@ let WaterCooler = {
     let chatDescription = document.getElementsByClassName('chat-description')[0]
     var pageTrigger = document.getElementById("pagination-trigger")
     var scrolled = false;
+    var messageScrollerExecuted = false;
     var host = null
 
     if (location.hostname == "localhost") {
@@ -426,7 +426,8 @@ let WaterCooler = {
     function scrollMessageIntoViewWhenQueried() {
       var searchParams = new URLSearchParams(window.location.search)
 
-      if (searchParams.has("message_id")) {
+      if (!messageScrollerExecuted && searchParams.has("message_id")) {
+        messageScrollerExecuted = true
         var messageId = searchParams.get("message_id")
         var messageElem = document.getElementById(`message-id-${messageId}`)
 
