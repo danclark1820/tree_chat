@@ -52,7 +52,7 @@ defmodule TreeChat.Chat do
                   order_by: [desc: m.inserted_at, desc: m.id]
 
     messages
-    |> Repo.paginate(cursor_fields: [:inserted_at, :id], sort_direction: :desc, limit: 4)
+    |> Repo.paginate(cursor_fields: [:inserted_at, :id], sort_direction: :desc, limit: 11)
   end
 
   def list_messages(chat = %Chat{}, message_id: message_id) do
