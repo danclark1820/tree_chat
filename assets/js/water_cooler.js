@@ -171,7 +171,6 @@ let WaterCooler = {
     us
 
     function isScrolledIntoView(el) {
-      //The bug could be here....but still, why is safari autoscrolling
         var rect = el.getBoundingClientRect();
         var elemBottom = rect.bottom;
         var isVisible = (elemBottom >= 0)
@@ -190,7 +189,8 @@ let WaterCooler = {
 
     function firePagination(picker, messageScroller = null) {
       var paginationTrigger = document.getElementById("pagination-trigger")
-      let originalScrollHeight = chatWindow.scrollHeight;
+      var originalScrollHeight = chatWindow.scrollHeight;
+      var originalScrollTop = chatWindow.scrollTop;
 
       if (paginationTrigger && isScrolledIntoView(paginationTrigger)) {
         var cursorAfter = paginationTrigger.dataset.cursorAfter
@@ -310,6 +310,13 @@ let WaterCooler = {
                 }
               }
             }
+            // Manually set scroll height to reset for the new elements (Chrome auto adjusts scrollTop to maintain new position,
+            // while safari keeps the same value despite a new scroll height which causes isScrolledIntoView to remain true
+            // There is definitely still a bug in fireBeforePagintion or isScrolledIntoView for BeforePagination not being reversed
+            // To look at elements coming up the view rather then down it.
+            var newScrollHeight = chatWindow.scrollHeight;
+            chatWindow.scrollTop = originalScrollTop + (newScrollHeight - originalScrollHeight)
+
           } else {
             console.log('The request failed!');
           }
