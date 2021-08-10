@@ -314,6 +314,7 @@ let WaterCooler = {
             // while safari keeps the same value despite a new scroll height which causes isScrolledIntoView to remain true
             // There is definitely still a bug in fireBeforePagintion or isScrolledIntoView for BeforePagination not being reversed
             // To look at elements coming up the view rather then down it.
+            //MOBILE PAGINATION IS much better but not fixed, now going to the top of the new page (atleast not firing multiple times)
             var newScrollHeight = chatWindow.scrollHeight;
             chatWindow.scrollTop = originalScrollTop + (newScrollHeight - originalScrollHeight)
 
