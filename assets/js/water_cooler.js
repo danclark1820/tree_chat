@@ -1,4 +1,10 @@
 import { EmojiButton } from '@joeattardi/emoji-button';
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en';
+
+
+// Create formatter (English).
+
 
 let WaterCooler = {
   init(socket) {
@@ -6,8 +12,10 @@ let WaterCooler = {
     let channel_name = window.location.pathname.replace(/\/c\//g, '')
     let channel = socket.channel(`water_cooler:${channel_name}`, {})
     let picker = new EmojiButton();
+    TimeAgo.addDefaultLocale(en);
+    let timeAgoFormatter = new TimeAgo('en-US');
     channel.join()
-    this.listenForChats(channel, picker)
+    this.listenForChats(channel, picker, timeAgoFormatter)
     this.listenForReactions(channel, picker)
     this.listenForReplies(channel)
   },
@@ -136,7 +144,7 @@ let WaterCooler = {
     }
   },
 
-  listenForChats(channel, picker) {
+  listenForChats(channel, picker, timeAgo) {
     let userName = window.userName
     let userFirst = window.userFirst || ""
     let userLast = window.userLast || ""
@@ -238,6 +246,7 @@ let WaterCooler = {
               let msgBlock = document.createElement('div')
               msgBlock.insertAdjacentHTML('beforeend', `<div class='message' id='message-id-${messages[i].id}'>
                                                           <span class='message-name'>${messages[i].name}</span>
+                                                          <span class='message-inserted-at'>${timeAgo.format(Date.parse(messages[i].inserted_at))}</span>
                                                           <br>
                                                           ${messages[i].body}
                                                         </div>
@@ -360,6 +369,7 @@ let WaterCooler = {
               let msgBlock = document.createElement('div')
               msgBlock.insertAdjacentHTML('beforeend', `<div class='message' id='message-id-${messages[i].id}'>
                                                           <span class='message-name'>${messages[i].name}</span>
+                                                          <span class='message-created-at'>${message[i].created_at}</span>
                                                           <br>
                                                           ${messages[i].body}
                                                         </div>
@@ -465,6 +475,7 @@ let WaterCooler = {
       let msgBlock = document.createElement('div')
       let msgHTML = `<div class='message' id='message-${payload.message_id}'>
                                                   <span class='message-name'>${payload.name}</span>
+                                                  <span class='message-inserted-at'>${payload.inserted_at}</span>
                                                   <br>
                                                   ${payload.body}
                                                 </div>

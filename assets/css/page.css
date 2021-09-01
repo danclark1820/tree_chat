@@ -116,6 +116,11 @@ body {
   margin: 2px;
 }
 
+.message-inserted-at {
+  font-weight: lighter;
+  color: grey;
+}
+
 .message-name {
   font-weight: bold;
 }
