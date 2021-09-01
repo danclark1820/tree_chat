@@ -1,3 +1,4 @@
 *.*
 !*.exs
 !.gitignore
+package-lock.json
