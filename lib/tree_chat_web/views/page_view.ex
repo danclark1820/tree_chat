@@ -42,14 +42,22 @@ defmodule TreeChatWeb.PageView do
     end
   end
 
-  def compose_preview(nil) do
+  def compose_preview({:no_link, nil}) do
     ""
   end
 
-  def compose_preview(youtube_video_id) do
-    "<br>
+  def compose_preview({:youtube, youtube_video_id}) do
+    "
       <iframe class='embedded-youtube-video' width='560' height='315'
         src='https://www.youtube.com/embed/#{youtube_video_id}'>
+      </iframe>
+    "
+  end
+
+  def compose_preview({:instagram, instagram_path_w_id}) do
+    "
+      <iframe class='embedded-instagram'
+        src=\"https://www.instagram.com/#{instagram_path_w_id}/embed\">
       </iframe>
     "
   end
@@ -59,9 +67,12 @@ defmodule TreeChatWeb.PageView do
   end
 
   def get_youtube_video_id(url) do
-    case Regex.run(~r/youtube\.com\/watch\?v=([\w-]{11})/, url) do
-      nil -> nil
-      youtube_string_matches -> List.last(youtube_string_matches)
+    cond do
+      Regex.run(~r/youtube\.com\/watch\?v=([\w-]{11})/, url) ->
+        {:youtube, List.last(Regex.run(~r/youtube\.com\/watch\?v=([\w-]{11})/, url))}
+      Regex.run(~r/https:\/\/www.instagram.com\/(.*\/[\w-]{11})/, url) ->
+        {:instagram, List.last(Regex.run(~r/https:\/\/www.instagram.com\/(.*\/[\w-]{11})/, url))}
+      true -> {:no_link, nil}
     end
   end
 end
