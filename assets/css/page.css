@@ -348,6 +348,11 @@ body {
     height: 157.5px;
   }
 
+  .embedded-instagram {
+    width: 375px;
+    height: 490px;
+  }
+
   #feedback-link {
     display: none;
   }

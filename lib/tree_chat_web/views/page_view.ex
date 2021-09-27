@@ -56,7 +56,7 @@ defmodule TreeChatWeb.PageView do
 
   def compose_preview({:instagram, instagram_path_w_id}) do
     "
-      <iframe class='embedded-instagram'
+      <iframe class='embedded-instagram' width='560' height='690'
         src=\"https://www.instagram.com/#{instagram_path_w_id}/embed\">
       </iframe>
     "
