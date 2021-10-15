@@ -14,14 +14,14 @@ config :tree_chat, TreeChatWeb.Endpoint,
   url: [host: "cooler.chat", port: 80], #This is critical for ensuring web-sockets properly authorize.
   check_origin: ["//cooler.chat", "//*.cooler.chat"],
   cache_static_manifest: "priv/static/cache_manifest.json",
-  https: [
-    port: 443,
-    cipher_suite: :strong,
-    otp_app: :hello,
-    keyfile: System.get_env("SSL_KEY_PATH"),
-    certfile: System.get_env("SSL_CERT_PATH"),
-  ],
-  force_ssl: [rewrite_on: [:x_forwarded_proto]],
+  # https: [
+  #   port: 443,
+  #   cipher_suite: :strong,
+  #   otp_app: :hello,
+  #   keyfile: System.get_env("SSL_KEY_PATH"),
+  #   certfile: System.get_env("SSL_CERT_PATH"),
+  # ],
+  # force_ssl: [rewrite_on: [:x_forwarded_proto]],
   server: true,
   root: ".",
   version: Application.spec(:tree_chat, :vsn)
@@ -37,19 +37,19 @@ config :tree_chat, TreeChat.Repo,
   url: System.get_env("DATABASE_URL"),
   pool_size: 10
 
-config :tree_chat, TreeChat.Mailer,
-  adapter: Bamboo.SMTPAdapter,
-  server: System.get_env("SES_SERVER"),
-  port: System.get_env("SES_PORT"),
-  username: System.get_env("SMTP_USERNAME"),
-  password: System.get_env("SMTP_PASSWORD"),
-  tls: :always, # can be `:always` or `:never`
-  ssl: false, # can be `true`
-  retries: 1
+# config :tree_chat, TreeChat.Mailer,
+#   adapter: Bamboo.SMTPAdapter,
+#   server: System.get_env("SES_SERVER"),
+#   port: System.get_env("SES_PORT"),
+#   username: System.get_env("SMTP_USERNAME"),
+#   password: System.get_env("SMTP_PASSWORD"),
+#   tls: :always, # can be `:always` or `:never`
+#   ssl: false, # can be `true`
+#   retries: 1
 
-config :tree_chat, TreeChat.AuthGoogle,
-  client_id: System.get_env("GOOGLE_CLIENT_ID"),
-  client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
+# config :tree_chat, TreeChat.AuthGoogle,
+#   client_id: System.get_env("GOOGLE_CLIENT_ID"),
+#   client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
 
 config :tree_chat, env: Mix.env()
 
