@@ -18,10 +18,11 @@ defmodule TreeChatWeb.UserController do
     |> List.keyfind("referer", 0)
     |> elem(1)
 
-    # generated_user_name = generate_user_name("#{user_params["first_name"]}#{user_params["last_name"]}", 0)
-    # generated_user_params = Map.put(user_params, "username",  generated_user_name)
+    parsed_email = Regex.run(~r/([^@]+)/, "#{user_params["email"]}") |> hd()
+    generated_user_name = generate_user_name(parsed_email, 0)
+    generated_user_params = Map.put(user_params, "username",  generated_user_name)
 
-    case Accounts.create_user(user_params) do
+    case Accounts.create_user(generated_user_params) do
       {:ok, user} ->
         conn
         |> put_session(:current_user_id, user.id)

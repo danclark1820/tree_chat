@@ -13,9 +13,6 @@
 <div class="form-element">
   <span id="forgot-password-link">Forgot Password?</span>
 </div>
-
-<div class="form-element sign-up-or">-OR-</div>
-<a id="google-sign-in-link" class="form-element" href="<%= @oauth_google_url %>"></a>
 <div class="form-element">
   Not a member? <span class="signup-link">Sign Up</span>
 </div>

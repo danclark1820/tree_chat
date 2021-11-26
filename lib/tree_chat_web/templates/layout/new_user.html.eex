@@ -2,22 +2,16 @@
 
 <%= form_for @conn, user_path(@conn, :create), [as: :user], fn f -> %>
   <div class="form-element">
-    <%= text_input f, :username, placeholder: "UserName", required: true, class: "form-input"%>
-    <%= error_tag f, :username %>
-  </div>
-  <div class="form-element">
     <%= text_input f, :email, placeholder: "Email", required: true, class: "form-input" %>
     <%= error_tag f, :email %>
   </div>
   <div class="form-element">
-    <%= password_input f, :encrypted_password, placeholder: "Password", required: true, class: "form-input" %>
+    <%= password_input f, :encrypted_password, placeholder: "Choose Password", required: true, class: "form-input" %>
     <%= error_tag f, :encrypted_password %>
   </div>
   <div class="form-element">
-    <%= submit "Submit", class: "form-submit" %>
+    <%= submit "Sign Up", class: "form-submit" %>
   </div>
-  <div class="form-element sign-up-or">-OR-</div>
-  <a id="google-sign-in-link" class="form-element" href="<%= @oauth_google_url %>"></a>
   <div class="form-element">
     Already a member? <span class="signin-link">Sign In</span>
   </div>
