@@ -241,11 +241,6 @@ body {
   margin-left: 45vw;
 }
 
-/* .embedded-instagram {
-  width: 360px;
-  height: 360px;
-} */
-
 
 @media only screen and (max-width: 600px) {
   body {
@@ -359,7 +354,7 @@ body {
 
   .embedded-instagram {
     width: 360px;
-    height: 360px;
+    height: 430px;
   }
 
   #feedback-link {
