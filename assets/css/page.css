@@ -241,6 +241,11 @@ body {
   margin-left: 45vw;
 }
 
+/* .embedded-instagram {
+  width: 360px;
+  height: 360px;
+} */
+
 
 @media only screen and (max-width: 600px) {
   body {
@@ -352,10 +357,10 @@ body {
     height: 157.5px;
   }
 
-  /* .embedded-instagram {
-    width: 350px;
-    height: 490px;
-  } */
+  .embedded-instagram {
+    width: 360px;
+    height: 360px;
+  }
 
   #feedback-link {
     display: none;
