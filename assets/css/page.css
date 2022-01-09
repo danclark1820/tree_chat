@@ -251,22 +251,17 @@ body {
     /* background-color: rgb(65, 33, 153); */
   }
 
+  .alert {
+    display: none
+  }
+
   #search-container {
-    padding-left: 15vw;
-  }
-
-  #search-form{
-    width: 50vw;
-    height: 25px
-  }
-
-  #search-submit {
-    width: 16vw;
-    height: 31px;
+    display: none;
+    /* padding-left: 15vw; */
   }
 
   .chat-title {
-    margin: 0vw;
+    display: none
   }
 
   #new-chat-link {
