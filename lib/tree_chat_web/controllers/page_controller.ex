@@ -5,14 +5,12 @@ defmodule TreeChatWeb.PageController do
   # alias TreeChat.Reaction
 
   def index(conn, _params) do
-    require IEx; IEx.pry
     oauth_google_url = TreeChat.AuthGoogle.generate_oauth_url(conn)
     chats = Chat.list_chats()
-    # redirect to lobby if nothing is passed in
+
     lobby = Chat.get_chat_by_topic("Lobby")
     cond do
       conn.params["chat_topic"] == nil ->
-        # require IEx; IEx.pry
         %{entries: messages, metadata: metadata} = case conn.params["message_id"] do
           nil -> Chat.list_messages(lobby)
           message_id -> Chat.list_messages(lobby, message_id: message_id)
@@ -21,8 +19,6 @@ defmodule TreeChatWeb.PageController do
       true -> {:ok, "do nothing"}
     end
 
-    # list messages for specifc chat if it exists, redirect to new chats page if it does not
-    # require IEx; IEx.pry
     case current_chat = Chat.get_chat_by_topic(conn.params["chat_topic"]) do
 
       %Chat{} ->
