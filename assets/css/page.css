@@ -286,14 +286,14 @@ body {
     overflow-x: hidden;
     overflow-y: hidden;
     width: 100vw;
-    height: 70vh;
+    height: 90vh;
   }
 
   .chat-window {
     overflow-x: hidden;
     overflow-y: hidden;
     width: 99vw;
-    height: 70vh;
+    height: 90vh;
     left: .25vw;
     border: solid #E0E0E0 1px;
     overflow-wrap: break-word;
@@ -315,7 +315,7 @@ body {
     overflow-x: hidden;
     overflow-y: hidden;
     width: 99vw;
-    height: 80vh;
+    height: 90vh;
     left: .25vw;
     border: solid #E0E0E0 1px;
     overflow-wrap: break-word;
@@ -327,9 +327,9 @@ body {
     margin-left: 0vw;
     margin-top: 0vh;
     position: absolute;
-    top: 80vh;
+    top: 90vh;
     padding: 0px;
-    height: 20vh;
+    height: 10vh;
     width: 99vw;
     overflow: auto;
     overflow-wrap: break-word;
