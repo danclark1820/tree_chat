@@ -5,6 +5,7 @@ defmodule TreeChatWeb.PageController do
   # alias TreeChat.Reaction
 
   def index(conn, _params) do
+    require IEx; IEx.pry
     oauth_google_url = TreeChat.AuthGoogle.generate_oauth_url(conn)
     chats = Chat.list_chats()
     # redirect to lobby if nothing is passed in

@@ -26,6 +26,7 @@ defmodule TreeChatWeb.Router do
     get "/c/:chat_topic", PageController, :index
     post "/search", SearchController, :index
     resources "/chat", ChatController, only: [:create, :index, :new, :show]
+    resources "/message", MessageController, only: [:show]
     resources "/user", UserController, only: [:create, :new, :edit, :update]
     resources "/password", PasswordController, only: [:new, :create]
     get "/privacy-policy", PrivacyPolicyController, :index
@@ -39,7 +40,7 @@ defmodule TreeChatWeb.Router do
   scope "/api", TreeChatWeb do
     pipe_through :api
 
-    resources "/messages", MessageController, only: [:index]
+    resources "/messages", API.MessageController, only: [:index]
   end
 
   defp put_user_token(conn, _) do

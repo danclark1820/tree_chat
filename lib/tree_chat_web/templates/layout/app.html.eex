@@ -4,11 +4,6 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <%= if @current_chat do %>
-      <title><%= "#{@current_chat.topic}" %></title>
-    <% else %>
-      <title><%= "Search" %></title>
-    <% end %>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-E9X63WJPR7"></script>
