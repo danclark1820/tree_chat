@@ -346,6 +346,10 @@ body {
     font-size: 16px;
   }
 
+  .message-input {
+    font-size: 16px;
+  }
+
   .embedded-youtube-video {
     width: 280px;
     height: 157.5px;
