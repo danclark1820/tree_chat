@@ -342,6 +342,10 @@ body {
     width: 60vw; /* Could be more or less, depending on screen size */
   }
 
+  .form-input {
+    font-size: 16px;
+  }
+
   .embedded-youtube-video {
     width: 280px;
     height: 157.5px;
