@@ -246,7 +246,7 @@ let WaterCooler = {
               let msgBlock = document.createElement('div')
               msgBlock.insertAdjacentHTML('beforeend', `<div class='message' id='message-id-${messages[i].id}'>
                                                           <span class='message-name'>${messages[i].name}</span>
-                                                          <span class='message-inserted-at'>${timeAgo.format(Date.parse(messages[i].inserted_at))}</span>
+                                                          <a href="${host}/chat/${chatId}?message_id=${messages[i].id}" class='message-inserted-at'>${timeAgo.format(Date.parse(messages[i].inserted_at))}</a>
                                                           <br>
                                                           ${messages[i].body}
                                                         </div>
@@ -369,7 +369,7 @@ let WaterCooler = {
               let msgBlock = document.createElement('div')
               msgBlock.insertAdjacentHTML('beforeend', `<div class='message' id='message-id-${messages[i].id}'>
                                                           <span class='message-name'>${messages[i].name}</span>
-                                                          <span class='message-created-at'>${message[i].created_at}</span>
+                                                          <a href="${host}/chat/${chatId}?message_id=${messages[i].id}" class='message-inserted-at'>${timeAgo.format(Date.parse(message[i].inserted_at))}</a>
                                                           <br>
                                                           ${messages[i].body}
                                                         </div>
@@ -473,9 +473,10 @@ let WaterCooler = {
     channel.on('shout', payload => {
       let replyWindow = document.getElementById("reply-window")
       let msgBlock = document.createElement('div')
+      // Need to fix this message inserted at
       let msgHTML = `<div class='message' id='message-${payload.message_id}'>
                                                   <span class='message-name'>${payload.name}</span>
-                                                  <span class='message-inserted-at'>${payload.inserted_at}</span>
+                                                  <a href="${host}/chat/${payload.chat_id}?message_id=${payload.message_id}" class='message-inserted-at'>${(payload.inserted_at)}</a>
                                                   <br>
                                                   ${payload.body}
                                                 </div>

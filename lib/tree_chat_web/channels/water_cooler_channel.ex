@@ -32,6 +32,7 @@ defmodule TreeChatWeb.WaterCoolerChannel do
         new_payload = payload
         |> Map.replace!("body", PageView.decorate_message(payload["body"]))
         |> Map.put("message_id", message.id)
+        |> Map.put("chat_id", message.chat_id)
         |> Map.put("inserted_at", elem(Timex.format(message.inserted_at, "{relative}", :relative), 1))
         # |> Map.put("reply_id", message.reply_id)
 
