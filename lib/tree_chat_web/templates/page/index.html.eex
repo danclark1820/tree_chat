@@ -24,7 +24,10 @@
 
         <%= raw "<div class='message' id='message-id-#{message.id}'>"%>
           <span class="message-name"><%= message.name %></span>
-          <%= link "#{elem(Timex.format(message.inserted_at, "{relative}", :relative), 1)}", to: chat_path(TreeChatWeb.Endpoint, :show, message.chat_id || "", message_id: message.id), class: "message-inserted-at"%>
+          <span>
+            <%= link "#{elem(Timex.format(message.inserted_at, "{relative}", :relative), 1)}", to: chat_path(TreeChatWeb.Endpoint, :show, message.chat_id || "", message_id: message.id), class: "message-inserted-at"%>
+            <i class="far fa-share-square"></i>
+          </span>
           <br>
           <%= raw decorate_message(message.body)%>
         </div>
