@@ -23,8 +23,10 @@ defmodule TreeChatWeb.API.MessageView do
   def message_json(message) do
     %{
       id: message.id,
+      chat_id: message.chat_id,
       name: message.name,
       body: PageView.decorate_message(message.body),
+      undecorated_body: message.body,
       reply_id: message.reply_id,
       inserted_at: message.inserted_at
     }

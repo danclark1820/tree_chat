@@ -152,6 +152,7 @@ let WaterCooler = {
     let chatWindow = document.getElementById('chat-window')
     let chatDescription = document.getElementsByClassName('chat-description')[0]
     var pageTrigger = document.getElementById("pagination-trigger")
+    var initialShareLinks = document.getElementsByClassName('message-inserted-at')
     var scrolled = false;
     var messageScrollerExecuted = false;
     var host = null
@@ -177,6 +178,11 @@ let WaterCooler = {
 
     var us = updateScroll()
     us
+
+ 
+    for (var i = 0; i < initialShareLinks.length; i++) {
+      attachNativeShare(initialShareLinks[i])
+    }
 
     function isScrolledIntoView(el) {
         var rect = el.getBoundingClientRect();
@@ -246,7 +252,11 @@ let WaterCooler = {
               let msgBlock = document.createElement('div')
               msgBlock.insertAdjacentHTML('beforeend', `<div class='message' id='message-id-${messages[i].id}'>
                                                           <span class='message-name'>${messages[i].name}</span>
-                                                          <a href="${host}/chat/${chatId}?message_id=${messages[i].id}" class='message-inserted-at'>${timeAgo.format(Date.parse(messages[i].inserted_at))}</a>
+                                                          <span class='message-inserted-at' id='message-share-id-${messages[i].id}' data-message-id='${messages[i].id}' data-chat-id='${messages[i].chat_id}' data-message-name='${messages[i].name}' data-message-body='${messages[i].undecorated_body}' >
+                                                            ${timeAgo.format(Date.parse(messages[i].inserted_at))}
+                                                            <i class="far fa-share-square"></i>
+                                                          </span>
+                                                          
                                                           <br>
                                                           ${messages[i].body}
                                                         </div>
@@ -256,6 +266,8 @@ let WaterCooler = {
                                                         `
               )
               chatWindow.insertBefore(msgBlock, firstChild)
+              let shareElem = document.getElementById(`message-share-id-${messages[i].id}`)
+              attachNativeShare(shareElem)
 
               let messageInput = document.getElementById("user-msg")
               let replyBlock = document.getElementById(`reply-message-id-${messages[i].id}`)
@@ -369,7 +381,10 @@ let WaterCooler = {
               let msgBlock = document.createElement('div')
               msgBlock.insertAdjacentHTML('beforeend', `<div class='message' id='message-id-${messages[i].id}'>
                                                           <span class='message-name'>${messages[i].name}</span>
-                                                          <a href="${host}/chat/${chatId}?message_id=${messages[i].id}" class='message-inserted-at'>${timeAgo.format(Date.parse(message[i].inserted_at))}</a>
+                                                          <span class='message-inserted-at' id='message-share-id-${messages[i].id}' data-message-id='${messages[i].id}' data-chat-id='${messages[i].chat_id}' data-message-name='${messages[i].name} data-message-body='${messages[i].undecorated_body}'>
+                                                            ${timeAgo.format(Date.parse(messages[i].inserted_at))}
+                                                            <i class="far fa-share-square"></i>
+                                                          </span>
                                                           <br>
                                                           ${messages[i].body}
                                                         </div>
@@ -378,6 +393,8 @@ let WaterCooler = {
               )
               lastChild.parentNode.insertBefore(msgBlock, lastChild.nextSibling)
               lastChild = chatWindow.lastChild //Could we avoid this by not reversing the messages we get back? // Also may have to not revers anyway for this scenario
+              let shareElem = document.getElementById(`message-share-id-${messages[i].id}`)
+              attachNativeShare(shareElem)
 
               let reactionBlock = document.getElementById(`reaction-message-id-${messages[i].id}`)
               reactionBlock.addEventListener('click', (e) => {
@@ -447,6 +464,23 @@ let WaterCooler = {
       }
     }
 
+    function attachNativeShare(shareButton) {
+      shareButton.addEventListener('click', event => {
+        if (navigator.share) {
+          navigator.share({
+            title: 'Cooler.Chat',
+            url: `${host}/chat/${shareButton.dataset.chatId}?message_id=${shareButton.dataset.messageId}`,
+            text: `${shareButton.dataset.messageName}: ${shareButton.dataset.messageBody}`
+          }).then(() => {
+            console.log('Thanks for sharing!');
+          })
+          .catch(console.error);
+        } else {
+          navigator.clipboard.writeText(`${host}/chat/${shareButton.dataset.chatId}?message_id=${shareButton.dataset.messageId}`)
+        }
+      });
+    }
+
     /// You may need to add something like this for before page trigger for when
     // someone has a larger window and the bfp() doesn't fire cuz its above trigger point
     if (pageTrigger != null && pageTrigger.scrollHeight == 0) {
@@ -474,9 +508,13 @@ let WaterCooler = {
       let replyWindow = document.getElementById("reply-window")
       let msgBlock = document.createElement('div')
       // Need to fix this message inserted at
-      let msgHTML = `<div class='message' id='message-${payload.message_id}'>
+      //<a href="${host}/chat/${payload.chat_id}?message_id=${payload.message_id}"
+      let msgHTML = `<div class='message' id='message-id-${payload.message_id}'>
                                                   <span class='message-name'>${payload.name}</span>
-                                                  <a href="${host}/chat/${payload.chat_id}?message_id=${payload.message_id}" class='message-inserted-at'>${(payload.inserted_at)}</a>
+                                                  <span class='message-inserted-at' id='message-share-id-${payload.message_id}' data-message-id='${payload.message_id}' data-chat-id='${payload.chat_id}' data-message-name='${payload.name}' data-message-body='${payload.body}'>
+                                                    ${(payload.inserted_at)}
+                                                    <i class="far fa-share-square"></i>
+                                                  </span>
                                                   <br>
                                                   ${payload.body}
                                                 </div>
@@ -505,6 +543,8 @@ let WaterCooler = {
       // Need to add event trigger to new reply button
 
       chatWindow.appendChild(msgBlock)
+      let shareElem = document.getElementById(`message-share-id-${payload.message_id}`)
+      attachNativeShare(shareElem)
       chatWindow.scrollTop = chatWindow.scrollHeight;
 
       let reactionBlock = document.getElementById(`reaction-message-id-${payload.message_id}`)
