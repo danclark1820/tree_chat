@@ -492,7 +492,6 @@ let WaterCooler = {
       if (e.keyCode == 13 && !e.shiftKey) {
         e.preventDefault();
         let userMsg = document.getElementById('user-msg').value
-        // let message_name = (userFirst !== "" && userLast !== "" ? `${userFirst} ${userLast}` : userName)
 
         if (replyWindow.dataset.messageId) {
           channel.push('shout', {name: userName, body: userMsg, user_id: userId, chat_id: chatDescription.id, reply_id: replyWindow.dataset.messageId})
@@ -509,7 +508,7 @@ let WaterCooler = {
       let msgBlock = document.createElement('div')
       let msgHTML = `<div class='message' id='message-id-${payload.message_id}'>
                                                   <span class='message-name'>${payload.name}</span>
-                                                  <span class='message-inserted-at' id='message-share-id-${payload.message_id}' data-message-id='${payload.message_id}' data-chat-id='${payload.chat_id}' data-message-name='${payload.name}' data-message-body='${payload.body}'>
+                                                  <span class='message-inserted-at' id='message-share-id-${payload.message_id}' data-message-id='${payload.message_id}' data-chat-id='${payload.chat_id}' data-message-name='${payload.name}' data-message-body='${payload.undecorated_body}'>
                                                     ${(payload.inserted_at)}
                                                     <i class="far fa-share-square"></i>
                                                   </span>
@@ -522,7 +521,6 @@ let WaterCooler = {
         let replyBlock = document.createElement('div')
         replyBlock.insertAdjacentHTML('beforeend', msgHTML)
         replyWindow.appendChild(replyBlock)
-        // Create span that adds message to list of hidden spans with data
       }
 
       var originalMessageReplyContainer = document.getElementById(`message-replies-container-${payload.message_id}`)
