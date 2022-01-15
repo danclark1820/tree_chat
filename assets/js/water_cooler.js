@@ -507,8 +507,6 @@ let WaterCooler = {
     channel.on('shout', payload => {
       let replyWindow = document.getElementById("reply-window")
       let msgBlock = document.createElement('div')
-      // Need to fix this message inserted at
-      //<a href="${host}/chat/${payload.chat_id}?message_id=${payload.message_id}"
       let msgHTML = `<div class='message' id='message-id-${payload.message_id}'>
                                                   <span class='message-name'>${payload.name}</span>
                                                   <span class='message-inserted-at' id='message-share-id-${payload.message_id}' data-message-id='${payload.message_id}' data-chat-id='${payload.chat_id}' data-message-name='${payload.name}' data-message-body='${payload.body}'>
