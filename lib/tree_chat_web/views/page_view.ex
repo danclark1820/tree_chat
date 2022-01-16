@@ -70,6 +70,10 @@ defmodule TreeChatWeb.PageView do
     cond do
       Regex.run(~r/youtube\.com\/watch\?v=([\w-]{11})/, url) ->
         {:youtube, List.last(Regex.run(~r/youtube\.com\/watch\?v=([\w-]{11})/, url))}
+      Regex.run(~r/youtube\.com\/shorts\/([\w-]{11})\?feature=share/, url) ->
+        {:youtube, List.last(Regex.run(~r/youtube\.com\/shorts\/([\w-]{11})\?feature=share/, url))}
+      Regex.run(~r/youtu.be\/([\w-]{11})/, url) ->
+        {:youtube, List.last(Regex.run(~r/youtu.be\/([\w-]{11})/, url))}
       Regex.run(~r/https:\/\/www.instagram.com\/(.*\/[\w-]{11})/, url) ->
         {:instagram, List.last(Regex.run(~r/https:\/\/www.instagram.com\/(.*\/[\w-]{11})/, url))}
       true -> {:no_link, nil}
