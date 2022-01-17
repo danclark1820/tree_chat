@@ -25,7 +25,6 @@
         <%= raw "<div class='message' id='message-id-#{message.id}'>"%>
           <span class="message-name"><%= message.name %></span>
           <%= raw "<span class='message-inserted-at' id='message-share-id-#{message.id}' data-message-id='#{message.id}' data-chat-id='#{message.chat_id}' data-message-name='#{message.name}' data-message-body='#{message.body}'>"%>
-            <%=#, to: chat_path(TreeChatWeb.Endpoint, :show, message.chat_id || "", message_id: message.id)%>
             <%= "#{elem(Timex.format(message.inserted_at, "{relative}", :relative), 1)}"%>
             <i class="far fa-share-square"></i>
           </span>
