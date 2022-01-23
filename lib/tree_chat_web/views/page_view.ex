@@ -74,8 +74,8 @@ defmodule TreeChatWeb.PageView do
         {:youtube, List.last(Regex.run(~r/youtube\.com\/shorts\/([\w-]{11})\?feature=share/, url))}
       Regex.run(~r/youtu.be\/([\w-]{11})/, url) ->
         {:youtube, List.last(Regex.run(~r/youtu.be\/([\w-]{11})/, url))}
-      Regex.run(~r/https:\/\/www.instagram.com\/(.*\/[\w-]{11})/, url) ->
-        {:instagram, List.last(Regex.run(~r/https:\/\/www.instagram.com\/(.*\/[\w-]{11})/, url))}
+      Regex.run(~r/https:\/\/www.instagram.com.*\/(.*\/[\w-]{11})/, url) ->
+        {:instagram, List.last(Regex.run(~r/https:\/\/www.instagram.com.*\/(.*\/[\w-]{11})/, url))}
       true -> {:no_link, nil}
     end
   end
