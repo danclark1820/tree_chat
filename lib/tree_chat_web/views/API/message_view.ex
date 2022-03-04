@@ -24,7 +24,7 @@ defmodule TreeChatWeb.API.MessageView do
     %{
       id: message.id,
       chat_id: message.chat_id,
-      name: message.name,
+      name: PageView.decorate_name(message.name),
       body: PageView.decorate_message(message.body),
       undecorated_body: message.body,
       reply_id: message.reply_id,

@@ -16,7 +16,7 @@
     <div class="chat-window" id="chat-window">
       <%= for message <- @messages do %>
         <%= raw "<div class='message' id='message-id-#{message.id}'>"%>
-          <span class="message-name"><%= message.name %>:</span>
+          <span class="message-name"><%= TreeChatWeb.PageView.decorate_name(message.name) %>:</span>
           <%= TreeChatWeb.PageView.decorate_message(message.body) %>
         </div>
       <% end %>

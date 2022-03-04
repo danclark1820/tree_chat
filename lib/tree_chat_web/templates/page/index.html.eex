@@ -23,7 +23,7 @@
         <% end %>
 
         <%= raw "<div class='message' id='message-id-#{message.id}'>"%>
-          <span class="message-name"><%= message.name %></span>
+          <span class="message-name"><%= decorate_name(message.name) %></span>
           <%= raw "<span class='message-inserted-at' id='message-share-id-#{message.id}' data-message-id='#{message.id}' data-chat-id='#{message.chat_id}' data-message-name='#{message.name}' data-message-body='#{message.body}'>"%>
             <%= "#{elem(Timex.format(message.inserted_at, "{relative}", :relative), 1)}"%>
             <i class="far fa-share-square"></i>

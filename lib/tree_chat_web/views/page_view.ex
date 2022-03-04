@@ -21,6 +21,29 @@ defmodule TreeChatWeb.PageView do
     |> append_preview(link_preview)
   end
 
+  def decorate_name(name) do
+    case name == "daniel.san" do
+      true ->
+        random_name
+      false ->
+        name
+    end
+  end
+
+  def random_name do
+    names = ["sony", "franky.w", "jeff.jeffry", "smoke.screen", "verdana.blend", "JohnJohn",
+    "JordyS", "MikeH", "SwellSwellian", "SkateNerd", "GearGuy", "BimmerLover", "SweetMistake",
+    "NerdAlert", "AC.Slater", "FiveNineteen", "UraniumFuture", "beSpoke45", "FireOnTheMountain",
+    "Jerry.Garcia.Lives", "NotPaulMcCartney", "TomBradysDad", "Jules", "JE11", "BobM", "PutinsAunt",
+    "Jakobi", "LizzieA", "FrankTheTank", "TwoFtSwell", "SchoolForAnts", "PowerLiftingSucks", "simon.anderson",
+    "john.flinch", "sam.stewart", "alexis.k", "genzEmoji", "teslaMacbook", "metalWaterBottle",
+    "anna", "beverly", "vinny", "xavier", "laxStacks", "rabil99", "nathanF", "HeikenBob", "IPALover",
+    "Japow", "TwinFinSin", "Logger", "ChaseW", "SweetFeet", "Beanie", "Tucker", "Homer", "Lucy", "NucleahPowaH",
+    "MoPowahBaby", "Sharks", "SharkFood", "Tunnna"]
+
+    Enum.random(names)
+  end
+
   def reply_count_and_spans(replies, message) do
     {reply_count_acc, reply_span_acc} = Enum.reduce(replies, {0, ""}, fn reply, {count_acc, span_acc} ->
       case reply.reply_id == message.id do

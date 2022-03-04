@@ -31,7 +31,7 @@ defmodule TreeChatWeb.WaterCoolerChannel do
       {:ok, message} ->
         new_payload = payload
         |> Map.put("undecorated_body", payload["body"])
-        |> Map.replace!("body", PageView.decorate_message(payload["body"]))
+        |> Map.replace!("body", PageView.decorate_message(payload["body"])) # Don't need to do name update here, fine if it comes in as daniel.san
         |> Map.put("message_id", message.id)
         |> Map.put("chat_id", message.chat_id)
         |> Map.put("inserted_at", elem(Timex.format(message.inserted_at, "{relative}", :relative), 1))
