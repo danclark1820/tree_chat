@@ -446,7 +446,6 @@ let WaterCooler = {
 
         firePagination(picker, scrollMessageIntoViewWhenQueried)
         fireBeforePagination(picker, scrollMessageIntoViewWhenQueried)
-        event.preventDefault();
       }
     )
 
