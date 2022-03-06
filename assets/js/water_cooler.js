@@ -441,11 +441,12 @@ let WaterCooler = {
       }
     }
 
-    chatWindow.addEventListener("scroll", function(){
+    chatWindow.addEventListener("scroll", function(event){
         setScrolledTrue()
 
         firePagination(picker, scrollMessageIntoViewWhenQueried)
         fireBeforePagination(picker, scrollMessageIntoViewWhenQueried)
+        event.preventDefault();
       }
     )
 
