@@ -37,4 +37,12 @@ defmodule TreeChatWeb.PageController do
         |> redirect(to: "/c/Lobby")
     end
   end
+
+  def sitemap(conn, __params) do
+    chats = Chat.list_chats()
+
+    conn
+    |> put_resp_content_type("text/xml")
+    |> render("sitemap.xml", chats: chats)
+  end
 end

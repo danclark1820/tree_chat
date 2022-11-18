@@ -24,6 +24,7 @@ defmodule TreeChatWeb.Router do
     get "/", RedirectController, :index
     get "/c/Lobby", PageController, :index
     get "/c/:chat_topic", PageController, :index
+    get "/sitemap", PageController, :sitemap
     post "/search", SearchController, :index
     resources "/chat", ChatController, only: [:create, :index, :new, :show]
     resources "/message", MessageController, only: [:show]

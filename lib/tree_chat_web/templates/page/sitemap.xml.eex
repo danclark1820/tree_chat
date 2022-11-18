@@ -1,0 +1,15 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://cooler.chat</loc>
+    <lastmod>2022-11-18</lastmod>
+    <changefreq>daily</changefreq>
+  </url>
+  <% alias TreeChat.Chat %>
+  <%= for chat <- @chats do %>
+    <url>
+      <loc><%= "https://cooler.chat/c/#{chat.topic}"%> </loc>
+      <lastmod><%= elem(Timex.format(hd(Chat.list_messages(chat).entries).inserted_at, "{YYYY}-{M}-{D}"), 1) %></lastmod>
+      <changefreq>daily</changefreq>
+    </url>
+  <% end %>
+</urlset>
