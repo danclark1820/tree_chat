@@ -34,7 +34,7 @@ defmodule TreeChatWeb.PageView do
     names = ["sony", "franky.w", "jeff.jeffry", "smoke.screen", "verdana.blend", "JohnJohn",
     "JordyS", "MikeH", "SwellSwellian", "SkateNerd", "GearGuy", "BimmerLover", "SweetMistake",
     "NerdAlert", "AC.Slater", "FiveNineteen", "UraniumFuture", "beSpoke45", "FireOnTheMountain",
-    "Jerry.Garcia.Lives", "NotPaulMcCartney", "TomBradysDad", "Jules", "JE11", "BobM", "PutinsAunt",
+    "Jerry.Garcia.Lives", "NotPaulMcCartney", "Jules", "JE11", "BobM",
     "Jakobi", "LizzieA", "FrankTheTank", "TwoFtSwell", "SchoolForAnts", "PowerLiftingSucks", "simon.anderson",
     "john.flinch", "sam.stewart", "alexis.k", "genzEmoji", "teslaMacbook", "metalWaterBottle",
     "anna", "beverly", "vinny", "xavier", "laxStacks", "rabil99", "nathanF", "HeikenBob", "IPALover",
