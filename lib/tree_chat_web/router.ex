@@ -22,7 +22,6 @@ defmodule TreeChatWeb.Router do
     pipe_through :browser
 
     get "/", RedirectController, :index
-    get "/c/Lobby", PageController, :index
     get "/c/:chat_topic", PageController, :index
     get "/sitemap", PageController, :sitemap
     post "/search", SearchController, :index
