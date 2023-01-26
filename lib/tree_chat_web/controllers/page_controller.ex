@@ -15,7 +15,10 @@ defmodule TreeChatWeb.PageController do
           nil -> Chat.list_messages(lobby)
           message_id -> Chat.list_messages(lobby, message_id: message_id)
         end
-        render conn, "index.html", messages: Enum.reverse(messages), replies: Chat.replies_for_messages(messages), metadata: metadata, reactions: Chat.reactions_for_messages(messages), chats: chats, current_chat: lobby, oauth_google_url: oauth_google_url
+        
+        conn
+        |> put_session(:current_chat_topic, "Lobby")
+        |> render "index.html", messages: Enum.reverse(messages), replies: Chat.replies_for_messages(messages), metadata: metadata, reactions: Chat.reactions_for_messages(messages), chats: chats, current_chat: lobby, oauth_google_url: oauth_google_url
       true -> {:ok, "do nothing"}
     end
 
